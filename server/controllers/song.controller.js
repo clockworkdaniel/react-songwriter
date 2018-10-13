@@ -1,4 +1,4 @@
-export function getSongs(req, res) {
+exports.getSongs = function(req, res) {
   Song.find({}, function(err, songs) {
     if (err) {
       return res.status(500).json({ message: err.message });
@@ -7,7 +7,7 @@ export function getSongs(req, res) {
   });
 }
 
-export function getSong(req, res) {
+exports.getSong = function(req, res) {
   Song.findOne({ id: req.params.id }).exec((err, post) => {
     if (err) {
       res.status(500).send(err);
@@ -17,7 +17,7 @@ export function getSong(req, res) {
 }
 
 
-export function postSong(req, res) {
+exports.postSong = function(req, res) {
   var song = req.body;
   Song.create(song, function(err, song) {
     if (err) {
@@ -27,7 +27,7 @@ export function postSong(req, res) {
   });
 }
 
-export function putSong(req, res) {
+exports.putSong = function(req, res) {
   var id = req.params.id;
   var song = req.body;
   if (song && song._id !== id) {
@@ -41,12 +41,12 @@ export function putSong(req, res) {
   });
 }
 
-export function deleteSongs(req, res) {
-  var id = req.params.id;
-  Song.findByIdAndRemove(id, function(err, result) {
-    if (err) {
-      return res.status(500).json({ err: err.message });
-    }
-    res.json({ message: 'Song Deleted' });
-  });
-}
+// exports.deleteSongs = function(req, res) {
+//   var id = req.params.id;
+//   Song.findByIdAndRemove(id, function(err, result) {
+//     if (err) {
+//       return res.status(500).json({ err: err.message });
+//     }
+//     res.json({ message: 'Song Deleted' });
+//   });
+// }

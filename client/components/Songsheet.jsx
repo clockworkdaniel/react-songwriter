@@ -3,7 +3,6 @@ import React from 'react';
 import UIControls from './UIControls.jsx';
 import SongTitle from './SongTitle.jsx';
 import SongAuthor from './SongAuthor.jsx';
-import Character from './Character.jsx';
 import Section from './Section.jsx';
 import NewSectionButton from './NewSectionButton.jsx';
 import EditModalContainer from '../containers/EditModalContainer.jsx';
