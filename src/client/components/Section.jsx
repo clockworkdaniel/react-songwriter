@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Line from './Line.jsx';
+import Line from './Line';
 
 export default function Section(props) {
 

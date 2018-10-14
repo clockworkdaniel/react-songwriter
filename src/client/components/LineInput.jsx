@@ -15,7 +15,7 @@ export default class LineInput extends React.Component {
 
   handleKeyDown(event) {
 
-    let lineLength = this.props.fullLine.length;
+    const lineLength = this.props.fullLine.length;
 
     // enter
     if (event.keyCode === 13) {

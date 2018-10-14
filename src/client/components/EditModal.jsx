@@ -1,31 +1,27 @@
 import React from 'react';
 
-export default function EditModal({editModalState, updateTextToEdit, commitTextChange}) {
+export default function EditModal({ editModalState, updateTextToEdit, commitTextChange }) {
 
   function handleChange(event) {
     updateTextToEdit(event.target.value);
   }
 
   function handleKeyDown(event) {
-    if (event.keyCode == 13) {
+    if (event.keyCode === 13) {
       commitTextChange(event.target.value);
     }
   }
 
   return (
-    <div>
-      {
-        editModalState.showEditModal && <div className="song-edit-modal">
+    editModalState.showEditModal && (
+      <div className="song-edit-modal">
         <input
           className="song-edit-modal__input"
           value={editModalState.textToEdit}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
         />
-        </div>
-      }
-    </div>
+      </div>
+    )
   );
-
-
 }

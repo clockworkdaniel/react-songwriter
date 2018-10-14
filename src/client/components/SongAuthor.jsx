@@ -1,6 +1,6 @@
 import React from 'react';
 
-export default function SongAuthor(props) {
+export default function SongAuthor({ author }) {
 
   function handleAuthorRename() {
     const textToEdit = props.author;
@@ -12,7 +12,7 @@ export default function SongAuthor(props) {
 
     <div>
       <h3 className="song-author controls__container">
-        {props.author}
+        {author}
         <span className="controls">
           <button className="controls__edit" onClick={handleAuthorRename} type="button">
             <span className="icon-pencil" />

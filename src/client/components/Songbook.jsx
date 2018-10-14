@@ -1,13 +1,17 @@
 import React from 'react';
 
 export default class Songbook extends React.Component {
+  constructor({ fetchSongList }) {
+    super({ fetchSongList });
+    this.fetchSongList = fetchSongList;
+  }
 
   componentDidMount() {
-    this.props.fetchSongList();
+    this.fetchSongList();
   }
 
   render() {
-    const {songList} = this.props;
+    const { songList } = this.props;
 
     return (
       <div>

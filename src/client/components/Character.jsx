@@ -1,15 +1,22 @@
-import React from "react";
+import React from 'react';
 
-export default function Character(props) {
+export default function Character({
+  character,
+  characterKey,
+  chordChange,
+  lineKey,
+  sectionKey,
+  updateChord
+}) {
   function handleChordChange() {
-    props.updateChord(props.characterKey, props.lineKey, props.sectionKey);
+    updateChord(characterKey, lineKey, sectionKey);
   }
   return (
     <span className="line__character" onClick={handleChordChange}>
-      {props.chordChange && (
-        <span className="line__chord">{props.character.chord}</span>
+      {chordChange && (
+        <span className="line__chord">{character.chord}</span>
       )}
-      {props.character.character}
+      {character.character}
     </span>
   );
 }

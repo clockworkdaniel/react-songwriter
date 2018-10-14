@@ -13,7 +13,8 @@ export default function Songsheet({
   uiHandlers,
   sectionHandlers,
   lineHandlers,
-  rename}) {
+  rename
+}) {
 
   return (
 
