@@ -34,7 +34,7 @@ export default function Line({
     );
   }
 
-  return ( 
+  return (
     <LineInput
       fullLine={line.fullLine}
       lineKey={lineKey}

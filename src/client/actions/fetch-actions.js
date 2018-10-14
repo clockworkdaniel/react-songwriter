@@ -10,7 +10,7 @@ export function receiveSongList(json) {
   return {
     type: 'RECEIVE_SONGLIST',
     songList: json
-	};
+  };
 }
 
 export function fetchSongList() {

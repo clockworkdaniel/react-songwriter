@@ -1,11 +1,11 @@
 import React from 'react';
 
-export default function SongAuthor({ author }) {
+export default function SongAuthor({ author, rename }) {
 
   function handleAuthorRename() {
-    const textToEdit = props.author;
+    const textToEdit = author;
     const path = ['song', 'author'];
-    props.rename(textToEdit, path);
+    rename(textToEdit, path);
   }
 
   return (

@@ -1,16 +1,21 @@
 import React from 'react';
 
-import Character from './Character.jsx';
+import Character from './Character';
 
-export default function SplitCharacters(props) {
+export default function SplitCharacters({
+  characters,
+  lineKey,
+  sectionKey,
+  updateChord
+}) {
 
   const splitCharacters = [];
 
-  props.characters.map((character, index) => {
+  characters.map((character, index) => {
 
     let chordChange = false;
 
-    if (index === 0 || character.chord !== props.characters[index - 1].chord) {
+    if (index === 0 || character.chord !== characters[index - 1].chord) {
       chordChange = true;
     }
 
@@ -20,9 +25,9 @@ export default function SplitCharacters(props) {
         character={character}
         key={index}
         characterKey={index}
-        lineKey={props.lineKey}
-        sectionKey={props.sectionKey}
-        updateChord={props.updateChord} 
+        lineKey={lineKey}
+        sectionKey={sectionKey}
+        updateChord={updateChord}
       />
     );
   });

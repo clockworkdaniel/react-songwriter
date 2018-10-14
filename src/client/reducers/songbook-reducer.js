@@ -4,11 +4,11 @@ import {
 } from '../actions/fetch-actions';
 
 const intialState = {
-	isFetching: false,
-	songList: []
+  isFetching: false,
+  songList: []
 };
 
-export const songbookReducer = (state = intialState, action) =>  {
+const songbookReducer = (state = intialState, action) => {
   switch (action.type) {
     case REQUEST_SONGLIST:
       return Object.assign({}, state, {
@@ -23,3 +23,5 @@ export const songbookReducer = (state = intialState, action) =>  {
       return state;
   }
 };
+
+export default songbookReducer;

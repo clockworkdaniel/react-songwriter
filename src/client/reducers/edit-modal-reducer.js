@@ -1,37 +1,36 @@
 const initialState = {
-	showEditModal : false,
-	textToEdit : ""
+  showEditModal: false,
+  textToEdit: ''
 };
 
-export const editModalReducer = (state = initialState, action) => {
+const editModalReducer = (state = initialState, action) => {
 
-	switch (action.type) {
+  switch (action.type) {
 
-		case 'UPDATE_TEXT_TO_EDIT': {
-			return Object.assign({}, state, {
+    case 'UPDATE_TEXT_TO_EDIT': {
+      return Object.assign({}, state, {
         textToEdit: action.updatedText
       });
-		}
+    }
 
-		case 'COMMIT_TEXT_CHANGE': {
-			return Object.assign({}, state, {
-        showEditModal : false
+    case 'COMMIT_TEXT_CHANGE': {
+      return Object.assign({}, state, {
+        showEditModal: false
       });
-		} 
+    }
 
-		case 'EDIT_MODAL_TRIGGER': {
-			return Object.assign({}, state, {
-        showEditModal : true,
+    case 'EDIT_MODAL_TRIGGER': {
+      return Object.assign({}, state, {
+        showEditModal: true,
         textToEdit: action.textToEdit
       });
-		}
+    }
 
-		//=======
-		//default
+    default: {
+      return state;
+    }
 
-		default: {
-			return state;
-		}
-
-	}
+  }
 };
+
+export default editModalReducer;

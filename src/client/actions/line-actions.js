@@ -1,4 +1,4 @@
-export function changeLine(text, lineKey, sectionKey){
+export function changeLine(text, lineKey, sectionKey) {
   return {
     type: 'CHANGE_LINE',
     text,
@@ -7,16 +7,16 @@ export function changeLine(text, lineKey, sectionKey){
   };
 }
 
-export function updateChord(characterKey, lineKey, sectionKey){
-	return {
-		type: 'UPDATE_CHORD',
-		characterKey,
-		lineKey,
-		sectionKey
-	};
+export function updateChord(characterKey, lineKey, sectionKey) {
+  return {
+    type: 'UPDATE_CHORD',
+    characterKey,
+    lineKey,
+    sectionKey
+  };
 }
 
-export function newLine(lineKey, sectionKey){
+export function newLine(lineKey, sectionKey) {
   return {
     type: 'NEW_LINE',
     lineKey,
@@ -24,7 +24,7 @@ export function newLine(lineKey, sectionKey){
   };
 }
 
-export function deleteLine(lineKey, sectionKey){
+export function deleteLine(lineKey, sectionKey) {
   return {
     type: 'DELETE_LINE',
     lineKey,
@@ -32,7 +32,7 @@ export function deleteLine(lineKey, sectionKey){
   };
 }
 
-export function splitLine(lineKey, sectionKey, caretPosition){
+export function splitLine(lineKey, sectionKey, caretPosition) {
   return {
     type: 'SPLIT_LINE',
     lineKey,
@@ -41,7 +41,7 @@ export function splitLine(lineKey, sectionKey, caretPosition){
   };
 }
 
-export function joinLines(lineKey, sectionKey){
+export function joinLines(lineKey, sectionKey) {
   return {
     type: 'JOIN_LINES',
     lineKey,
@@ -49,10 +49,10 @@ export function joinLines(lineKey, sectionKey){
   };
 }
 
-export function moveLine(lineKey, newPosition){
-	return {
-		type: 'MOVE_LINE',
-		lineKey,
-		newPosition
-	};
+export function moveLine(lineKey, newPosition) {
+  return {
+    type: 'MOVE_LINE',
+    lineKey,
+    newPosition
+  };
 }

@@ -1,8 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { newSection } from '../actions/section-actions.js';
+import { newSection } from '../actions/section-actions';
 
-let NewSectionButton = ({dispatch}) => {
+let NewSectionButton = ({ dispatch }) => {
 
   return (
     <button

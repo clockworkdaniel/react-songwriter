@@ -2,28 +2,49 @@ import React from 'react';
 
 import Line from './Line';
 
-export default function Section(props) {
+export default function Section({
+  caretPosition,
+  caretIsBeingSet,
+  changeLine,
+  chordMode,
+  deleteLine,
+  dictateCaret,
+  getCaretAndFocus,
+  updateChord,
+  deleteSection,
+  duplicateSection,
+  joinLines,
+  lineFocused,
+  newLine,
+  moveSection,
+  rename,
+  resetCaretMonitoring,
+  section,
+  sectionFocused,
+  sectionKey,
+  splitLine,
+}) {
 
   function handleDelete() {
-    props.deleteSection(props.sectionKey);
+    deleteSection(sectionKey);
   }
 
   function handleDuplicate() {
-    props.duplicateSection(props.sectionKey);
+    duplicateSection(sectionKey);
   }
 
   function handleRename() {
-    const textToEdit = props.section.sectionName;
-    const path = ['song', 'structure', Number(props.sectionKey), 'sectionName'];
-    props.rename(textToEdit, path);
+    const textToEdit = section.sectionName;
+    const path = ['song', 'structure', Number(sectionKey), 'sectionName'];
+    rename(textToEdit, path);
   }
 
   function handleMoveUp() {
-    props.moveSection(props.sectionKey, props.sectionKey - 1);
+    moveSection(sectionKey, sectionKey - 1);
   }
 
   function handleMoveDown() {
-    props.moveSection(props.sectionKey, props.sectionKey + 1);
+    moveSection(sectionKey, sectionKey + 1);
   }
 
   return (
@@ -41,7 +62,7 @@ export default function Section(props) {
           </button>
         </div>
         <h4 className="song-section__name">
-          {props.section.sectionName}
+          {section.sectionName}
           <span className="song-section__move-labels">
             <button className="controls__move-up" onClick={handleMoveUp} type="button">
               <span className="icon-move-up" />
@@ -53,26 +74,26 @@ export default function Section(props) {
         </h4>
       </div>
       <div className="lines">
-        {props.section.lines.map((line, index) => (
+        {section.lines.map((line, index) => (
           <Line
             line={line}
             key={index}
             lineKey={index}
-            sectionKey={props.sectionKey}
-            changeLine={props.changeLine}
-            chordMode={props.chordMode}
-            updateChord={props.updateChord}
-            caretPosition={props.caretPosition}
-            lineFocused={props.lineFocused}
-            sectionFocused={props.sectionFocused}
-            dictateCaret={props.dictateCaret}
-            caretIsBeingSet={props.caretIsBeingSet}
-            resetCaretMonitoring={props.resetCaretMonitoring}
-            newLine={props.newLine}
-            deleteLine={props.deleteLine}
-            splitLine={props.splitLine}
-            joinLines={props.joinLines}
-            getCaretAndFocus={props.getCaretAndFocus}
+            sectionKey={sectionKey}
+            changeLine={changeLine}
+            chordMode={chordMode}
+            updateChord={updateChord}
+            caretPosition={caretPosition}
+            lineFocused={lineFocused}
+            sectionFocused={sectionFocused}
+            dictateCaret={dictateCaret}
+            caretIsBeingSet={caretIsBeingSet}
+            resetCaretMonitoring={resetCaretMonitoring}
+            newLine={newLine}
+            deleteLine={deleteLine}
+            splitLine={splitLine}
+            joinLines={joinLines}
+            getCaretAndFocus={getCaretAndFocus}
           />
         ))}
       </div>

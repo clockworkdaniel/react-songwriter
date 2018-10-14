@@ -1,279 +1,287 @@
-import song from '../../server/mock/song2.js';
-
 import update from 'immutability-helper';
+import song from '../../server/mock/song2';
 
-import breakDownLine from '../functions/breakDownLine.js';
-import lastChord from '../functions/lastChord.js';
+
+import breakDownLine from '../functions/breakDownLine';
+import lastChord from '../functions/lastChord';
 
 const initialState = {
-	uiState: {
-		chordMode : false,
-		chordToPaint : "E",
-		paintSpecificity : "word",
-		caretPosition: null,
-		lineFocused: 0,
-		sectionFocused: 0,
-		caretIsBeingSet: false
-	},
-	textToEditPathArray: [],
-	song : song
+  uiState: {
+    chordMode: false,
+    chordToPaint: 'E',
+    paintSpecificity: 'word',
+    caretPosition: null,
+    lineFocused: 0,
+    sectionFocused: 0,
+    caretIsBeingSet: false
+  },
+  textToEditPathArray: [],
+  song
 };
 
-export const songsheetReducer = (state = initialState, action) => {
+const songsheetReducer = (state = initialState, action) => {
 
-	switch (action.type) {
+  switch (action.type) {
 
-		//===========
-		//change line
+    case 'CHANGE_LINE': {
+      return update(state,
+        { song: { structure: { [action.sectionKey]: { lines: { [action.lineKey]: { fullLine: { $set: action.text } } } } } } });
+    }
 
-		case 'CHANGE_LINE': {
-			return update(state, 
-				{song: { structure: {[action.sectionKey]: {lines: {[action.lineKey]: {fullLine: {$set: action.text}}}}}}}
-			);
-		}
+    case 'UPDATE_CHORD': {
 
-		//============
-		//update chord
+      const lineCopy = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey].lines[action.lineKey]));
 
-		case 'UPDATE_CHORD': {
+      // change chord on per character basis
+      if (state.uiState.paintSpecificity === 'character') {
+        lineCopy.characters[action.characterKey].chord = state.uiState.chordToPaint;
+      }
+      // change chord on per word basis
+      else if (state.uiState.paintSpecificity === 'word') {
+        // assign this character and previous characters in word to given chord
+        for (let i = action.characterKey; i > -1 && lineCopy.characters[i].character !== ' '; i--) {
+          lineCopy.characters[i].chord = state.uiState.chordToPaint;
+        }
+        // assign next characters in word to given chord
+        for (let i = action.characterKey + 1, end = false; end === false; i++) {
+          if (lineCopy.characters[i]) {
+            lineCopy.characters[i].chord = state.uiState.chordToPaint;
+          }
+          end = !!((!lineCopy.characters[i] || lineCopy.characters[i].character === ' '));
+        }
+      }
+      // change chord on per line basis
+      else if (state.uiState.paintSpecificity === 'line') {
+        lineCopy.characters.map((character) => {
+          character.chord = state.uiState.chordToPaint;
+        });
+      }
 
-			let lineCopy = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey].lines[action.lineKey]));
+      return update(state, { song: { structure: { [action.sectionKey]: { lines: { [action.lineKey]: { $set: lineCopy } } } } } });
+    }
 
-			//change chord on per character basis
-			if(state.uiState.paintSpecificity === "character") {
-				lineCopy.characters[action.characterKey].chord = state.uiState.chordToPaint;
-			}
-			//change chord on per word basis
-			else if (state.uiState.paintSpecificity === "word") {
-				//assign this character and previous characters in word to given chord
-				for (let i = action.characterKey; i > -1 && lineCopy.characters[i].character !== " "; i--) {
-					lineCopy.characters[i].chord = state.uiState.chordToPaint;
-				}
-				//assign next characters in word to given chord
-				for (let i = action.characterKey + 1, end = false; end == false; i++) {
-					if (lineCopy.characters[i]){
-						lineCopy.characters[i].chord = state.uiState.chordToPaint;
-					}
-					end = ( !lineCopy.characters[i] || lineCopy.characters[i].character === " ") ? true : false;
-				}
-			} 
-			//change chord on per line basis
-			else if (state.uiState.paintSpecificity === "line") {
-				lineCopy.characters.map((character, index) => {
-						character.chord = state.uiState.chordToPaint;
-				});
-			}
+    case 'DICTATE_CARET': {
 
-			return update(state, {song: { structure: {[action.sectionKey]: {lines: {[action.lineKey]: {$set: lineCopy}}}}}});
-		}
+      const uiStateCopy = JSON.parse(JSON.stringify(state.uiState));
 
-		case 'DICTATE_CARET' : {
+      const lengthOfFocusedLine = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey].lines[action.newLineToFocus].fullLine.length));
 
-			let uiStateCopy = JSON.parse(JSON.stringify(state.uiState));
+      const caretPosition = action.frontOfLine ? 0 : lengthOfFocusedLine;
 
-			let lengthOfFocusedLine = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey].lines[action.newLineToFocus].fullLine.length));
+      uiStateCopy.caretIsBeingSet = true;
+      uiStateCopy.caretPosition = caretPosition;
+      uiStateCopy.lineFocused = action.newLineToFocus;
+      uiStateCopy.sectionFocused = action.sectionKey;
 
-			let caretPosition = action.frontOfLine ? 0 : lengthOfFocusedLine;
+      return update(state, { uiState: { $set: uiStateCopy } });
+    }
 
-			uiStateCopy.caretIsBeingSet  = true;
-			uiStateCopy.caretPosition = caretPosition;
-			uiStateCopy.lineFocused = action.newLineToFocus;
-			uiStateCopy.sectionFocused = action.sectionKey;
+    case 'RESET_CARET_MONITORING': {
+      return update(state, { uiState: { caretIsBeingSet: { $set: false } } });
+    }
 
-			return update(state, {uiState: { $set: uiStateCopy }});
-		}
+    // song controls
 
-		case 'RESET_CARET_MONITORING' : {
-			return  update(state, {uiState: { caretIsBeingSet: {$set: false }}});
-		}
+    case 'SWITCH_MODE': {
 
-		//=============
-		//song controls
+      const newBool = !state.uiState.chordMode;
+      const songCopy = JSON.parse(JSON.stringify(state.song));
 
-		case 'SWITCH_MODE': {
+      if (!state.uiState.chordMode) {
+        songCopy.structure.map((section, index) => {
+          const sectionKey = index;
+          section.lines.map((line, index) => {
+            const { characters } = line;
+            const newCharacterArray = breakDownLine(line, characters);
 
-			let newBool = !state.uiState.chordMode;
-			let songCopy = JSON.parse(JSON.stringify(state.song));
+            songCopy.structure[sectionKey].lines[index].characters = newCharacterArray;
+          });
+        });
+      }
 
-			if (!state.uiState.chordMode){
-				songCopy.structure.map((section, index) => {
-					let sectionKey = index;
-					section.lines.map((line, index) => {
-						let characters = line.characters;
-						let newCharacterArray = breakDownLine(line, characters);
+      const newState = update(state, {
+        uiState: { chordMode: { $set: newBool } },
+        song: { $set: songCopy }
+      });
 
-						songCopy.structure[sectionKey].lines[index].characters = newCharacterArray;
-					});
-				});	
-			}
+      return newState;
+    }
 
-			let newState = update(state, {
-				uiState: {chordMode: {$set: newBool}},
-				song: {$set: songCopy}
-			});
+    case 'UPDATE_CHORD_TO_PAINT': {
+      return update(state, { uiState: { chordToPaint: { $set: action.chord } } });
+    }
 
-			return newState;
-		}
-		case 'UPDATE_CHORD_TO_PAINT': {
-			return update(state, {uiState: {chordToPaint: {$set: action.chord}}});
-		}
-		case 'UPDATE_PAINT_SPECIFICITY': {
-			return update(state, {uiState: {paintSpecificity: {$set: action.newSpecificity}}});
-		}
-		case 'GET_CARET_AND_FOCUS': {
+    case 'UPDATE_PAINT_SPECIFICITY': {
+      return update(state, { uiState: { paintSpecificity: { $set: action.newSpecificity } } });
+    }
 
-			let uiStateCopy = JSON.parse(JSON.stringify(state.uiState));
+    case 'GET_CARET_AND_FOCUS': {
 
-			uiStateCopy.caretPosition = action.caretPosition;
-			uiStateCopy.lineFocused = action.lineKey;
-			uiStateCopy.sectionFocused = action.sectionKey;	
+      const uiStateCopy = JSON.parse(JSON.stringify(state.uiState));
 
-			return Object.assign({}, state, { uiState: uiStateCopy });
+      uiStateCopy.caretPosition = action.caretPosition;
+      uiStateCopy.lineFocused = action.lineKey;
+      uiStateCopy.sectionFocused = action.sectionKey;
 
-		}
-		//================
-		//section controls
+      return Object.assign({}, state, { uiState: uiStateCopy });
 
-		case 'NEW_SECTION': {
-			let blankSection = [{
-				"sectionName" : "New Section",
-				"lines" : [
-					{
-						"fullLine" : "",
-						"characters" : []
-					}
-				]
-			}];
-			return update(state, {song: {structure: {$push: blankSection}}});
-		}
-		case 'DELETE_SECTION': {		
-			return update(state, {song: {structure: {$splice: [[action.sectionKey, 1]]}}});
-		}
-		case 'DUPLICATE_SECTION': {
-			let newSection = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey]));
-			return update(state, {song: {structure: {$splice: [[action.sectionKey, 0, newSection]]}}});
-		}
-		case 'MOVE_SECTION': {
-			let copiedStructure = JSON.parse(JSON.stringify(state.song.structure));
-			let sectionToMove = copiedStructure.splice(action.sectionKey, 1);
+    }
 
-			sectionToMove = sectionToMove.pop();
-			copiedStructure.splice(action.newPosition, 0, sectionToMove);
-			
-			return update(state, {song: {structure: {$set: copiedStructure}}});
-		}
+    // section controls
 
-		//====================
-		//new/join/delete line
+    case 'NEW_SECTION': {
+      const blankSection = [{
+        'sectionName': 'New Section',
+        lines: [
+          {
+            fullLine: '',
+            'characters': []
+          }
+        ]
+      }];
+      return update(state, { song: { structure: { $push: blankSection } } });
+    }
 
-		case 'NEW_LINE': {
-			let blankLine = {
-				"fullLine" : "",
-				"characters" : []
-			};
+    case 'DELETE_SECTION': {
+      return update(state, { song: { structure: { $splice: [[action.sectionKey, 1]] } } });
+    }
 
-			return  update(state, {song: {structure: {[action.sectionKey]: {lines:
-				{$splice: [[action.lineKey, 0, blankLine]]}
-			}}}});
-		}
-		case 'DELETE_LINE': {
-			return  update(state, {song: {structure: {[action.sectionKey]: {lines: {$splice: [[action.lineKey, 1]]}}}}});
-		}
-		case 'SPLIT_LINE': {
+    case 'DUPLICATE_SECTION': {
+      const newSection = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey]));
+      return update(state, { song: { structure: { $splice: [[action.sectionKey, 0, newSection]] } } });
+    }
 
-			let sectionCopy = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey]));
+    case 'MOVE_SECTION': {
+      const copiedStructure = JSON.parse(JSON.stringify(state.song.structure));
+      let sectionToMove = copiedStructure.splice(action.sectionKey, 1);
 
-			let lines = sectionCopy.lines;
+      sectionToMove = sectionToMove.pop();
+      copiedStructure.splice(action.newPosition, 0, sectionToMove);
 
-			let lineLength = sectionCopy.lines[action.lineKey].fullLine.length;
+      return update(state, { song: { structure: { $set: copiedStructure } } });
+    }
 
-			//check for trailing/leading spaces
-			let trailingSpace = lines[action.lineKey].characters[action.caretPosition - 1].character === " " ? true : false;
-			let leadingSpace = lines[action.lineKey].characters[action.caretPosition].character === " " ? true : false;
-			//adjust split positions based on trailing/leading spaces
-			let beforeSplitPos = trailingSpace ? action.caretPosition - 1 : action.caretPosition;
-			let afterSplitPos = leadingSpace ? action.caretPosition + 1 : action.caretPosition;
+    // new/join/delete line
 
-			let beforeSplit = {
-				"fullLine" : lines[action.lineKey].fullLine.substr(0, beforeSplitPos),
-				"characters" : lines[action.lineKey].characters.splice(0, beforeSplitPos)
-			};
+    case 'NEW_LINE': {
 
-			let afterSplit = {
-				"fullLine" : lines[action.lineKey].fullLine.substring(afterSplitPos, lineLength),
-				"characters" : lines[action.lineKey].characters
-			};
+      const blankLine = {
+        fullLine: '',
+        'characters': []
+      };
 
-			afterSplit.fullLine = afterSplit.fullLine.slice(0,1).toUpperCase() + afterSplit.fullLine.slice(1);
+      return update(state, {
+        song: {
+          structure: {
+            [action.sectionKey]: {
+              lines: { $splice: [[action.lineKey, 0, blankLine]] }
+            }
+          }
+        }
+      });
 
-			if (leadingSpace || trailingSpace) {
-				afterSplit.characters = afterSplit.characters.splice(1);
-			}
+    }
 
-			lines.splice(action.lineKey, 1, beforeSplit );
-			lines.splice(action.lineKey+1, 0, afterSplit );
-	
-			return  update(state, {song: {structure: {[action.sectionKey]: {$set: sectionCopy}}}});
-		}
-		case 'JOIN_LINES': {
+    case 'DELETE_LINE': {
+      return update(state, { song: { structure: { [action.sectionKey]: { lines: { $splice: [[action.lineKey, 1]] } } } } });
+    }
 
-			let sectionCopy = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey]));
+    case 'SPLIT_LINE': {
 
-			let lines = sectionCopy.lines;
+      const sectionCopy = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey]));
 
-			let prevLineIsEmpty = (lines[action.lineKey-1].fullLine.length === 0 );
+      const lines = sectionCopy.lines;
 
-			lines[action.lineKey].fullLine = prevLineIsEmpty ?
-				lines[action.lineKey].fullLine.slice(0,1).toUpperCase() + lines[action.lineKey].fullLine.slice(1) :
-				lines[action.lineKey].fullLine.slice(0,1).toLowerCase() + lines[action.lineKey].fullLine.slice(1);
+      const lineLength = sectionCopy.lines[action.lineKey].fullLine.length;
 
-			//join line on to end of old one
-			lines[action.lineKey-1] = {
-				"fullLine" : lines[action.lineKey-1].fullLine + ( prevLineIsEmpty ? "" : " ") + lines[action.lineKey].fullLine, 
-				"characters" : lines[action.lineKey-1].characters.concat({"character" : " ", "chord" : lastChord(lines[action.lineKey-1]) }, lines[action.lineKey].characters) 
-			};
-		
-			lines.splice(action.lineKey, 1);
+      // check for trailing/leading spaces
+      const trailingSpace = lines[action.lineKey].characters[action.caretPosition - 1].character === ' ';
+      const leadingSpace = lines[action.lineKey].characters[action.caretPosition].character === ' ';
+      // adjust split positions based on trailing/leading spaces
+      const beforeSplitPos = trailingSpace ? action.caretPosition - 1 : action.caretPosition;
+      const afterSplitPos = leadingSpace ? action.caretPosition + 1 : action.caretPosition;
 
-			return update(state, {song: {structure: {[action.sectionKey]: {$set: sectionCopy}}}});	
-		}
+      const beforeSplit = {
+        'fullLine': lines[action.lineKey].fullLine.substr(0, beforeSplitPos),
+        characters: lines[action.lineKey].characters.splice(0, beforeSplitPos)
+      };
 
-		//==========
-		//edit modal
+      const afterSplit = {
+        fullLine: lines[action.lineKey].fullLine.substring(afterSplitPos, lineLength),
+        'characters': lines[action.lineKey].characters
+      };
 
-		case 'EDIT_MODAL_TRIGGER': {
+      afterSplit.fullLine = afterSplit.fullLine.slice(0, 1).toUpperCase() + afterSplit.fullLine.slice(1);
 
-			return Object.assign({}, state, {
+      if (leadingSpace || trailingSpace) {
+        afterSplit.characters = afterSplit.characters.splice(1);
+      }
+
+      lines.splice(action.lineKey, 1, beforeSplit);
+      lines.splice(action.lineKey + 1, 0, afterSplit);
+
+      return update(state, { song: { structure: { [action.sectionKey]: { $set: sectionCopy } } } });
+    }
+
+    case 'JOIN_LINES': {
+
+      const sectionCopy = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey]));
+
+      const { lines } = sectionCopy;
+
+      const prevLineIsEmpty = (lines[action.lineKey - 1].fullLine.length === 0);
+
+      lines[action.lineKey].fullLine = prevLineIsEmpty
+        ? lines[action.lineKey].fullLine.slice(0, 1).toUpperCase() + lines[action.lineKey].fullLine.slice(1)
+        : lines[action.lineKey].fullLine.slice(0, 1).toLowerCase() + lines[action.lineKey].fullLine.slice(1);
+
+      // join line on to end of old one
+      lines[action.lineKey - 1] = {
+        'fullLine': lines[action.lineKey - 1].fullLine + (prevLineIsEmpty ? '' : ' ') + lines[action.lineKey].fullLine,
+        characters: lines[action.lineKey - 1].characters.concat({ 'character': ' ', 'chord': lastChord(lines[action.lineKey - 1]) }, lines[action.lineKey].characters)
+      };
+
+      lines.splice(action.lineKey, 1);
+
+      return update(state, { song: { structure: { [action.sectionKey]: { $set: sectionCopy } } } });
+    }
+
+    // edit modal
+
+    case 'EDIT_MODAL_TRIGGER': {
+
+      return Object.assign({}, state, {
         textToEditPathArray: action.pathArray
       });
-		}
+    }
 
-		case 'COMMIT_TEXT_CHANGE': {
+    case 'COMMIT_TEXT_CHANGE': {
 
-			let path = {
-				$set: action.committedText
-			};
-			let reversedPathArray = state.textToEditPathArray.reverse();
-			let key = action.key;
+      let path = {
+        $set: action.committedText
+      };
+      const reversedPathArray = state.textToEditPathArray.reverse();
+      let key = action.key;
 
-			for ( key of reversedPathArray	){
-				if ( typeof key === "number") {
-					key = [key];
-				}
-				let newPath = {};
-				newPath[key] = path;
-				path = newPath;
-			}
-			
-			return update(state, path);
-		}
+      for (key of reversedPathArray) {
+        if (typeof key === 'number') {
+          key = [key];
+        }
+        const newPath = {};
+        newPath[key] = path;
+        path = newPath;
+      }
 
-		//=======
-		//default
+      return update(state, path);
+    }
 
-		default: {
-			return state;
-		}
+    // default
 
-	}
+    default: {
+      return state;
+    }
+
+  }
 };
+
+export default songsheetReducer;

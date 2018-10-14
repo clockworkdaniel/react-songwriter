@@ -7,13 +7,13 @@ import {
 
 import EditModal from '../components/EditModal';
 
-const mapStateToProps = state => {
+const mapStateToProps = (state) => {
   return {
     editModalState: state.editModalState
   };
 };
 
-const mapDispatchToProps = dispatch => {
+const mapDispatchToProps = (dispatch) => {
   return {
     updateTextToEdit: (updatedText) => {
       dispatch(updateTextToEdit(updatedText));
