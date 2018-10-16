@@ -13,6 +13,8 @@
   "author": "Daniel Mears <clockworkdaniel@gmail.com>",
   "license": "MIT",
   "dependencies": {
+    "async": "^2.6.1",
+    "body-parser": "^1.18.3",
     "express": "^4.16.4",
     "immutability-helper": "^2.8.1",
     "isomorphic-fetch": "^2.2.1",
