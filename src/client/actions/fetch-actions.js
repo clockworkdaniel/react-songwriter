@@ -1,23 +1,53 @@
-import fetch from 'isomorphic-fetch';
+import callApi from '../util/callApi';
 
-export function requestSongList() {
-  return {
-    type: 'REQUEST_SONGLIST'
+export function fetchSong(songId) {
+  return (dispatch) => {
+    return callApi(`song/${songId}`).then(res => dispatch(addSong(res.song)));
   };
 }
 
-export function receiveSongList(json) {
+export function fetchSongs() {
+  return (dispatch) => {
+    return callApi('songs').then((res) => {
+      dispatch(addSongs(res.songs));
+    });
+  }
+}
+
+export function addSong(song) {
   return {
-    type: 'RECEIVE_SONGLIST',
-    songList: json
+    type: 'ADD_SONG',
+    song
   };
 }
 
-export function fetchSongList() {
-  return dispatch => {
-    dispatch(requestSongList());
-    return fetch('/api/songs')
-      .then(response => response.json())
-      .then(json => dispatch(receiveSongList(json)));
+export function addSongs(songs) {
+  return {
+    type: 'ADD_SONGS',
+    songs
+  };
+}
+
+export function addSongRequest(song) {
+  return (dispatch) => {
+    return callApi('songs', 'post', {
+      post: {
+        name: song.title,
+        title: song.author,
+      },
+    }).then(res => dispatch(addSong(res.post)));
+  };
+}
+
+export function deleteSong(songId) {
+  return {
+    type: 'DELETE_SONG',
+    songId,
+  };
+}
+
+export function deletePostRequest(songId) {
+  return (dispatch) => {
+    return callApi(`posts/${songId}`, 'delete').then(() => dispatch(deleteSong(songId)));
   };
 }

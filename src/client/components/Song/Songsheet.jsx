@@ -1,11 +1,11 @@
 import React from 'react';
 
-import UIControls from './UIControls';
+import UIControls from './SongUIControls';
 import SongTitle from './SongTitle';
 import SongAuthor from './SongAuthor';
 import Section from './Section';
 import NewSectionButton from './NewSectionButton';
-import EditModalContainer from '../containers/EditModalContainer';
+import EditModalContainer from '../../containers/EditModalContainer';
 
 export default function Songsheet({
   uiState,
