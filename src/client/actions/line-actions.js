@@ -1,58 +1,44 @@
-export function changeLine(text, lineKey, sectionKey) {
-  return {
-    type: 'CHANGE_LINE',
-    text,
-    lineKey,
-    sectionKey
-  };
-}
+export const changeLine = (text, lineKey, sectionKey) => ({
+  type: 'CHANGE_LINE',
+  text,
+  lineKey,
+  sectionKey
+});
 
-export function updateChord(characterKey, lineKey, sectionKey) {
-  return {
-    type: 'UPDATE_CHORD',
-    characterKey,
-    lineKey,
-    sectionKey
-  };
-}
+export const updateChord = (characterKey, lineKey, sectionKey) => ({
+  type: 'UPDATE_CHORD',
+  characterKey,
+  lineKey,
+  sectionKey
+});
 
-export function newLine(lineKey, sectionKey) {
-  return {
-    type: 'NEW_LINE',
-    lineKey,
-    sectionKey
-  };
-}
+export const newLine = (lineKey, sectionKey) => ({
+  type: 'NEW_LINE',
+  lineKey,
+  sectionKey
+});
 
-export function deleteLine(lineKey, sectionKey) {
-  return {
-    type: 'DELETE_LINE',
-    lineKey,
-    sectionKey
-  };
-}
+export const deleteLine = (lineKey, sectionKey) => ({
+  type: 'DELETE_LINE',
+  lineKey,
+  sectionKey
+});
 
-export function splitLine(lineKey, sectionKey, caretPosition) {
-  return {
-    type: 'SPLIT_LINE',
-    lineKey,
-    sectionKey,
-    caretPosition
-  };
-}
+export const splitLine = (lineKey, sectionKey, caretPosition) => ({
+  type: 'SPLIT_LINE',
+  lineKey,
+  sectionKey,
+  caretPosition
+});
 
-export function joinLines(lineKey, sectionKey) {
-  return {
-    type: 'JOIN_LINES',
-    lineKey,
-    sectionKey
-  };
-}
+export const joinLines = (lineKey, sectionKey) => ({
+  type: 'JOIN_LINES',
+  lineKey,
+  sectionKey
+});
 
-export function moveLine(lineKey, newPosition) {
-  return {
-    type: 'MOVE_LINE',
-    lineKey,
-    newPosition
-  };
-}
+export const moveLine = (lineKey, newPosition) => ({
+  type: 'MOVE_LINE',
+  lineKey,
+  newPosition
+});

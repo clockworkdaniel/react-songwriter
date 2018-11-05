@@ -1,27 +1,19 @@
-export function newSection() {
-  return {
-    type: 'NEW_SECTION'
-  };
-}
+export const newSection = () => ({
+  type: 'NEW_SECTION'
+});
 
-export function duplicateSection(sectionKey) {
-  return {
-    type: 'DUPLICATE_SECTION',
-    sectionKey
-  };
-}
+export const duplicateSection = sectionKey => ({
+  type: 'DUPLICATE_SECTION',
+  sectionKey
+});
 
-export function deleteSection(sectionKey) {
-  return {
-    type: 'DELETE_SECTION',
-    sectionKey
-  };
-}
+export const deleteSection = sectionKey => ({
+  type: 'DELETE_SECTION',
+  sectionKey
+});
 
-export function moveSection(sectionKey, newPosition) {
-  return {
-    type: 'MOVE_SECTION',
-    sectionKey,
-    newPosition
-  };
-}
+export const moveSection = (sectionKey, newPosition) => ({
+  type: 'MOVE_SECTION',
+  sectionKey,
+  newPosition
+});
