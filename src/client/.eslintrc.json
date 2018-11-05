@@ -9,6 +9,7 @@
     "comma-dangle": "off",
     "padded-blocks": "off",
     "react/prop-types": "off",
-    "no-plusplus": "off"
+    "no-plusplus": "off",
+    "brace-style": "off"
   }
 }

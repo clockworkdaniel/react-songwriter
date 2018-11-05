@@ -261,7 +261,7 @@ const songsheetReducer = (state = initialState, action) => {
         $set: action.committedText
       };
       const reversedPathArray = state.textToEditPathArray.reverse();
-      let key = action.key;
+      let { key } = action;
 
       for (key of reversedPathArray) {
         if (typeof key === 'number') {

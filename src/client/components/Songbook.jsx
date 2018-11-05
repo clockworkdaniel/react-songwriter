@@ -1,18 +1,20 @@
-import React from 'react';
+import React from 'react'; 
+
+import { fetchSongs } from '../actions/fetch-actions';
 
 export default class Songbook extends React.Component {
-  constructor({ fetchSongList }) {
-    super({ fetchSongList });
-    this.fetchSongList = fetchSongList;
+  constructor(props) {
+    super(props);
+    this.props = props;
   }
 
   componentDidMount() {
-    this.fetchSongList();
+    this.props.dispatch(fetchSongs());
   }
 
   render() {
     const { songList } = this.props;
-
+    console.log(this.props);
     return (
       <div>
         <h1>Blah</h1>

@@ -1,28 +1,23 @@
 import { connect } from 'react-redux';
 
-import { fetchSongList } from '../actions/fetch-actions';
+import { getSongs } from '../reducers/songbook-reducer';
 
-import Songbook from '../components/Songbook';
+import Songbook from '../components/SongBook';
 
-const mapStateToProps = (state) => {
-  return {
-    songList : state.songbookState.songList,
-    isFetching : state.songbookState.isFetching
-  };
-};
+const mapStateToProps = state => ({
+  songList: getSongs(state),
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    fetchSongList: () => {
-      dispatch(fetchSongList());
-    }
-  };
-};
+// const mapDispatchToProps = dispatch => ({
+//   getSongs: () => {
+//     dispatch(getSongs());
+//   }
+// });
 
 
 const SongbookContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  // mapDispatchToProps
 )(Songbook);
 
 export default SongbookContainer;

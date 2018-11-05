@@ -7,26 +7,22 @@ import {
 
 import EditModal from '../components/EditModal';
 
-const mapStateToProps = (state) => {
-  return {
-    editModalState: state.editModalState
-  };
-};
+const mapStateToProps = state => ({
+  editModalState: state.editModalState
+});
 
-const mapDispatchToProps = (dispatch) => {
-  return {
-    updateTextToEdit: (updatedText) => {
-      dispatch(updateTextToEdit(updatedText));
-    },
-    commitTextChange: (commitedText) => {
-      dispatch(commitTextChange(commitedText));
-    },
-  };
-};
+// const mapDispatchToProps = dispatch => ({
+//   updateTextToEdit: (updatedText) => {
+//     dispatch(updateTextToEdit(updatedText));
+//   },
+//   commitTextChange: (commitedText) => {
+//     dispatch(commitTextChange(commitedText));
+//   },
+// });
 
 const EditModalContainer = connect(
   mapStateToProps,
-  mapDispatchToProps
+  // mapDispatchToProps
 )(EditModal);
 
 export default EditModalContainer;
