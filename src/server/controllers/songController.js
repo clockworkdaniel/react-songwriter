@@ -11,7 +11,7 @@ exports.getSongs = function (req, res) {
 };
 
 exports.getSong = function (req, res) {
-  Song.findOne({ id: req.params.id }).exec((err, post) => {
+  Song.findOne({ _id: req.params.id }, (err, song) => {
     if (err) {
       res.status(500).send(err);
     }
@@ -26,11 +26,12 @@ exports.postSong = function (req, res) {
     if (err) {
       return res.status(500).json({ err: err.message });
     }
-    res.json({ 'song': song, message: 'Song Created' });
+    res.json({ 'song': song, message: 'Song created' });
   });
 };
 
 exports.putSong = function (req, res) {
+  res.send('put Song');
   // var id = req.params.id;
   // var song = req.body;
   // if (song && song._id !== id) {
@@ -45,11 +46,12 @@ exports.putSong = function (req, res) {
 };
 
 exports.deleteSong = function(req, res) {
-//   var id = req.params.id;
-//   Song.findByIdAndRemove(id, function(err, result) {
-//     if (err) {
-//       return res.status(500).json({ err: err.message });
-//     }
-//     res.json({ message: 'Song Deleted' });
-//   });
+  res.send('delete Song');
+  // var id = req.params.id;
+  // Song.findByIdAndRemove(id, function(err, result) {
+  //   if (err) {
+  //     return res.status(500).json({ err: err.message });
+  //   }
+  //   res.json({ message: 'Song Deleted' });
+  // });
 }

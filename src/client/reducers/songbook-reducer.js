@@ -1,27 +1,30 @@
-import {
-  REQUEST_SONGLIST,
-  RECEIVE_SONGLIST
-} from '../actions/fetch-actions';
+
 
 const intialState = {
-  isFetching: false,
   songList: []
 };
 
 const songbookReducer = (state = intialState, action) => {
   switch (action.type) {
-    case REQUEST_SONGLIST:
+    case 'ADD_SONG':
       return Object.assign({}, state, {
-        isFetching: true
+        songList: [action.song, ...state.songList]
       });
-    case RECEIVE_SONGLIST:
-      return Object.assign({}, state, {
-        isFetching: false,
-        songList: action.songList
-      });
+    case 'ADD_SONGS':
+      return {
+        songList: action.songs
+      }
+    case 'DELETE_SONG':
+      return {
+        songList: state.songList.filter(song => song.songId !== action.songId)
+      };
     default:
       return state;
   }
 };
+
+export const getSongs = state => state.songList;
+
+export const getSong = (state, songId) => state.songList.data.filter(song => song.songId === songId)[0];
 
 export default songbookReducer;

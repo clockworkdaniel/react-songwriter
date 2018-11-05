@@ -2,35 +2,39 @@
 var Author = require('../models/author');
 
 exports.getAuthors = function (req, res) {
-  Author.find({}, (err, authors) => {
-    if (err) {
-      return res.status(500).json({ message: err.message });
-    }
-    res.json({ authors: authors });
-  });
+  res.send('get Authors');
+  // Author.find({}, (err, authors) => {
+  //   if (err) {
+  //     return res.status(500).json({ message: err.message });
+  //   }
+  //   res.json({ authors: authors });
+  // });
 };
 
-exports.getSong = function (req, res) {
-  Author.findOne({ id: req.params.id }).exec((err, author) => {
-    if (err) {
-      res.status(500).send(err);
-    }
-    res.json({ author });
-  });
+exports.getAuthor = function (req, res) {
+  res.send('get Author');
+  // Author.findOne({ id: req.params.id }).exec((err, author) => {
+  //   if (err) {
+  //     res.status(500).send(err);
+  //   }
+  //   res.json({ author });
+  // });
 };
 
 
-exports.postauthor = function (req, res) {
-  var author = req.body;
-  Author.create(author, (err, author) => {
-    if (err) {
-      return res.status(500).json({ err: err.message });
-    }
-    res.json({ 'author': author, message: 'Author Created' });
-  });
+exports.postAuthor = function (req, res) {
+  res.send('post Author');
+  // var author = req.body;
+  // Author.create(author, (err, author) => {
+  //   if (err) {
+  //     return res.status(500).json({ err: err.message });
+  //   }
+  //   res.json({ 'author': author, message: 'Author Created' });
+  // });
 };
 
 exports.putAuthor = function (req, res) {
+  res.send('put Author');
   // var id = req.params.id;
   // var author = req.body;
   // if (author && Author._id !== id) {
@@ -45,11 +49,5 @@ exports.putAuthor = function (req, res) {
 };
 
 exports.deleteAuthor = function(req, res) {
-//   var id = req.params.id;
-//   Author.findByIdAndRemove(id, function(err, result) {
-//     if (err) {
-//       return res.status(500).json({ err: err.message });
-//     }
-//     res.json({ message: 'Author Deleted' });
-//   });
+    res.send('delete Author');
 }

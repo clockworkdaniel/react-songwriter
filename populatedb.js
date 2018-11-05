@@ -60,20 +60,14 @@ function authorCreate(name, cb) {
 function createAuthors(cb) {
     async.parallel([
         function(callback) {
-          authorCreate('The Beatles', callback);
+          authorCreate('Tom Waits', callback);
+        },
+        function(callback) {
+          authorCreate('Hinds', callback);
         },
         function(callback) {
           authorCreate('Honeyblood', callback);
         },
-        function(callback) {
-          authorCreate('Tom Waits', callback);
-        },
-        function(callback) {
-          authorCreate('The La\'s', callback);
-        },
-        function(callback) {
-          authorCreate('Hinds', callback);
-        }
         ],
         // optional callback
         cb);
@@ -84,22 +78,16 @@ function createSongs(cb) {
   console.log('test')
     async.parallel([
         function(callback) {
-          songCreate('Please Please Me', authors[0], callback);
+          songCreate('Falling Down', authors[0], callback);
         },
         function(callback) {
-          songCreate('Biro', authors[1], callback);
+          songCreate('Soberland', authors[1], callback);
         },
         function(callback) {
-          songCreate('Falling Down', authors[2], callback);
+          songCreate('Biro', authors[2], callback);
         },
         function(callback) {
-          songCreate('Timeless Melody', authors[3], callback);
-        },
-        function(callback) {
-          songCreate('Soberland', authors[4], callback);
-        },
-        function(callback) {
-          songCreate('Step right up', authors[2], callback)
+          songCreate('Step Right Up', authors[0], callback);
         }
         ],
         // optional callback
@@ -119,5 +107,9 @@ function(err, results) {
     mongoose.connection.close();
 });
 
-
-
+// mongoose.connection.collections['authors'].drop(function(err){
+//   console.log('collection dropped');
+// })
+// mongoose.connection.collections['songs'].drop(function(err){
+//   console.log('collection dropped');
+// })
