@@ -131,11 +131,11 @@ const songsheetReducer = (state = initialState, action) => {
 
     case 'NEW_SECTION': {
       const blankSection = [{
-        'sectionName': 'New Section',
+        sectionName: 'New Section',
         lines: [
           {
             fullLine: '',
-            'characters': []
+            characters: []
           }
         ]
       }];
@@ -167,7 +167,7 @@ const songsheetReducer = (state = initialState, action) => {
 
       const blankLine = {
         fullLine: '',
-        'characters': []
+        characters: []
       };
 
       return update(state, {
@@ -202,13 +202,13 @@ const songsheetReducer = (state = initialState, action) => {
       const afterSplitPos = leadingSpace ? action.caretPosition + 1 : action.caretPosition;
 
       const beforeSplit = {
-        'fullLine': lines[action.lineKey].fullLine.substr(0, beforeSplitPos),
+        fullLine: lines[action.lineKey].fullLine.substr(0, beforeSplitPos),
         characters: lines[action.lineKey].characters.splice(0, beforeSplitPos)
       };
 
       const afterSplit = {
         fullLine: lines[action.lineKey].fullLine.substring(afterSplitPos, lineLength),
-        'characters': lines[action.lineKey].characters
+        characters: lines[action.lineKey].characters
       };
 
       afterSplit.fullLine = afterSplit.fullLine.slice(0, 1).toUpperCase() + afterSplit.fullLine.slice(1);
@@ -237,8 +237,8 @@ const songsheetReducer = (state = initialState, action) => {
 
       // join line on to end of old one
       lines[action.lineKey - 1] = {
-        'fullLine': lines[action.lineKey - 1].fullLine + (prevLineIsEmpty ? '' : ' ') + lines[action.lineKey].fullLine,
-        characters: lines[action.lineKey - 1].characters.concat({ 'character': ' ', 'chord': lastChord(lines[action.lineKey - 1]) }, lines[action.lineKey].characters)
+        fullLine: lines[action.lineKey - 1].fullLine + (prevLineIsEmpty ? '' : ' ') + lines[action.lineKey].fullLine,
+        characters: lines[action.lineKey - 1].characters.concat({ character: ' ', chord: lastChord(lines[action.lineKey - 1]) }, lines[action.lineKey].characters)
       };
 
       lines.splice(action.lineKey, 1);

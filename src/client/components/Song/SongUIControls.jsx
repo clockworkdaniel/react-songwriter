@@ -31,7 +31,7 @@ export default function UIControls({
           <p>Chord:</p>
           <input
             value={chordToPaint}
-            type="text" 
+            type="text"
             onChange={handleChordChange}
           />
         </div>
