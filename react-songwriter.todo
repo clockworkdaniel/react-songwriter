@@ -1,0 +1,28 @@
+Exploration:
+  ☐ Can using componentDidUpdate() be avoided in LineInput.jsx?
+  ☐ Animation between Lyrics/Chord UI state
+
+
+Lyrics editing:
+
+  Features:
+    ☐ Use arrow keys to navigate around song
+    ☐ Implement undo button button (which is triggered by shift Z)
+  Bugs:
+    ☐ When merging lines, a space should not be added in between the two strings being merged
+
+Chord editing:
+
+  Features:
+    ☐ Touch controls
+    ☐ Chord palette
+      - set starting palette based on key/cirlce of fifths?
+      - can then add to that chord palette
+    ☐ Guitar chord shapes
+      ☐ expandable, at top of page, fixed at side for practice?
+      ☐ use that shape to work out chord
+    ☐ More visual painting of song 
+
+Play mode:
+    ☐ Scrolling over time
+    - Set speed

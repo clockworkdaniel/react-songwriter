@@ -10,7 +10,7 @@ const initialState = {
     chordMode: false,
     chordToPaint: 'E',
     paintSpecificity: 'word',
-    caretPosition: null,
+    caretPosition: 0,
     lineFocused: 0,
     sectionFocused: 0,
     caretIsBeingSet: false
@@ -190,7 +190,7 @@ const songsheetReducer = (state = initialState, action) => {
 
       const sectionCopy = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey]));
 
-      const lines = sectionCopy.lines;
+      const { lines } = sectionCopy;
 
       const lineLength = sectionCopy.lines[action.lineKey].fullLine.length;
 
