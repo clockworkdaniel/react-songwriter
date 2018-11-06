@@ -1,7 +1,48 @@
+Backend Start:
+
+
 Exploration:
+  ☐ Which props are actually required on each component
+    - use redux connect more components rather than using react method?
+
+    //all these are fine in songsheet
+
+    uiState.chordMode 
+    uiHandlers.switchMode
+    uiState.chordToPaint
+    uiHandlers.updateChordToPaint
+    uiState.paintSpecificity
+    uiHandlers.updatePaintSpecificity
+    
+    currently in title ->
+    song.title
+    currently in author ->
+    song.author
+
+    currently in each section ->
+
+      move commented to be in LineInput  
+
+      // uiState.caretPosition
+      // uiState.lineFocused
+      // uiState.sectionFocused
+      // lineHandlers.changeLine
+      // lineHandlers.newLine
+      // lineHandlers.deleteLine
+      // lineHandlers.splitLine
+      // lineHandlers.joinLines
+      // lineHandlers.updateChord
+      // uiHandlers.getCaretAndFocus
+      // uiState.caretIsBeingSet
+      // uiHandlers.resetCaretMonitoring
+      // lineHandlers.dictateCaret 					
+      sectionHandlers.deleteSection
+      sectionHandlers.duplicateSection
+      sectionHandlers.moveSection
+      rename ?
+
   ☐ Can using componentDidUpdate() be avoided in LineInput.jsx?
   ☐ Animation between Lyrics/Chord UI state
-
 
 Lyrics editing:
 

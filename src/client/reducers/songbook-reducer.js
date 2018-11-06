@@ -13,7 +13,7 @@ const songbookReducer = (state = intialState, action) => {
     case 'ADD_SONGS':
       return {
         songList: action.songs
-      }
+      };
     case 'DELETE_SONG':
       return {
         songList: state.songList.filter(song => song.songId !== action.songId)

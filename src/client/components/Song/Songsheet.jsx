@@ -49,7 +49,7 @@ export default function Songsheet({
             getCaretAndFocus={uiHandlers.getCaretAndFocus}
             caretIsBeingSet={uiState.caretIsBeingSet}
             resetCaretMonitoring={uiHandlers.resetCaretMonitoring}
-            dictateCaret={lineHandlers.dictateCaret} 					
+            dictateCaret={lineHandlers.dictateCaret}
             deleteSection={sectionHandlers.deleteSection}
             duplicateSection={sectionHandlers.duplicateSection}
             moveSection={sectionHandlers.moveSection}
