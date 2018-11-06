@@ -22,6 +22,7 @@ export default class LineInput extends React.Component {
   }
 
   componentDidUpdate() {
+
     if (this.props.caretIsBeingSet === true) {
       if (this.props.sectionFocused === this.props.sectionKey) {
         if (this.props.lineFocused === this.props.lineKey) {
@@ -29,7 +30,7 @@ export default class LineInput extends React.Component {
           this.textInput.focus();
           this.textInput.selectionStart = this.props.caretPosition;
           this.textInput.selectionEnd = this.props.caretPosition;
-          this.props.resetCaretMonitoring();
+          this.resetCaretMonitoring();
         }
       }
     }
@@ -37,8 +38,6 @@ export default class LineInput extends React.Component {
 
   // called on click and keyup
   getCaretAndPosition(event, caretIsBeingSet, lineKey, sectionKey) {
-
-    console.log(event);
 
     if (caretIsBeingSet === false) {
       this.getCaretAndFocus(
