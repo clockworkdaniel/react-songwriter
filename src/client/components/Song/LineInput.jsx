@@ -1,20 +1,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-
 export default class LineInput extends React.Component {
-  constructor(props) {
+  constructor({ caret, lineHandlers }) {
     super();
 
-    this.getCaretAndFocus = props.getCaretAndFocus;
-    this.dictateCaret = props.dictateCaret;
-    this.resetCaretMonitoring = props.resetCaretMonitoring;
+    this.getCaretAndFocus = caret.getCaretAndFocus;
+    this.dictateCaret = caret.dictateCaret;
+    this.resetCaretMonitoring = caret.resetCaretMonitoring;
 
-    this.changeLine = props.changeLine;
-    this.newLine = props.newLine;
-    this.splitLine = props.splitLine;
-    this.joinLines = props.joinLines;
-    this.deleteLine = props.deleteLine;
+    this.changeLine = lineHandlers.changeLine;
+    this.newLine = lineHandlers.newLine;
+    this.splitLine = lineHandlers.splitLine;
+    this.joinLines = lineHandlers.joinLines;
+    this.deleteLine = lineHandlers.deleteLine;
 
     this.handleChangeLine = this.handleChangeLine.bind(this);
     this.handleKeyDown = this.handleKeyDown.bind(this);
@@ -23,13 +22,24 @@ export default class LineInput extends React.Component {
 
   componentDidUpdate() {
 
-    if (this.props.caretIsBeingSet === true) {
-      if (this.props.sectionFocused === this.props.sectionKey) {
-        if (this.props.lineFocused === this.props.lineKey) {
+    const {
+      uiState: {
+        caretIsBeingSet,
+        caretPosition,
+        lineFocused,
+        sectionFocused
+      },
+      lineKey,
+      sectionKey
+    } = this.props;
+
+    if (caretIsBeingSet === true) {
+      if (sectionFocused === sectionKey) {
+        if (lineFocused === lineKey) {
 
           this.textInput.focus();
-          this.textInput.selectionStart = this.props.caretPosition;
-          this.textInput.selectionEnd = this.props.caretPosition;
+          this.textInput.selectionStart = caretPosition;
+          this.textInput.selectionEnd = caretPosition;
           this.resetCaretMonitoring();
         }
       }
@@ -38,7 +48,6 @@ export default class LineInput extends React.Component {
 
   // called on click and keyup
   getCaretAndPosition(event, caretIsBeingSet, lineKey, sectionKey) {
-
     if (caretIsBeingSet === false) {
       this.getCaretAndFocus(
         event.target.selectionStart,
@@ -49,6 +58,7 @@ export default class LineInput extends React.Component {
   }
 
   handleChangeLine(event, lineKey, sectionKey) {
+
     this.changeLine(event.target.value, lineKey, sectionKey);
   }
 
@@ -85,13 +95,17 @@ export default class LineInput extends React.Component {
   }
 
   render() {
+
     const {
       fullLine,
-      caretIsBeingSet,
-      caretPosition,
       lineKey,
-      sectionKey
+      sectionKey,
+      uiState: {
+        caretIsBeingSet,
+        caretPosition,
+      }
     } = this.props;
+
     return (
       <div className="line">
         <input
@@ -110,19 +124,25 @@ export default class LineInput extends React.Component {
 }
 
 LineInput.propTypes = {
+  caret: PropTypes.shape({
+    getCaretAndFocus: PropTypes.func.isRequired,
+    dictateCaret: PropTypes.func.isRequired,
+    resetCaretMonitoring: PropTypes.func.isRequired
+  }).isRequired,
+  lineHandlers: PropTypes.shape({
+    changeLine: PropTypes.func.isRequired,
+    newLine: PropTypes.func.isRequired,
+    deleteLine: PropTypes.func.isRequired,
+    splitLine: PropTypes.func.isRequired,
+    joinLines: PropTypes.func.isRequired
+  }).isRequired,
+  uiState: PropTypes.shape({
+    caretIsBeingSet: PropTypes.bool.isRequired,
+    caretPosition: PropTypes.number.isRequired,
+    lineFocused: PropTypes.number.isRequired,
+    sectionFocused: PropTypes.number.isRequired,
+  }).isRequired,
   fullLine: PropTypes.string.isRequired,
   lineKey: PropTypes.number.isRequired,
   sectionKey: PropTypes.number.isRequired,
-  changeLine: PropTypes.func.isRequired,
-  caretPosition: PropTypes.number.isRequired,
-  lineFocused: PropTypes.number.isRequired,
-  sectionFocused: PropTypes.number.isRequired,
-  dictateCaret: PropTypes.func.isRequired,
-  caretIsBeingSet: PropTypes.bool.isRequired,
-  resetCaretMonitoring: PropTypes.func.isRequired,
-  newLine: PropTypes.func.isRequired,
-  deleteLine: PropTypes.func.isRequired,
-  splitLine: PropTypes.func.isRequired,
-  joinLines: PropTypes.func.isRequired,
-  getCaretAndFocus: PropTypes.func.isRequired,
 };

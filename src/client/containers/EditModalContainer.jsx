@@ -11,18 +11,18 @@ const mapStateToProps = state => ({
   editModalState: state.editModalState
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   updateTextToEdit: (updatedText) => {
-//     dispatch(updateTextToEdit(updatedText));
-//   },
-//   commitTextChange: (commitedText) => {
-//     dispatch(commitTextChange(commitedText));
-//   },
-// });
+const mapDispatchToProps = dispatch => ({
+  updateTextToEdit: (updatedText) => {
+    dispatch(updateTextToEdit(updatedText));
+  },
+  commitTextChange: (commitedText) => {
+    dispatch(commitTextChange(commitedText));
+  },
+});
 
 const EditModalContainer = connect(
   mapStateToProps,
-  // mapDispatchToProps
+  mapDispatchToProps
 )(EditModal);
 
 export default EditModalContainer;
