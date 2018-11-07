@@ -8,8 +8,8 @@ import { createStore } from 'redux';
 
 import reactSongwriter from './reducers/root-reducer';
 
-import SongbookContainer from './containers/SongbookContainer';
-// import SongsheetContainer from './containers/SongsheetContainer';
+// import SongbookContainer from './containers/SongbookContainer';
+import SongsheetContainer from './containers/SongsheetContainer';
 
 import './main.scss';
 
@@ -17,7 +17,7 @@ const store = createStore(reactSongwriter);
 
 ReactDOM.render(
   <Provider store={store}>
-    <SongbookContainer />
+    <SongsheetContainer />
   </Provider>,
   document.getElementById('app')
 );

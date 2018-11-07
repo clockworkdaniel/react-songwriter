@@ -1,16 +1,6 @@
 import { connect } from 'react-redux';
 
 import {
-  changeLine,
-  updateChord,
-  newLine,
-  splitLine,
-  deleteLine,
-  joinLines
-} from '../actions/line-actions';
-
-
-import {
   deleteSection,
   duplicateSection,
   moveSection
@@ -21,12 +11,13 @@ import {
 } from '../actions/rename-actions';
 
 import {
+  updateChord
+} from '../actions/line-actions';
+
+import {
   switchMode,
   updateChordToPaint,
-  updatePaintSpecificity,
-  getCaretAndFocus,
-  dictateCaret,
-  resetCaretMonitoring
+  updatePaintSpecificity
 } from '../actions/ui-actions';
 
 import Songsheet from '../components/Song/Songsheet';
@@ -46,13 +37,12 @@ const mapDispatchToProps = dispatch => ({
     },
     updatePaintSpecificity: (newSpecificity) => {
       dispatch(updatePaintSpecificity(newSpecificity));
-    },
-    getCaretAndFocus: (caretPosition, lineKey, sectionKey) => {
-      dispatch(getCaretAndFocus(caretPosition, lineKey, sectionKey));
-    },
-    resetCaretMonitoring: () => {
-      dispatch(resetCaretMonitoring());
     }
+  },
+  chord: {
+    update: (characterKey, lineKey, sectionKey) => {
+      dispatch(updateChord(characterKey, lineKey, sectionKey));
+    },
   },
   sectionHandlers: {
     deleteSection: (sectionKey) => {
@@ -63,29 +53,6 @@ const mapDispatchToProps = dispatch => ({
     },
     moveSection: (sectionKey, newPosition) => {
       dispatch(moveSection(sectionKey, newPosition));
-    }
-  },
-  lineHandlers: {
-    changeLine: (value, linekey, sectionKey) => {
-      dispatch(changeLine(value, linekey, sectionKey));
-    },
-    updateChord: (characterKey, lineKey, sectionKey) => {
-      dispatch(updateChord(characterKey, lineKey, sectionKey));
-    },
-    newLine: (linekey, sectionKey) => {
-      dispatch(newLine(linekey, sectionKey));
-    },
-    deleteLine: (lineKey, sectionKey) => {
-      dispatch(deleteLine(lineKey, sectionKey));
-    },
-    splitLine: (lineKey, sectionKey, caretPosition) => {
-      dispatch(splitLine(lineKey, sectionKey, caretPosition));
-    },
-    joinLines: (lineKey, sectionKey) => {
-      dispatch(joinLines(lineKey, sectionKey));
-    },
-    dictateCaret: (frontOfLine, newLineToFocus, sectionKey) => {
-      dispatch(dictateCaret(frontOfLine, newLineToFocus, sectionKey));
     }
   },
   rename: (value, key) => {

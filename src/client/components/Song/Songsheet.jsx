@@ -11,8 +11,8 @@ export default function Songsheet({
   uiState,
   song,
   uiHandlers,
+  chord,
   sectionHandlers,
-  lineHandlers,
   rename
 }) {
 
@@ -37,19 +37,7 @@ export default function Songsheet({
             key={index}
             sectionKey={index}
             chordMode={uiState.chordMode}
-            caretPosition={uiState.caretPosition}
-            lineFocused={uiState.lineFocused}
-            sectionFocused={uiState.sectionFocused}
-            changeLine={lineHandlers.changeLine}
-            newLine={lineHandlers.newLine}
-            deleteLine={lineHandlers.deleteLine}
-            splitLine={lineHandlers.splitLine}
-            joinLines={lineHandlers.joinLines}
-            updateChord={lineHandlers.updateChord}
-            getCaretAndFocus={uiHandlers.getCaretAndFocus}
-            caretIsBeingSet={uiState.caretIsBeingSet}
-            resetCaretMonitoring={uiHandlers.resetCaretMonitoring}
-            dictateCaret={lineHandlers.dictateCaret}
+            updateChord={chord.update}
             deleteSection={sectionHandlers.deleteSection}
             duplicateSection={sectionHandlers.duplicateSection}
             moveSection={sectionHandlers.moveSection}
