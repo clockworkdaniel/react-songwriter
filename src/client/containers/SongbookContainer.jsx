@@ -1,23 +1,34 @@
 import { connect } from 'react-redux';
 
-import { getSongs } from '../reducers/songbook-reducer';
+import { 
+  fetchSongs,
+  newSongRequest,
+  deleteSongRequest
+} from '../actions/songbook-actions';
 
 import Songbook from '../components/SongBook';
 
 const mapStateToProps = state => ({
-  songList: getSongs(state),
+  songList: state.songbookState.songList
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   getSongs: () => {
-//     dispatch(getSongs());
-//   }
-// });
+const mapDispatchToProps = dispatch => ({
+  fetchSongs: () => {
+    dispatch(fetchSongs());
+  },
+  newSongRequest: () => {
+    dispatch(newSongRequest());
+  },
+  deleteSongRequest: () => {
+    dispatch(deleteSongRequest());
+  }
+  
+});
 
 
 const SongbookContainer = connect(
   mapStateToProps,
-  // mapDispatchToProps
+  mapDispatchToProps
 )(Songbook);
 
 export default SongbookContainer;
