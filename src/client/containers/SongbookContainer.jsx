@@ -1,13 +1,17 @@
 import { connect } from 'react-redux';
 
-import { getSongs } from '../reducers/songbook-reducer';
+import { 
+  fetchSongs,
+  newSongRequest,
+  deleteSongRequest
+} from '../actions/songbook-actions';
 
 import { editModalTrigger } from '../actions/rename-actions';
 
 import Songbook from '../components/SongBook';
 
 const mapStateToProps = state => ({
-  songList: getSongs(state),
+  songList: state.songbookState.songList
 });
 
 const mapDispatchToProps = dispatch => ({

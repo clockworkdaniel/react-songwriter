@@ -1,8 +1,6 @@
 import React from 'react';
 import EditModalContainer from '../containers/EditModalContainer';
 
-import { fetchSongs } from '../actions/fetch-actions';
-
 export default class Songbook extends React.Component {
   constructor(props) {
     super(props);
@@ -10,7 +8,9 @@ export default class Songbook extends React.Component {
   }
 
   componentDidMount() {
-    this.props.dispatch(fetchSongs());
+
+    const {fetchSongs} = this.props;
+    fetchSongs();
   }
 
   render() {
@@ -23,7 +23,7 @@ export default class Songbook extends React.Component {
          onClick={ newText }
         >New Song</button>
         <ul className="song-list">
-          { songList.length && songList.map((song, index) => (
+          { songList && songList.map((song, index) => (
             <li key={index}>
               <h3>{song.title}</h3>
               <h3>{song.author}</h3>
