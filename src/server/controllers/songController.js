@@ -1,5 +1,6 @@
 /* eslint func-names: "off" */
 var Song = require('../models/song');
+var Author = require('../models/author');
 
 exports.getSongs = function (req, res) {
   Song.find({}, (err, songs) => {
@@ -22,11 +23,33 @@ exports.getSong = function (req, res) {
 
 exports.postSong = function (req, res) {
   var song = req.body;
+  var existingAuthor, songID;
+
+  if (song.author !== undefined) {
+    existingAuthor = Author.findOne({ name: song.author });
+    
+    if (existingAuthor) {
+      var author = {
+        name : song.author
+      };
+      Author.create(author, (err, author) => {
+        song.author = author.id;
+      });
+    }
+  }
+
   Song.create(song, (err, song) => {
+    
     if (err) {
       return res.status(500).json({ err: err.message });
     }
     res.json({ 'song': song, message: 'Song created' });
+
+    if (existingAuthor) {
+      songID = song._id;
+      existingAuthor.songs.push(songID);
+      existingAuthor.save();
+    }
   });
 };
 
