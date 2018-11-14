@@ -3,9 +3,9 @@ import React from 'react';
 export default function SongAuthor({ author, rename }) {
 
   function handleAuthorRename() {
-    const textToEdit = author;
+    const editableText = author;
     const path = ['song', 'author'];
-    rename(textToEdit, path);
+    rename(editableText, path);
   }
 
   return (

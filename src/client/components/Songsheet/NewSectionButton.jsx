@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'react-redux';
-import { newSection } from '../../actions/section-actions';
+import { newSection } from '../../actions/Songsheet/songsheet-actions';
 
 let NewSectionButton = ({ dispatch }) => (
   <button

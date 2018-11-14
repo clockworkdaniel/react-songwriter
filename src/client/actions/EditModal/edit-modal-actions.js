@@ -1,7 +1,6 @@
-export const editModalTrigger = (textToEdit, pathArray) => ({
+export const editModalTrigger = editableText => ({
   type: 'EDIT_MODAL_TRIGGER',
-  textToEdit,
-  pathArray
+  editableText
 });
 
 export const commitTextChange = committedText => ({
@@ -9,7 +8,7 @@ export const commitTextChange = committedText => ({
   committedText
 });
 
-export const updateTextToEdit = updatedText => ({
+export const updateEditableText = updatedText => ({
   type: 'UPDATE_TEXT_TO_EDIT',
   updatedText
 });

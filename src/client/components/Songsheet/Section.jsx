@@ -22,9 +22,9 @@ export default function Section({
   }
 
   function handleRename() {
-    const textToEdit = section.sectionName;
+    const editableText = section.sectionName;
     const path = ['song', 'structure', Number(sectionKey), 'sectionName'];
-    rename(textToEdit, path);
+    rename(editableText, path);
   }
 
   function handleMoveUp() {
