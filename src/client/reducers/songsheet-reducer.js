@@ -15,7 +15,7 @@ const initialState = {
     sectionFocused: 0,
     caretIsBeingSet: false
   },
-  textToEditPathArray: [],
+  editableTextPathArray: [],
   song
 };
 
@@ -248,10 +248,9 @@ const songsheetReducer = (state = initialState, action) => {
 
     // edit modal
 
-    case 'EDIT_MODAL_TRIGGER': {
-
+    case 'RENAME': {
       return Object.assign({}, state, {
-        textToEditPathArray: action.pathArray
+        editableTextPathArray: action.pathArray
       });
     }
 
@@ -260,7 +259,7 @@ const songsheetReducer = (state = initialState, action) => {
       let path = {
         $set: action.committedText
       };
-      const reversedPathArray = state.textToEditPathArray.reverse();
+      const reversedPathArray = state.editableTextPathArray.reverse();
       let { key } = action;
 
       for (key of reversedPathArray) {

@@ -6,8 +6,8 @@ var state = {
 			"focus" : undefined,
 			"editModal" : {
 				"showEditModal" : false,
-				"textToEdit" : "",
-				"textToEditKey" : ""
+				"editableText" : "",
+				"editableTextKey" : ""
 			}
 	},
 	"song": {

@@ -1,9 +1,9 @@
 import React from 'react';
 
-export default function EditModal({ editModalState, updateTextToEdit, commitTextChange }) {
+export default function EditModal({ editModalState, updateEditableText, commitTextChange }) {
 
   function handleChange(event) {
-    updateTextToEdit(event.target.value);
+    updateEditableText(event.target.value);
   }
 
   function handleKeyDown(event) {
@@ -17,7 +17,7 @@ export default function EditModal({ editModalState, updateTextToEdit, commitText
       <div className="song-edit-modal">
         <input
           className="song-edit-modal__input"
-          value={editModalState.textToEdit}
+          value={editModalState.editableText}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
         />
