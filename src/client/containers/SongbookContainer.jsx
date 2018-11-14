@@ -4,9 +4,9 @@ import {
   fetchSongs,
   newSongRequest,
   deleteSongRequest
-} from '../actions/songbook-actions';
+} from '../actions/Songbook/songbook-actions';
 
-import { editModalTrigger } from '../actions/rename-actions';
+import { editModalTrigger } from '../actions/EditModal/edit-modal-actions';
 
 import Songbook from '../components/Songbook';
 

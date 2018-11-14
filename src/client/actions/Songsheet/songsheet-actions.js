@@ -1,9 +1,19 @@
-export const rename = (editableText,
-  path) => ({
-  type: 'RENAME',
-  editableText,
+import { editModalTrigger } from '../EditModal/edit-modal-actions';
+
+export const updateTextBeingEditedPath = path => ({
+  type: 'UPDATE_TEXT_BEING_EDITED_PATH',
   path
 });
+
+export const updateEditedText = commitedText => ({
+  type: 'UPDATE_EDITED_TEXT',
+  commitedText
+});
+
+export const rename = (editableText, path) => (dispatch) => {
+  dispatch(updateTextBeingEditedPath(path));
+  dispatch(editModalTrigger(editableText));
+};
 
 export {
   changeLine,
