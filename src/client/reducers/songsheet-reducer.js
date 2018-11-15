@@ -117,14 +117,17 @@ const songsheetReducer = (state = initialState, action) => {
 
     case 'GET_CARET_AND_FOCUS': {
 
-      const uiStateCopy = JSON.parse(JSON.stringify(state.uiState));
+      const { caretPosition, lineKey, sectionKey } = action;
 
-      uiStateCopy.caretPosition = action.caretPosition;
-      uiStateCopy.lineFocused = action.lineKey;
-      uiStateCopy.sectionFocused = action.sectionKey;
-
-      return Object.assign({}, state, { uiState: uiStateCopy });
-
+      return {
+        ...state,
+        uiState: {
+          ...state.uiState,
+          caretPosition,
+          lineFocused: lineKey,
+          sectionFocused: sectionKey
+        }
+      };
     }
 
     // section controls
@@ -249,13 +252,20 @@ const songsheetReducer = (state = initialState, action) => {
     // edit modal
 
     case 'UPDATE_TEXT_BEING_EDITED_PATH': {
-      return Object.assign({}, state, {
-        textBeingEditedPathArray: action.path
-      });
+      return { ...state, textBeingEditedPathArray: action.path };
     }
 
     case 'UPDATE_EDITED_TEXT': {
-      console.log(action);
+      // build up new object from inside out
+      let newObject = { $set: action.commitedText };
+      const reversedPathArray = state.textBeingEditedPathArray.reverse();
+      reversedPathArray.forEach((value) => {
+        const newLayer = {};
+        newLayer[value] = newObject;
+        newObject = newLayer;
+      });
+
+      return update(state, newObject);
     }
 
     // default

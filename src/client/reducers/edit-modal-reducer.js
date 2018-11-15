@@ -1,6 +1,7 @@
 const initialState = {
   showEditModal: false,
   editableText: '',
+  actionToTriggerOnCommit: undefined
 };
 
 const editModalReducer = (state = initialState, action) => {
@@ -10,7 +11,8 @@ const editModalReducer = (state = initialState, action) => {
     case 'EDIT_MODAL_TRIGGER': {
       return Object.assign({}, state, {
         showEditModal: true,
-        editableText: action.editableText
+        editableText: action.editableText,
+        actionToTriggerOnCommit: action.actionToTriggerOnCommit
       });
     }
 
@@ -20,7 +22,7 @@ const editModalReducer = (state = initialState, action) => {
       });
     }
 
-    case 'COMMIT_TEXT_CHANGE': {
+    case 'CLOSE_MODAL': {
       return Object.assign({}, state, {
         showEditModal: false
       });

@@ -15,9 +15,9 @@ const mapDispatchToProps = dispatch => ({
   updateEditableText: (updatedText) => {
     dispatch(updateEditableText(updatedText));
   },
-  commitTextChange: (commitedText) => {
-    dispatch(commitTextChange(commitedText));
-  },
+  commitTextChange: (commitedText, actionToTriggerOnCommit) => {
+    dispatch(commitTextChange(commitedText, actionToTriggerOnCommit));
+  }
 });
 
 const EditModalContainer = connect(

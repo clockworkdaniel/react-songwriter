@@ -1,14 +1,19 @@
-export const editModalTrigger = editableText => ({
+export const editModalTrigger = (editableText, actionToTriggerOnCommit) => ({
   type: 'EDIT_MODAL_TRIGGER',
-  editableText
-});
-
-export const commitTextChange = committedText => ({
-  type: 'COMMIT_TEXT_CHANGE',
-  committedText
+  editableText,
+  actionToTriggerOnCommit
 });
 
 export const updateEditableText = updatedText => ({
   type: 'UPDATE_TEXT_TO_EDIT',
   updatedText
 });
+
+export const closeModal = () => ({
+  type: 'CLOSE_MODAL'
+});
+
+export const commitTextChange = (commitedText, actionToTriggerOnCommit) => (dispatch) => {
+  dispatch(actionToTriggerOnCommit(commitedText));
+  dispatch(closeModal());
+};

@@ -8,7 +8,7 @@ export default function EditModal({ editModalState, updateEditableText, commitTe
 
   function handleKeyDown(event) {
     if (event.keyCode === 13) {
-      commitTextChange(event.target.value);
+      commitTextChange(event.target.value, editModalState.actionToTriggerOnCommit);
     }
   }
 
