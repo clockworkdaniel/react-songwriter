@@ -3,9 +3,9 @@ import React from 'react';
 export default function SongTitle({ title, rename }) {
 
   function handleTitleRename() {
-    const textToEdit = title;
+    const editableText = title;
     const path = ['song', 'title'];
-    rename(textToEdit, path);
+    rename(editableText, 'Rename song', path);
   }
 
   return (

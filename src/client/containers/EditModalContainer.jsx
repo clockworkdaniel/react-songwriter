@@ -1,9 +1,9 @@
 import { connect } from 'react-redux';
 
 import {
-  updateTextToEdit,
+  updateEditableText,
   commitTextChange
-} from '../actions/rename-actions';
+} from '../actions/EditModal/edit-modal-actions';
 
 import EditModal from '../components/EditModal';
 
@@ -12,12 +12,12 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateTextToEdit: (updatedText) => {
-    dispatch(updateTextToEdit(updatedText));
+  updateEditableText: (updatedText) => {
+    dispatch(updateEditableText(updatedText));
   },
-  commitTextChange: (commitedText) => {
-    dispatch(commitTextChange(commitedText));
-  },
+  commitTextChange: (commitedText, actionToTriggerOnCommit) => {
+    dispatch(commitTextChange(commitedText, actionToTriggerOnCommit));
+  }
 });
 
 const EditModalContainer = connect(

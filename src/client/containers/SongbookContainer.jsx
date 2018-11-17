@@ -1,12 +1,14 @@
 import { connect } from 'react-redux';
 
-import { 
+import {
   fetchSongs,
   newSongRequest,
   deleteSongRequest
-} from '../actions/songbook-actions';
+} from '../actions/Songbook/songbook-actions';
 
-import Songbook from '../components/SongBook';
+import { editModalTrigger } from '../actions/EditModal/edit-modal-actions';
+
+import Songbook from '../components/Songbook';
 
 const mapStateToProps = state => ({
   songList: state.songbookState.songList
@@ -21,8 +23,11 @@ const mapDispatchToProps = dispatch => ({
   },
   deleteSongRequest: () => {
     dispatch(deleteSongRequest());
+  },
+  newText: () => {
+    dispatch(editModalTrigger());
   }
-  
+
 });
 
 

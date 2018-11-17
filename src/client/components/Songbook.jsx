@@ -1,4 +1,5 @@
-import React from 'react'; 
+import React from 'react';
+import EditModalContainer from '../containers/EditModalContainer';
 
 export default class Songbook extends React.Component {
   constructor(props) {
@@ -13,10 +14,14 @@ export default class Songbook extends React.Component {
   }
 
   render() {
-    const { songList } = this.props;
+    const { songList, newText } = this.props;
     return (
       <div>
+        <EditModalContainer />
         <h1>Blah</h1>
+        <button
+         onClick={ newText }
+        >New Song</button>
         <ul className="song-list">
           { songList && songList.map((song, index) => (
             <li key={index}>

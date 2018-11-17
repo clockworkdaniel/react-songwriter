@@ -3,24 +3,15 @@ import { connect } from 'react-redux';
 import {
   deleteSection,
   duplicateSection,
-  moveSection
-} from '../actions/section-actions';
-
-import {
-  editModalTrigger
-} from '../actions/rename-actions';
-
-import {
-  updateChord
-} from '../actions/line-actions';
-
-import {
+  moveSection,
+  updateChord,
   switchMode,
   updateChordToPaint,
-  updatePaintSpecificity
-} from '../actions/ui-actions';
+  updatePaintSpecificity,
+  rename
+} from '../actions/Songsheet/songsheet-actions';
 
-import Songsheet from '../components/Song/Songsheet';
+import Songsheet from '../components/Songsheet/Songsheet';
 
 const mapStateToProps = state => ({
   uiState: state.songsheetState.uiState,
@@ -55,8 +46,8 @@ const mapDispatchToProps = dispatch => ({
       dispatch(moveSection(sectionKey, newPosition));
     }
   },
-  rename: (value, key) => {
-    dispatch(editModalTrigger(value, key));
+  rename: (value, userPrompt, pathArray) => {
+    dispatch(rename(value, userPrompt, pathArray));
   }
 });
 

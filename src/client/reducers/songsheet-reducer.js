@@ -15,7 +15,7 @@ const initialState = {
     sectionFocused: 0,
     caretIsBeingSet: false
   },
-  textToEditPathArray: [],
+  textBeingEditedPathArray: [],
   song
 };
 
@@ -117,14 +117,17 @@ const songsheetReducer = (state = initialState, action) => {
 
     case 'GET_CARET_AND_FOCUS': {
 
-      const uiStateCopy = JSON.parse(JSON.stringify(state.uiState));
+      const { caretPosition, lineKey, sectionKey } = action;
 
-      uiStateCopy.caretPosition = action.caretPosition;
-      uiStateCopy.lineFocused = action.lineKey;
-      uiStateCopy.sectionFocused = action.sectionKey;
-
-      return Object.assign({}, state, { uiState: uiStateCopy });
-
+      return {
+        ...state,
+        uiState: {
+          ...state.uiState,
+          caretPosition,
+          lineFocused: lineKey,
+          sectionFocused: sectionKey
+        }
+      };
     }
 
     // section controls
@@ -248,31 +251,21 @@ const songsheetReducer = (state = initialState, action) => {
 
     // edit modal
 
-    case 'EDIT_MODAL_TRIGGER': {
-
-      return Object.assign({}, state, {
-        textToEditPathArray: action.pathArray
-      });
+    case 'UPDATE_TEXT_BEING_EDITED_PATH': {
+      return { ...state, textBeingEditedPathArray: action.path };
     }
 
-    case 'COMMIT_TEXT_CHANGE': {
+    case 'UPDATE_EDITED_TEXT': {
+      // build up new object from inside out
+      let newObject = { $set: action.commitedText };
+      const reversedPathArray = state.textBeingEditedPathArray.reverse();
+      reversedPathArray.forEach((value) => {
+        const newLayer = {};
+        newLayer[value] = newObject;
+        newObject = newLayer;
+      });
 
-      let path = {
-        $set: action.committedText
-      };
-      const reversedPathArray = state.textToEditPathArray.reverse();
-      let { key } = action;
-
-      for (key of reversedPathArray) {
-        if (typeof key === 'number') {
-          key = [key];
-        }
-        const newPath = {};
-        newPath[key] = path;
-        path = newPath;
-      }
-
-      return update(state, path);
+      return update(state, newObject);
     }
 
     // default
