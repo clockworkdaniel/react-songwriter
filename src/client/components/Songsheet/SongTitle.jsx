@@ -5,7 +5,7 @@ export default function SongTitle({ title, rename }) {
   function handleTitleRename() {
     const editableText = title;
     const path = ['song', 'title'];
-    rename(editableText, path);
+    rename(editableText, 'Rename song', path);
   }
 
   return (

@@ -1,6 +1,10 @@
 import React from 'react';
 
-export default function EditModal({ editModalState, updateEditableText, commitTextChange }) {
+export default function EditModal({
+  editModalState,
+  updateEditableText,
+  commitTextChange
+}) {
 
   function handleChange(event) {
     updateEditableText(event.target.value);
@@ -14,13 +18,17 @@ export default function EditModal({ editModalState, updateEditableText, commitTe
 
   return (
     editModalState.showEditModal && (
-      <div className="song-edit-modal">
-        <input
-          className="song-edit-modal__input"
-          value={editModalState.editableText}
-          onChange={handleChange}
-          onKeyDown={handleKeyDown}
-        />
+      <div className="edit-modal">
+        <div className="edit-modal__input-container">
+          <label className="edit-modal__prompt" htmlFor="user-input-text">{editModalState.userPrompt}</label>
+          <input
+            id="user-input-text"
+            className="edit-modal__input"
+            value={editModalState.editableText}
+            onChange={handleChange}
+            onKeyDown={handleKeyDown}
+          />
+        </div>
       </div>
     )
   );

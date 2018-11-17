@@ -24,7 +24,7 @@ export default function Section({
   function handleRename() {
     const editableText = section.sectionName;
     const path = ['song', 'structure', Number(sectionKey), 'sectionName'];
-    rename(editableText, path);
+    rename(editableText, 'Rename section', path);
   }
 
   function handleMoveUp() {

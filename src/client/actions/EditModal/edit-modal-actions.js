@@ -1,6 +1,7 @@
-export const editModalTrigger = (editableText, actionToTriggerOnCommit) => ({
+export const editModalTrigger = (editableText, userPrompt, actionToTriggerOnCommit) => ({
   type: 'EDIT_MODAL_TRIGGER',
   editableText,
+  userPrompt,
   actionToTriggerOnCommit
 });
 

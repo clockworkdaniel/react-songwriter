@@ -46,8 +46,8 @@ const mapDispatchToProps = dispatch => ({
       dispatch(moveSection(sectionKey, newPosition));
     }
   },
-  rename: (value, pathArray) => {
-    dispatch(rename(value, pathArray));
+  rename: (value, userPrompt, pathArray) => {
+    dispatch(rename(value, userPrompt, pathArray));
   }
 });
 

@@ -10,9 +10,9 @@ export const updateEditedText = commitedText => ({
   commitedText
 });
 
-export const rename = (editableText, path) => (dispatch) => {
+export const rename = (editableText, userPrompt, path) => (dispatch) => {
   dispatch(updateTextBeingEditedPath(path));
-  dispatch(editModalTrigger(editableText, updateEditedText));
+  dispatch(editModalTrigger(editableText, userPrompt, updateEditedText));
 };
 
 export {
