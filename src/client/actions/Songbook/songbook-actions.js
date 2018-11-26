@@ -1,4 +1,5 @@
 import callApi from '../../util/callApi';
+import { editModalTrigger } from '../EditModal/edit-modal-actions';
 
 export function addSongs(songs) {
   return {
@@ -17,7 +18,52 @@ export function addSong(song) {
 export function removeSong(songId) {
   return {
     type: 'REMOVE_SONG',
-    songId,
+    songId
+  };
+}
+
+export function newSongRequest(song) {
+  return dispatch => callApi('song/create', 'post', {
+    title: song.title
+  }).then(res => dispatch(addSong(res.song)));
+}
+
+export function newSongModalSequenceComplete(songAuthor) {
+  return (dispatch, getState) => {
+    const { songTitle } = getState().songbookState;
+    const song = {
+      title: songTitle,
+      author: songAuthor
+    };
+    dispatch(newSongRequest(song));
+  };
+}
+
+export function setNewSongTitle(songTitle) {
+  return {
+    type: 'SET_NEW_SONG_TITLE',
+    songTitle
+  };
+}
+
+export function assignSongAuthorModal(songTitle) {
+  return (dispatch) => {
+    dispatch(setNewSongTitle(songTitle));
+    dispatch(editModalTrigger({
+      userPrompt: 'Song author',
+      actionToTriggerOnCommit: newSongModalSequenceComplete,
+      shouldCloseModal: true
+    }));
+  };
+}
+
+export function newSongModal() {
+  return (dispatch) => {
+    dispatch(editModalTrigger({
+      userPrompt: 'Song title',
+      actionToTriggerOnCommit: assignSongAuthorModal,
+      shouldCloseModal: false
+    }));
   };
 }
 
@@ -29,15 +75,6 @@ export function fetchSongs() {
   return dispatch => callApi('songs').then((res) => {
     dispatch(addSongs(res.songs));
   });
-}
-
-export function newSongRequest(song) {
-  return dispatch => callApi('songs/create', 'post', {
-    song: {
-      title: song.title,
-      author: song.author,
-    },
-  }).then(res => dispatch(addSong(res.song)));
 }
 
 export function deleteSongRequest(songId) {

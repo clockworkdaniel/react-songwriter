@@ -1,20 +1,35 @@
-export const editModalTrigger = (editableText, userPrompt, actionToTriggerOnCommit) => ({
-  type: 'EDIT_MODAL_TRIGGER',
-  editableText,
-  userPrompt,
-  actionToTriggerOnCommit
-});
+export function editModalTrigger({
+  editableText = '', userPrompt = '', actionToTriggerOnCommit, shouldCloseModal = true
+} = {}) {
+  return {
+    type: 'EDIT_MODAL_TRIGGER',
+    editableText,
+    userPrompt,
+    actionToTriggerOnCommit,
+    shouldCloseModal
+  };
+}
 
-export const updateEditableText = updatedText => ({
-  type: 'UPDATE_TEXT_TO_EDIT',
-  updatedText
-});
+export function updateEditableText(updatedText) {
+  return {
+    type: 'UPDATE_TEXT_TO_EDIT',
+    updatedText
+  };
+}
 
-export const closeModal = () => ({
-  type: 'CLOSE_MODAL'
-});
+export function closeModal() {
+  return {
+    type: 'CLOSE_MODAL'
+  };
+}
 
-export const commitTextChange = (commitedText, actionToTriggerOnCommit) => (dispatch) => {
-  dispatch(actionToTriggerOnCommit(commitedText));
-  dispatch(closeModal());
-};
+export function commitTextChange({
+  commitedText, actionToTriggerOnCommit, shouldCloseModal = true
+} = {}) {
+  return (dispatch) => {
+    dispatch(actionToTriggerOnCommit(commitedText));
+    if (shouldCloseModal) {
+      dispatch(closeModal());
+    }
+  };
+}

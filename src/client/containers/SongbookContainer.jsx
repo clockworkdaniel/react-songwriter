@@ -2,30 +2,26 @@ import { connect } from 'react-redux';
 
 import {
   fetchSongs,
-  newSongRequest,
+  newSongModal,
   deleteSongRequest
 } from '../actions/Songbook/songbook-actions';
-
-import { editModalTrigger } from '../actions/EditModal/edit-modal-actions';
 
 import Songbook from '../components/Songbook';
 
 const mapStateToProps = state => ({
-  songList: state.songbookState.songList
+  songList: state.songbookState.songList,
+  newSong: state.songbookState.newSong
 });
 
 const mapDispatchToProps = dispatch => ({
   fetchSongs: () => {
     dispatch(fetchSongs());
   },
-  newSongRequest: () => {
-    dispatch(newSongRequest());
-  },
   deleteSongRequest: () => {
     dispatch(deleteSongRequest());
   },
-  newText: () => {
-    dispatch(editModalTrigger());
+  newSongModal: () => {
+    dispatch(newSongModal());
   }
 
 });

@@ -12,7 +12,11 @@ export default function EditModal({
 
   function handleKeyDown(event) {
     if (event.keyCode === 13) {
-      commitTextChange(event.target.value, editModalState.actionToTriggerOnCommit);
+      commitTextChange({
+        commitedText: editModalState.editableText,
+        actionToTriggerOnCommit: editModalState.actionToTriggerOnCommit,
+        shouldCloseModal: editModalState.shouldCloseModal
+      });
     }
   }
 

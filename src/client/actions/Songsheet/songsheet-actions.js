@@ -5,14 +5,19 @@ export const updateTextBeingEditedPath = path => ({
   path
 });
 
-export const updateEditedText = commitedText => ({
+export const updateEditedText = commitedTextObj => ({
   type: 'UPDATE_EDITED_TEXT',
-  commitedText
+  commitedTextObj
 });
 
 export const rename = (editableText, userPrompt, path) => (dispatch) => {
   dispatch(updateTextBeingEditedPath(path));
-  dispatch(editModalTrigger(editableText, userPrompt, updateEditedText));
+  dispatch(editModalTrigger({
+    editableText,
+    userPrompt,
+    actionToTriggerOnCommit: updateEditedText,
+    shouldCloseModal: true
+  }));
 };
 
 export {

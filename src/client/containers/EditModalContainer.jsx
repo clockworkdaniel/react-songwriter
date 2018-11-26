@@ -15,8 +15,12 @@ const mapDispatchToProps = dispatch => ({
   updateEditableText: (updatedText) => {
     dispatch(updateEditableText(updatedText));
   },
-  commitTextChange: (commitedText, actionToTriggerOnCommit) => {
-    dispatch(commitTextChange(commitedText, actionToTriggerOnCommit));
+  commitTextChange: ({ commitedText, actionToTriggerOnCommit, shouldCloseModal }) => {
+    dispatch(commitTextChange({
+      commitedText,
+      actionToTriggerOnCommit,
+      shouldCloseModal
+    }));
   }
 });
 

@@ -257,7 +257,7 @@ const songsheetReducer = (state = initialState, action) => {
 
     case 'UPDATE_EDITED_TEXT': {
       // build up new object from inside out
-      let newObject = { $set: action.commitedText };
+      let newObject = { $set: action.commitedTextObj };
       const reversedPathArray = state.textBeingEditedPathArray.reverse();
       reversedPathArray.forEach((value) => {
         const newLayer = {};

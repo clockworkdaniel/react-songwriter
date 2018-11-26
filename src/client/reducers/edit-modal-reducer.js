@@ -2,6 +2,7 @@ const initialState = {
   showEditModal: false,
   editableText: '',
   userPrompt: '',
+  commitedTextObj: {},
   actionToTriggerOnCommit: undefined
 };
 
@@ -15,7 +16,8 @@ const editModalReducer = (state = initialState, action) => {
         showEditModal: true,
         editableText: action.editableText,
         userPrompt: action.userPrompt,
-        actionToTriggerOnCommit: action.actionToTriggerOnCommit
+        actionToTriggerOnCommit: action.actionToTriggerOnCommit,
+        shouldCloseModal: action.shouldCloseModal
       };
     }
 
