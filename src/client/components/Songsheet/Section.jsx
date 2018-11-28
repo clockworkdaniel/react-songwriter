@@ -3,26 +3,14 @@ import React from 'react';
 import Line from './Line';
 
 export default function Section({
-  caretPosition,
-  caretIsBeingSet,
-  changeLine,
   chordMode,
-  deleteLine,
-  dictateCaret,
-  getCaretAndFocus,
   updateChord,
   deleteSection,
   duplicateSection,
-  joinLines,
-  lineFocused,
-  newLine,
   moveSection,
   rename,
-  resetCaretMonitoring,
   section,
-  sectionFocused,
   sectionKey,
-  splitLine,
 }) {
 
   function handleDelete() {
@@ -34,9 +22,9 @@ export default function Section({
   }
 
   function handleRename() {
-    const textToEdit = section.sectionName;
+    const editableText = section.sectionName;
     const path = ['song', 'structure', Number(sectionKey), 'sectionName'];
-    rename(textToEdit, path);
+    rename(editableText, 'Rename section', path);
   }
 
   function handleMoveUp() {
@@ -80,20 +68,8 @@ export default function Section({
             key={index}
             lineKey={index}
             sectionKey={sectionKey}
-            changeLine={changeLine}
             chordMode={chordMode}
             updateChord={updateChord}
-            caretPosition={caretPosition}
-            lineFocused={lineFocused}
-            sectionFocused={sectionFocused}
-            dictateCaret={dictateCaret}
-            caretIsBeingSet={caretIsBeingSet}
-            resetCaretMonitoring={resetCaretMonitoring}
-            newLine={newLine}
-            deleteLine={deleteLine}
-            splitLine={splitLine}
-            joinLines={joinLines}
-            getCaretAndFocus={getCaretAndFocus}
           />
         ))}
       </div>

@@ -4,7 +4,7 @@ import fetch from 'cross-fetch';
 //   process.env.BASE_URL || (`http://localhost:${process.env.PORT || 3000}/api`) :
 //   '/api';
 
-export const API_URL = 'http://localhost:3000/api';
+export const API_URL = 'http://localhost:8000/api';
 
 export default function callApi(endpoint, method = 'get', body) {
   return fetch(`${API_URL}/${endpoint}`, {

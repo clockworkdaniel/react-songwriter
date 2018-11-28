@@ -10,7 +10,7 @@ import thunk from 'redux-thunk';
 import rootReducer from './reducers/root-reducer';
 
 import SongbookContainer from './containers/SongbookContainer';
-// import SongsheetContainer from './containers/SongsheetContainer';
+import SongsheetContainer from './containers/SongsheetContainer';
 
 import './main.scss';
 

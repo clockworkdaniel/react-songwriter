@@ -1,29 +1,32 @@
 const initialState = {
   showEditModal: false,
-  textToEdit: ''
+  editableText: '',
+  userPrompt: '',
+  commitedTextObj: {},
+  actionToTriggerOnCommit: undefined
 };
 
 const editModalReducer = (state = initialState, action) => {
 
   switch (action.type) {
 
-    case 'UPDATE_TEXT_TO_EDIT': {
-      return Object.assign({}, state, {
-        textToEdit: action.updatedText
-      });
-    }
-
-    case 'COMMIT_TEXT_CHANGE': {
-      return Object.assign({}, state, {
-        showEditModal: false
-      });
-    }
-
     case 'EDIT_MODAL_TRIGGER': {
-      return Object.assign({}, state, {
+      return {
+        ...state,
         showEditModal: true,
-        textToEdit: action.textToEdit
-      });
+        editableText: action.editableText,
+        userPrompt: action.userPrompt,
+        actionToTriggerOnCommit: action.actionToTriggerOnCommit,
+        shouldCloseModal: action.shouldCloseModal
+      };
+    }
+
+    case 'UPDATE_TEXT_TO_EDIT': {
+      return { ...state, editableText: action.updatedText };
+    }
+
+    case 'CLOSE_MODAL': {
+      return { ...state, showEditModal: false };
     }
 
     default: {
