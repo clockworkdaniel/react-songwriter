@@ -21,34 +21,33 @@ exports.getSong = function (req, res) {
 };
 
 
-exports.postSong = function (req, res) {
-  var song = req.body;
-  var existingAuthor, songID;
+exports.postSong = async function (req, res) {
+  const song = req.body;
+  const authorName = song.author;
+  const songTitle = song.title;
 
-  if (song.author !== undefined) {
-    existingAuthor = Author.findOne({ name: song.author });
-    
-    if (existingAuthor) {
-      var author = {
-        name : song.author
-      };
-      Author.create(author, (err, author) => {
-        song.author = author.id;
-      });
-    }
+  function createSongWithAuthorId(author){
+    Song.create({"title": songTitle, "author": author._id}, (err, song) => {  
+      if (err) {
+        return res.status(500).json({ err: err.message });
+      }
+      res.json({ 'song': song, message: 'Song created' });
+
+      author.songs.push(song._id);
+      author.save();
+    });
   }
 
-  Song.create(song, (err, song) => {
-    
-    if (err) {
-      return res.status(500).json({ err: err.message });
-    }
-    res.json({ 'song': song, message: 'Song created' });
-
-    if (existingAuthor) {
-      songID = song._id;
-      existingAuthor.songs.push(songID);
-      existingAuthor.save();
+  Author.findOne({ "name": authorName }).then((author) => {
+    if (author) {
+      createSongWithAuthorId(author);
+    } else {
+      Author.create({name: authorName, songs: []}, (err, author) => {
+        if (err) {
+          return res.status(500).json({ err: err.message });
+        }
+        createSongWithAuthorId(author);
+      })
     }
   });
 };

@@ -24,7 +24,8 @@ export function removeSong(songId) {
 
 export function newSongRequest(song) {
   return dispatch => callApi('song/create', 'post', {
-    title: song.title
+    title: song.title,
+    author: song.author
   }).then(res => dispatch(addSong(res.song)));
 }
 
