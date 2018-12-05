@@ -9,9 +9,9 @@ import {
   updateChordToPaint,
   updatePaintSpecificity,
   rename
-} from '../actions/Songsheet/songsheet-actions';
+} from '../../actions/Songsheet/songsheet-actions';
 
-import Songsheet from '../components/Songsheet/Songsheet';
+import Songsheet from '../../components/Songsheet/Songsheet';
 
 const mapStateToProps = state => ({
   uiState: state.songsheetState.uiState,

@@ -9,9 +9,9 @@ import {
   getCaretAndFocus,
   dictateCaret,
   resetCaretMonitoring
-} from '../actions/Songsheet/songsheet-actions';
+} from '../../actions/Songsheet/songsheet-actions';
 
-import LineInput from '../components/Songsheet/LineInput';
+import LineInput from '../../components/Songsheet/LineInput';
 
 const mapStateToProps = state => ({
   uiState: state.songsheetState.uiState

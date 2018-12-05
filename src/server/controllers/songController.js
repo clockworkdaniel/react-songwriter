@@ -71,12 +71,11 @@ exports.putSong = function (req, res) {
 };
 
 exports.deleteSong = function(req, res) {
-  res.send('delete Song');
-  // var id = req.params.id;
-  // Song.findByIdAndRemove(id, function(err, result) {
-  //   if (err) {
-  //     return res.status(500).json({ err: err.message });
-  //   }
-  //   res.json({ message: 'Song Deleted' });
-  // });
+  var id = req.params.id;
+  Song.findByIdAndRemove(id, function(err, result) {
+    if (err) {
+      return res.status(500).json({ err: err.message });
+    }
+    res.json({ message: 'Song Deleted' });
+  });
 }

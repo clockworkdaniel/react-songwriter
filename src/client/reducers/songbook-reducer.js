@@ -19,7 +19,7 @@ const songbookReducer = (state = intialState, action) => {
       });
     case 'REMOVE_SONG':
       return Object.assign({}, state, {
-        songList: state.songList.filter(song => song.songId !== action.songId)
+        songList: state.songList.filter(song => song._id !== action.songId)
       });
 
     case 'SET_NEW_SONG_TITLE':

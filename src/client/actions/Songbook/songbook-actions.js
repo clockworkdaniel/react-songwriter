@@ -79,5 +79,5 @@ export function fetchSongs() {
 }
 
 export function deleteSongRequest(songId) {
-  return dispatch => callApi(`songs/${songId}`, 'delete').then(() => dispatch(removeSong(songId)));
+  return dispatch => callApi(`song/${songId}`, 'delete').then(() => dispatch(removeSong(songId)));
 }

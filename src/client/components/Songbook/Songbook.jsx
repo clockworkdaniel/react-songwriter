@@ -1,5 +1,6 @@
 import React from 'react';
-import EditModalContainer from '../containers/EditModalContainer';
+import EditModalContainer from '../../containers/EditModalContainer';
+import Song from './Song';
 
 export default class Songbook extends React.Component {
   constructor(props) {
@@ -19,7 +20,7 @@ export default class Songbook extends React.Component {
   }
 
   render() {
-    const { songList } = this.props;
+    const { songList, deleteSongRequest } = this.props;
     return (
       <div>
         <EditModalContainer />
@@ -32,10 +33,7 @@ export default class Songbook extends React.Component {
         </button>
         <ul className="song-list">
           { songList && songList.map(song => (
-            <li key={song._id}>
-              <h3>{song.title}</h3>
-              <h3>{song.author.name}</h3>
-            </li>
+            <Song key={song._id} song={song} deleteSongRequest={deleteSongRequest} />
           ))}
         </ul>
       </div>
