@@ -31,10 +31,10 @@ export default class Songbook extends React.Component {
           New Song
         </button>
         <ul className="song-list">
-          { songList && songList.map((song, index) => (
-            <li key={index}>
+          { songList && songList.map(song => (
+            <li key={song._id}>
               <h3>{song.title}</h3>
-              <h3>{song.author}</h3>
+              <h3>{song.author.name}</h3>
             </li>
           ))}
         </ul>

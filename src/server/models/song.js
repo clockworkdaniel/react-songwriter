@@ -14,4 +14,10 @@ var songSchema = new Schema({
 //   return '/catalog/song/' + this._id;
 // });
 
+songSchema.post('save', function(doc, next) {
+  doc.populate('author').execPopulate().then(function() {
+    next();
+  });
+});
+
 module.exports = mongoose.model('Song', songSchema);

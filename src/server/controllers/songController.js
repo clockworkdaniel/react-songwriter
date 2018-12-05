@@ -3,7 +3,7 @@ var Song = require('../models/song');
 var Author = require('../models/author');
 
 exports.getSongs = function (req, res) {
-  Song.find({}, (err, songs) => {
+  Song.find({}).populate('author', 'name').exec((err, songs) => {
     if (err) {
       return res.status(500).json({ message: err.message });
     }
@@ -12,16 +12,18 @@ exports.getSongs = function (req, res) {
 };
 
 exports.getSong = function (req, res) {
-  Song.findOne({ _id: req.params.id }, (err, song) => {
-    if (err) {
-      res.status(500).send(err);
-    }
-    res.json({ song });
-  });
+  Song.findOne({ _id: req.params.id })
+    .populate('author', 'name')
+    .exec((err, song) => {
+      if (err) {
+        res.status(500).json({ message: err.message });
+      }
+      res.json({ song });
+    });
 };
 
 
-exports.postSong = async function (req, res) {
+exports.postSong = function (req, res) {
   const song = req.body;
   const authorName = song.author;
   const songTitle = song.title;
@@ -31,6 +33,7 @@ exports.postSong = async function (req, res) {
       if (err) {
         return res.status(500).json({ err: err.message });
       }
+
       res.json({ 'song': song, message: 'Song created' });
 
       author.songs.push(song._id);
