@@ -4,9 +4,9 @@ import {
   fetchSongs,
   newSongModal,
   deleteSongRequest
-} from '../actions/Songbook/songbook-actions';
+} from '../../actions/Songbook/songbook-actions';
 
-import Songbook from '../components/Songbook';
+import Songbook from '../../components/Songbook/Songbook';
 
 const mapStateToProps = state => ({
   songList: state.songbookState.songList,
@@ -17,8 +17,8 @@ const mapDispatchToProps = dispatch => ({
   fetchSongs: () => {
     dispatch(fetchSongs());
   },
-  deleteSongRequest: () => {
-    dispatch(deleteSongRequest());
+  deleteSongRequest: (songID) => {
+    dispatch(deleteSongRequest(songID));
   },
   newSongModal: () => {
     dispatch(newSongModal());

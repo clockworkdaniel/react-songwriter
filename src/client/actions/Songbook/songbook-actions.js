@@ -24,7 +24,8 @@ export function removeSong(songId) {
 
 export function newSongRequest(song) {
   return dispatch => callApi('song/create', 'post', {
-    title: song.title
+    title: song.title,
+    author: song.author
   }).then(res => dispatch(addSong(res.song)));
 }
 
@@ -78,5 +79,5 @@ export function fetchSongs() {
 }
 
 export function deleteSongRequest(songId) {
-  return dispatch => callApi(`songs/${songId}`, 'delete').then(() => dispatch(removeSong(songId)));
+  return dispatch => callApi(`song/${songId}`, 'delete').then(() => dispatch(removeSong(songId)));
 }
