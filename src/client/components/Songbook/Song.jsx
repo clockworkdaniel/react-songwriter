@@ -2,30 +2,39 @@ import React from 'react';
 
 export default function Song({ song, deleteSongRequest }) {
 
-  // function handleRenameSong() {
-  //   renameSong(song._id);
-  // }
-
   function handleDeleteSong() {
     deleteSongRequest(song._id);
   }
 
+  let author;
+  if (song.author) {
+    author = song.author.name;
+  } else {
+    author = 'Unknown Author';
+  }
+
   return (
-    <li>
-      <h3>{song.title}</h3>
-      <h3>{song.author.name}</h3>
-      {/* <button
-        type="button"
-        onClick={handleRenameSong}
-      >
-        Rename Song
-      </button> */}
-      <button
-        type="button"
-        onClick={handleDeleteSong}
-      >
-        Delete Song
-      </button>
+    <li className="song">
+      <h3 className="song__title">
+        {song.title}
+        <div className="song__controls">
+          <a
+            className="controls__edit"
+          >
+            <span className="icon-pencil" />
+          </a>
+          <button
+            className="controls__delete"
+            onClick={handleDeleteSong}
+            type="button"
+          >
+            <span className="icon-cross" />
+          </button>
+        </div>
+      </h3>
+      <h3 className="song__author">
+        {author}
+      </h3>
     </li>
   );
 }
