@@ -1,4 +1,3 @@
-/* eslint func-names: "off" */
 var Song = require('../models/song');
 var Author = require('../models/author');
 
@@ -22,60 +21,73 @@ exports.getSong = function (req, res) {
     });
 };
 
+function createSongWithAuthor(author, songTitle, res){
+  Song.create({"title": songTitle, "author": author._id}, (err, song) => {  
+    if (err) {
+      return res.status(500).json({ err: err.message });
+    }
+
+    res.json({ 'song': song, message: 'Song created' });
+
+    author.songs.push(song._id);
+    author.save();
+  });
+}
 
 exports.postSong = function (req, res) {
   const song = req.body;
   const authorName = song.author;
-  const songTitle = song.title;
+  const songTitle = song.title; 
 
-  function createSongWithAuthorId(author){
-    Song.create({"title": songTitle, "author": author._id}, (err, song) => {  
+  if (authorName) {
+    Author.findOne({ "name": authorName }).then((author) => {
+      if (author) {
+        createSongWithAuthor(author, songTitle, res);
+      } else {
+        Author.create({name: authorName, songs: []}, (err, author) => {
+          if (err) {
+            return res.status(500).json({ err: err.message });
+          }
+          createSongWithAuthor(author, songTitle, res);
+        })
+      }
+    });
+  } else {
+    Song.create({"title": songTitle}, (err, song) => {  
       if (err) {
         return res.status(500).json({ err: err.message });
       }
-
+  
       res.json({ 'song': song, message: 'Song created' });
 
-      author.songs.push(song._id);
-      author.save();
     });
   }
-
-  Author.findOne({ "name": authorName }).then((author) => {
-    if (author) {
-      createSongWithAuthorId(author);
-    } else {
-      Author.create({name: authorName, songs: []}, (err, author) => {
-        if (err) {
-          return res.status(500).json({ err: err.message });
-        }
-        createSongWithAuthorId(author);
-      })
-    }
-  });
+  
 };
 
 exports.putSong = function (req, res) {
-  res.send('put Song');
-  // var id = req.params.id;
-  // var song = req.body;
-  // if (song && song._id !== id) {
-  //   return res.status(500).json({ err: "Ids don't match!" });
-  // }
-  // Song.findByIdAndUpdate(id, song, { new: true }, (err) => {
-  //   if (err) {
-  //     return res.status(500).json({ err: err.message });
-  //   }
-  //   res.json({ 'song': song, message: 'Song Updated' });
-  // });
+  const id = req.params.id;
+
+  Song.findByIdAndUpdate(id, song, { new: true }, (err) => {
+    if (err) {
+      return res.status(500).json({ err: err.message });
+    }
+    res.json({ 'song': song, message: 'Song Updated' });
+  });
+
+  // potentially create new author if author does not exist
+
+  // potentially delete author if old author no longer has any songs 
 };
 
 exports.deleteSong = function(req, res) {
-  var id = req.params.id;
+  const id = req.params.id;
   Song.findByIdAndRemove(id, function(err, result) {
     if (err) {
       return res.status(500).json({ err: err.message });
     }
     res.json({ message: 'Song Deleted' });
   });
+
+  //delete the author if there are no more songs
 }
