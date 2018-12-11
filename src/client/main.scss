@@ -1,5 +1,6 @@
 @import './scss/standard.scss';
-@import './scss/ui-controls.scss';
-@import './scss/song.scss';
 @import './scss/hover-controls.scss';
-@import './scss/edit-modal.scss';
+@import './components/Layout/Layout.scss';
+@import './components/Songsheet/Songsheet.scss';
+@import './components/Songbook/Songbook.scss';
+@import './components/EditModal/EditModal.scss';

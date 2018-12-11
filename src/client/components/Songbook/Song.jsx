@@ -1,4 +1,6 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
+  
 
 export default function Song({ song, deleteSongRequest }) {
 
@@ -15,14 +17,9 @@ export default function Song({ song, deleteSongRequest }) {
 
   return (
     <li className="song">
-      <h3 className="song__title">
+      <h3 className="song__title controls__container">
         {song.title}
-        <div className="song__controls">
-          <a
-            className="controls__edit"
-          >
-            <span className="icon-pencil" />
-          </a>
+        <div className="controls">
           <button
             className="controls__delete"
             onClick={handleDeleteSong}
@@ -30,11 +27,19 @@ export default function Song({ song, deleteSongRequest }) {
           >
             <span className="icon-cross" />
           </button>
+          <button
+            className="controls__edit"
+            type="button"
+          >
+            <span className="icon-pencil" />
+          </button>
         </div>
       </h3>
-      <h3 className="song__author">
-        {author}
-      </h3>
+      <Link to={`author/${song.author._id}`}>
+        <h4 className="song__author">
+          {author}
+        </h4>
+      </Link>
     </li>
   );
 }

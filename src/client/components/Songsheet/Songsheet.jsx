@@ -1,11 +1,10 @@
 import React from 'react';
 
-import UIControls from './SongUIControls';
+import UIControls from './UIControls/UIControls';
 import SongTitle from './SongTitle';
 import SongAuthor from './SongAuthor';
-import Section from './Section';
-import NewSectionButton from './NewSectionButton';
-import EditModalContainer from '../../containers/EditModalContainer';
+import Section from './Section/Section';
+import NewSectionButton from './Section/NewSectionButton';
 
 export default function Songsheet({
   uiState,
@@ -18,8 +17,7 @@ export default function Songsheet({
 
   return (
 
-    <div className="song">
-      <EditModalContainer />
+    <div className="songsheet">
       <UIControls
         chordMode={uiState.chordMode}
         switchMode={uiHandlers.switchMode}
@@ -30,7 +28,7 @@ export default function Songsheet({
       />
       <SongTitle title={song.title} rename={rename} />
       <SongAuthor author={song.author} rename={rename} />
-      <div className="song-structure">
+      <div className="songsheet__structure">
         {song.structure.map((section, index) => (
           <Section
             section={section}

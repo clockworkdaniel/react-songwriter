@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import {
   updateEditableText,
   commitTextChange
-} from '../actions/EditModal/edit-modal-actions';
+} from '../../actions/EditModal/edit-modal-actions';
 
-import EditModal from '../components/EditModal';
+import EditModal from './EditModal';
 
 const mapStateToProps = state => ({
   editModalState: state.editModalState

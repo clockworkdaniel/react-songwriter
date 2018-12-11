@@ -102,11 +102,22 @@ html {
 
 body {
 	background-color: black;
+	margin: 8px;
 }
 
 h1, h2, h3, h4, h5, h6 {
 	font-family: 'Ovo';
-	
+}
+
+h1 {
+	font-size: 3rem;
+	font-family: 'Ovo';
+	color: #D8D8B5;
+	margin: 0.625rem 0;
+}
+
+h2 {
+  font-size: 2rem;
 }
 
 input, button, select {
@@ -118,12 +129,18 @@ input, button, select {
 	display: inline;
 }
 
-p, input, button, label, select {
+p, input, button, label, select, a {
 	font-family: 'Muli';
 	color: #F9F8C8;
 	font-size: 1rem;
 	font-weight: 300;
 	font-kerning: none;
+}
+
+a,
+a:visited,
+a:active {
+	text-decoration: none;
 }
 
 select {

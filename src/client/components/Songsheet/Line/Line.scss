@@ -1,0 +1,48 @@
+.line {
+
+  transition: margin 250ms ease;
+
+  &:last-of-type,
+  &.expanded:last-of-type {
+    margin-bottom: 0;
+  }
+
+  &.expanded {
+    margin: 1.8em 0;
+  }
+
+  &__lyrics-input,
+  &__chord-input {
+    margin: 0;
+    padding: 1px 0;
+    word-spacing: 0.15em;
+  }
+
+  &__lyrics-input {
+    width: 100%;
+    display: block;
+  }
+
+  &__chord-input {
+    cursor: pointer;
+  }
+
+  &__character {
+    display: inline;
+    white-space: pre-wrap;
+  }
+
+  &__chord {
+    position: absolute;
+    transform: translate(0, -1.2em);
+    opacity: 0;
+    font-size: 1.05rem;
+    animation: FADE-IN 300ms 350ms 1 forwards;
+  }
+
+}
+
+@keyframes FADE-IN {
+	0% 		{ opacity: 0; transform: translate(0, -1.5em); }
+	100%	{ opacity: 0.6; transform: translate(0, -1.2em); }
+}

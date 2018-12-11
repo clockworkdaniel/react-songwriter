@@ -11,7 +11,7 @@ export default function SongAuthor({ author, rename }) {
   return (
 
     <div>
-      <h3 className="song-author controls__container">
+      <h3 className="songsheet__author controls__container">
         {author}
         <span className="controls">
           <button className="controls__edit" onClick={handleAuthorRename} type="button">
