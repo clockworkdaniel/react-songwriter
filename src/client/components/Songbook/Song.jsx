@@ -15,9 +15,9 @@ export default function Song({ song, deleteSongRequest }) {
 
   return (
     <li className="song">
-      <h3 className="song__title">
+      <h3 className="songsheet__title">
         {song.title}
-        <div className="song__controls">
+        <div className="songsheet__controls">
           <a
             className="controls__edit"
           >
@@ -32,7 +32,7 @@ export default function Song({ song, deleteSongRequest }) {
           </button>
         </div>
       </h3>
-      <h3 className="song__author">
+      <h3 className="songsheet__author">
         {author}
       </h3>
     </li>

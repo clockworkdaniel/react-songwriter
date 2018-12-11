@@ -1,6 +1,6 @@
 import React from 'react';
 
-import Line from './Line';
+import Line from '../Line/Line';
 
 export default function Section({
   chordMode,
@@ -36,32 +36,32 @@ export default function Section({
   }
 
   return (
-    <div className="song-section">
-      <div className="song-section__top-labels">
-        <div className="song-section__controls">
-          <button className="controls__edit" onClick={handleRename} type="button">
+    <div className="songsheet__section">
+      <div className="section__ui">
+        <div className="section__controls">
+          <button className="section__edit" onClick={handleRename} type="button">
             <span className="icon-pencil" />
           </button>
-          <button className="controls__duplicate" onClick={handleDuplicate} type="button">
+          <button className="section__duplicate" onClick={handleDuplicate} type="button">
             <span className="icon-copy" />
           </button>
-          <button className="controls__delete" onClick={handleDelete} type="button">
+          <button className="section__delete" onClick={handleDelete} type="button">
             <span className="icon-cross" />
           </button>
         </div>
-        <h4 className="song-section__name">
+        <h4 className="section__name">
           {section.sectionName}
-          <span className="song-section__move-labels">
-            <button className="controls__move-up" onClick={handleMoveUp} type="button">
+          <span className="section__move-labels">
+            <button className="section__move-up" onClick={handleMoveUp} type="button">
               <span className="icon-move-up" />
             </button>
-            <button className="controls__move-down" onClick={handleMoveDown} type="button">
+            <button className="section__move-down" onClick={handleMoveDown} type="button">
               <span className="icon-move-down" />
             </button>
           </span>
         </h4>
       </div>
-      <div className="lines">
+      <div className="section__lines">
         {section.lines.map((line, index) => (
           <Line
             line={line}

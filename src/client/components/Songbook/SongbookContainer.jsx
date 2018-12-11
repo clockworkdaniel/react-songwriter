@@ -6,7 +6,7 @@ import {
   deleteSongRequest
 } from '../../actions/Songbook/songbook-actions';
 
-import Songbook from '../../components/Songbook/Songbook';
+import Songbook from './Songbook';
 
 const mapStateToProps = state => ({
   songList: state.songbookState.songList,

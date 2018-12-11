@@ -6,8 +6,8 @@ import {
   Link
 } from 'react-router-dom';
 
-import SongbookContainer from '../containers/SongbookContainer';
-import SongsheetContainer from '../containers/SongsheetContainer';
+import SongbookContainer from './Songbook/SongbookContainer';
+import SongsheetContainer from './Songsheet/SongsheetContainer';
 import Help from './Help';
 import Settings from './Settings';
 

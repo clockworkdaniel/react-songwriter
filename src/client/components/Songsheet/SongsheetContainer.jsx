@@ -11,7 +11,7 @@ import {
   rename
 } from '../../actions/Songsheet/songsheet-actions';
 
-import Songsheet from '../../components/Songsheet/Songsheet';
+import Songsheet from './Songsheet';
 
 const mapStateToProps = state => ({
   uiState: state.songsheetState.uiState,

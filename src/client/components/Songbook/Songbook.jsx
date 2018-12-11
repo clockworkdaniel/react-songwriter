@@ -1,5 +1,5 @@
 import React from 'react';
-import EditModalContainer from '../../containers/EditModalContainer';
+import EditModalContainer from '../EditModal/EditModalContainer';
 import Song from './Song';
 
 export default class Songbook extends React.Component {

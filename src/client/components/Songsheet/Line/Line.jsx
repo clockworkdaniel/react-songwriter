@@ -1,7 +1,7 @@
 import React from 'react';
 
 import SplitCharacters from './SplitCharacters';
-import LineInputContainer from '../../containers/Songsheet/LineInputContainer';
+import LineInputContainer from './LineInputContainer';
 
 export default function Line({
   chordMode,

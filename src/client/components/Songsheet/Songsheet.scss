@@ -1,0 +1,28 @@
+@import './Line/Line.scss';
+@import './Section/Section.scss';
+@import './UIControls/UIControls.scss';
+
+.songsheet {
+	margin-top: 2rem;
+	margin-left: 4.5rem;
+
+	&__title {
+		font-size: 3rem;
+		display: inline-block;
+		font-family: 'Ovo';
+		color: #D8D8B5;
+		margin: 0.625rem 0;
+	}
+
+	&__author {
+		color: #D8D8B5;
+		display: inline-block;
+		font-family: 'Ovo';
+		font-size: 1.5rem;
+	}
+
+	&__section {
+		display: flex;
+		margin-bottom: 1rem;
+  }
+}

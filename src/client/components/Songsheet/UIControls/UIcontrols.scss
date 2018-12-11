@@ -1,0 +1,55 @@
+.ui-controls {
+	position: fixed;
+	top: 3rem;
+	right: 3rem;
+	z-index: 1;
+	display: flex;
+	flex-direction: column;
+	align-items: flex-end;
+
+	&__switch-button,
+	&__chord-input,
+	&__specificity-select {
+		display: inline-block;
+		padding: 0.125rem 0.375rem 0.1875rem;
+		border-style: solid;
+		border-radius: 3px;
+		border-width: 1px;
+		margin: 0 0 1em;
+	}
+
+	&__switch-button {
+		margin: 0 0 2em;
+		opacity:1;
+	}
+
+	&__chord-input {
+		input {
+			font-size: 0.9rem;
+			display: inline-block;
+			width: 3rem;
+		}
+		p {
+			font-size: 0.9rem;
+			display: inline-block;
+			margin: 0 0.5rem 0 0;
+		}
+	}
+
+	&__specificity-select {
+		text-align: right;
+		select {
+			font-size: 0.9rem;
+			display: inline-block;
+			text-align: right;
+			text-align-last: right;
+			margin-right: -0.1rem;
+		}
+		p {
+			font-size: 0.9rem;
+			display: block;
+			margin: 0 0 0.15rem;
+		}
+	}
+
+}
