@@ -5,7 +5,6 @@ import SongTitle from './SongTitle';
 import SongAuthor from './SongAuthor';
 import Section from './Section/Section';
 import NewSectionButton from './Section/NewSectionButton';
-import EditModalContainer from '../EditModal/EditModalContainer';
 
 export default function Songsheet({
   uiState,
@@ -19,7 +18,6 @@ export default function Songsheet({
   return (
 
     <div className="songsheet">
-      <EditModalContainer />
       <UIControls
         chordMode={uiState.chordMode}
         switchMode={uiHandlers.switchMode}
