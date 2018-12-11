@@ -5,8 +5,8 @@ var Schema = mongoose.Schema;
 var songSchema = new Schema({
   title: { type: String, required: true },
   author: { type: Schema.Types.ObjectId, ref: 'Author' },
+  structure: Array,
   //user: { type: Schema.Types.ObjectId, ref: 'User' },
-  //structure: [{ type: Schema.Types.ObjectId, ref: 'Section', required: true }],
   //genre: [{type: Schema.Types.ObjectId, ref: 'Genre'}]
 });
 

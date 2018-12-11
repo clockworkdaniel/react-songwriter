@@ -8,15 +8,12 @@ export default function Song({ song, deleteSongRequest }) {
     deleteSongRequest(song._id);
   }
 
-  let author;
-  if (song.author) {
-    author = song.author.name;
-  } else {
-    author = 'Unknown Author';
-  }
+  const author = song.author ? song.author.name : 'Unknown Author';
+  const authorURL = author.replace(/\s+/g, '-').toLowerCase();
 
   return (
     <li className="song">
+
       <h3 className="song__title controls__container">
         {song.title}
         <div className="controls">
@@ -27,15 +24,17 @@ export default function Song({ song, deleteSongRequest }) {
           >
             <span className="icon-cross" />
           </button>
-          <button
-            className="controls__edit"
-            type="button"
-          >
-            <span className="icon-pencil" />
-          </button>
+          <Link to={`song/${song._id}`}>
+            <button
+              className="controls__edit"
+              type="button"
+            >
+              <span className="icon-pencil" />
+            </button>
+          </Link>
         </div>
       </h3>
-      <Link to={`author/${song.author._id}`}>
+      <Link to={`author/${authorURL}`}>
         <h4 className="song__author">
           {author}
         </h4>

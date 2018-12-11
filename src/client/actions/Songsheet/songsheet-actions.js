@@ -1,3 +1,4 @@
+import callApi from '../../util/callApi';
 import { editModalTrigger } from '../EditModal/edit-modal-actions';
 
 export const updateTextBeingEditedPath = path => ({
@@ -19,6 +20,17 @@ export const rename = (editableText, userPrompt, path) => (dispatch) => {
     shouldCloseModal: true
   }));
 };
+
+export function renderSong(song) {
+  return {
+    type: 'RENDER_SONG',
+    song
+  };
+}
+
+export function fetchSong(songId) {
+  return dispatch => callApi(`song/${songId}`).then(res => dispatch(renderSong(res.song)));
+}
 
 export {
   changeLine,

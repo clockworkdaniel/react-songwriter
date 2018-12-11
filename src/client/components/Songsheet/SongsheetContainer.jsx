@@ -8,7 +8,8 @@ import {
   switchMode,
   updateChordToPaint,
   updatePaintSpecificity,
-  rename
+  rename,
+  fetchSong
 } from '../../actions/Songsheet/songsheet-actions';
 
 import Songsheet from './Songsheet';
@@ -48,6 +49,9 @@ const mapDispatchToProps = dispatch => ({
   },
   rename: (value, userPrompt, pathArray) => {
     dispatch(rename(value, userPrompt, pathArray));
+  },
+  fetchSong: (songID) => {
+    dispatch(fetchSong(songID));
   }
 });
 
