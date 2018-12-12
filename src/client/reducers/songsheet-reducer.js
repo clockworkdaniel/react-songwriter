@@ -12,7 +12,8 @@ const initialState = {
     caretPosition: 0,
     lineFocused: 0,
     sectionFocused: 0,
-    caretIsBeingSet: false
+    caretIsBeingSet: false,
+    songSaved: false
   },
   textBeingEditedPathArray: [],
   song: {
@@ -28,6 +29,14 @@ const songsheetReducer = (state = initialState, action) => {
 
     case 'RENDER_SONG': {
       return update(state, { song: { $set: action.song } });
+    }
+
+    case 'SONG_SAVED': {
+      return update(state, { uiState: { songSaved: { $set: true } } });
+    }
+
+    case 'RESET_SONG_SAVED': {
+      return update(state, { uiState: { songSaved: { $set: false } } });
     }
 
     case 'CHANGE_LINE': {

@@ -9,7 +9,9 @@ import {
   updateChordToPaint,
   updatePaintSpecificity,
   rename,
-  fetchSong
+  fetchSong,
+  saveSong,
+  resetSongSaved
 } from '../../actions/Songsheet/songsheet-actions';
 
 import Songsheet from './Songsheet';
@@ -29,6 +31,12 @@ const mapDispatchToProps = dispatch => ({
     },
     updatePaintSpecificity: (newSpecificity) => {
       dispatch(updatePaintSpecificity(newSpecificity));
+    },
+    saveSong: (songId, song) => {
+      dispatch(saveSong(songId, song));
+    },
+    resetSongSaved: () => {
+      dispatch(resetSongSaved());
     }
   },
   chord: {
@@ -50,8 +58,8 @@ const mapDispatchToProps = dispatch => ({
   rename: (value, userPrompt, pathArray) => {
     dispatch(rename(value, userPrompt, pathArray));
   },
-  fetchSong: (songID) => {
-    dispatch(fetchSong(songID));
+  fetchSong: (songId) => {
+    dispatch(fetchSong(songId));
   }
 });
 

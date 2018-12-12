@@ -7,9 +7,6 @@ import Section from './Section/Section';
 import NewSectionButton from './Section/NewSectionButton';
 
 export default class Songsheet extends React.Component {
-  constructor(props) {
-    super(props);
-  }
 
   componentDidMount() {
     const { match, fetchSong } = this.props;
@@ -35,6 +32,10 @@ export default class Songsheet extends React.Component {
           updateChordToPaint={uiHandlers.updateChordToPaint}
           paintSpecificity={uiState.paintSpecificity}
           updatePaintSpecificity={uiHandlers.updatePaintSpecificity}
+          song={song}
+          saveSong={uiHandlers.saveSong}
+          songSaved={uiState.songSaved}
+          resetSongSaved={uiHandlers.resetSongSaved}
         />
         <SongTitle title={song.title} rename={rename} />
         <SongAuthor author={song.author.name} rename={rename} />

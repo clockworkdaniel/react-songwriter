@@ -32,7 +32,7 @@ export default function Layout() {
                   </h1>
                 </Link>
               </li>
-              <li className="header__li">
+              {/* <li className="header__li">
                 <NavLink
                   className="header__link"
                   to="/help"
@@ -47,7 +47,7 @@ export default function Layout() {
                 >
                   settings
                 </NavLink>
-              </li>
+              </li> */}
             </ul>
           </nav>
         </header>
