@@ -73,7 +73,6 @@ exports.putSong = function putSong(req, res) {
 
   Song.findByIdAndUpdate(id, {
     title: song.title,
-    author: song.author,
     structure: song.structure
   }, { new: true }, (err, updatedSong) => {
     if (err) {
@@ -81,6 +80,8 @@ exports.putSong = function putSong(req, res) {
     }
     res.status(200).json({ song: updatedSong, message: 'Song updated' });
   });
+
+  // author stuff
 
   // potentially create new author if author does not exist
 

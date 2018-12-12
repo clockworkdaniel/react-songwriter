@@ -18,7 +18,7 @@ const initialState = {
   textBeingEditedPathArray: [],
   song: {
     title: '',
-    author: '',
+    author: {},
     structure: []
   }
 };
