@@ -1,21 +1,16 @@
-var mongoose = require('mongoose');
+const mongoose = require('mongoose');
 
-var Schema = mongoose.Schema;
+const { Schema } = mongoose;
 
-var songSchema = new Schema({
+const songSchema = new Schema({
   title: { type: String, required: true },
   author: { type: Schema.Types.ObjectId, ref: 'Author' },
   structure: Array,
-  //user: { type: Schema.Types.ObjectId, ref: 'User' },
-  //genre: [{type: Schema.Types.ObjectId, ref: 'Genre'}]
+  // user: { type: Schema.Types.ObjectId, ref: 'User' },
 });
 
-// songSchema.virtual('url').get(function() {
-//   return '/catalog/song/' + this._id;
-// });
-
-songSchema.post('save', function(doc, next) {
-  doc.populate('author').execPopulate().then(function() {
+songSchema.post('save', (doc, next) => {
+  doc.populate('author').execPopulate().then(() => {
     next();
   });
 });

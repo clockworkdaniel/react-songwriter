@@ -10,6 +10,7 @@
     "padded-blocks": "off",
     "react/prop-types": "off",
     "no-plusplus": "off",
-    "brace-style": "off"
+    "brace-style": "off",
+    "no-underscore-dangle": "off"
   }
 }
