@@ -4,7 +4,7 @@ export default function SongAuthor({ author, rename }) {
 
   function handleAuthorRename() {
     const editableText = author;
-    const path = ['song', 'author'];
+    const path = ['song', 'author', 'name'];
     rename(editableText, 'Edit author', path);
   }
 

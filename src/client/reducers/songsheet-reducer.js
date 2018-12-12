@@ -1,5 +1,4 @@
 import update from 'immutability-helper';
-import song from '../../server/mock/song2';
 
 
 import breakDownLine from '../functions/breakDownLine';
@@ -13,15 +12,32 @@ const initialState = {
     caretPosition: 0,
     lineFocused: 0,
     sectionFocused: 0,
-    caretIsBeingSet: false
+    caretIsBeingSet: false,
+    songSaved: false
   },
   textBeingEditedPathArray: [],
-  song
+  song: {
+    title: '',
+    author: {},
+    structure: []
+  }
 };
 
 const songsheetReducer = (state = initialState, action) => {
 
   switch (action.type) {
+
+    case 'RENDER_SONG': {
+      return update(state, { song: { $set: action.song } });
+    }
+
+    case 'SONG_SAVED': {
+      return update(state, { uiState: { songSaved: { $set: true } } });
+    }
+
+    case 'RESET_SONG_SAVED': {
+      return update(state, { uiState: { songSaved: { $set: false } } });
+    }
 
     case 'CHANGE_LINE': {
       return update(state,

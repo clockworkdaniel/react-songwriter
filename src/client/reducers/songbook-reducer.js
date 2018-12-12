@@ -1,5 +1,3 @@
-
-
 const intialState = {
   songList: [],
   songTitle: ''

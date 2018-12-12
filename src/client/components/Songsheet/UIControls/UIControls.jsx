@@ -1,54 +1,90 @@
 import React from 'react';
 
-export default function UIControls({
-  chordMode,
-  chordToPaint,
-  paintSpecificity,
-  switchMode,
-  updateChordToPaint,
-  updatePaintSpecificity
-}) {
+export default class UIControls extends React.Component {
+  constructor(props) {
+    super();
+    this.props = props;
+    this.handleChordChange = this.handleChordChange.bind(this);
+    this.handleSpecificityChange = this.handleSpecificityChange.bind(this);
+    this.handleSave = this.handleSave.bind(this);
+  }
 
-  function handleChordChange(event) {
+  componentDidMount() {
+    const { resetSongSaved } = this.props;
+    const saveButton = document.querySelector('.ui-controls__save-button');
+    saveButton.addEventListener('animationend', () => {
+      resetSongSaved();
+    });
+  }
+
+  handleChordChange(event) {
+    const { updateChordToPaint } = this.props;
     updateChordToPaint(event.target.value);
   }
 
-  function handleSpecificityChange(event) {
+  handleSpecificityChange(event) {
+    const { updatePaintSpecificity } = this.props;
     updatePaintSpecificity(event.target.value);
   }
 
-  return (
-    <div className="ui-controls">
-      <button
-        className="ui-controls__switch-button"
-        onClick={switchMode}
-        type="button"
-      >
-        {chordMode ? 'Lyrics Mode' : 'Chord Mode' }
-      </button>
-      {chordMode && (
-        <div className="ui-controls__chord-input">
-          <p>Chord:</p>
-          <input
-            value={chordToPaint}
-            type="text"
-            onChange={handleChordChange}
-          />
-        </div>
-      )}
-      {chordMode && (
-        <div className="ui-controls__specificity-select">
-          <p>Assign chord by:</p>
-          <select
-            value={paintSpecificity}
-            onChange={handleSpecificityChange}
-          >
-            <option value="character">Character</option>
-            <option value="word">Word</option>
-            <option value="line">Line</option>
-          </select>
-        </div>
-      )}
-    </div>
-  );
+  handleSave() {
+    const { song, saveSong, songSaved } = this.props;
+    if (!songSaved) {
+      saveSong(song._id, song);
+    }
+  }
+
+  render() {
+    const {
+      chordMode,
+      chordToPaint,
+      paintSpecificity,
+      switchMode,
+      songSaved
+    } = this.props;
+
+    const songSavedModifier = songSaved ? 'ui-controls__save-button--saved' : '';
+
+    return (
+      <div className="ui-controls">
+        <button
+          className="ui-controls__switch-button"
+          onClick={switchMode}
+          type="button"
+        >
+          {chordMode ? 'Lyrics Mode' : 'Chord Mode' }
+        </button>
+        {chordMode && (
+          <div className="ui-controls__chord-input">
+            <p>Chord:</p>
+            <input
+              value={chordToPaint}
+              type="text"
+              onChange={this.handleChordChange}
+            />
+          </div>
+        )}
+        {chordMode && (
+          <div className="ui-controls__specificity-select">
+            <p>Assign chord by:</p>
+            <select
+              value={paintSpecificity}
+              onChange={this.handleSpecificityChange}
+            >
+              <option value="character">Character</option>
+              <option value="word">Word</option>
+              <option value="line">Line</option>
+            </select>
+          </div>
+        )}
+        <button
+          className={`ui-controls__save-button ${songSavedModifier}`}
+          onClick={this.handleSave}
+          type="button"
+        >
+          Save
+        </button>
+      </div>
+    );
+  }
 }

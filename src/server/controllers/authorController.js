@@ -1,15 +1,15 @@
-var Author = require('../models/author');
+const Author = require('../models/author');
 
-exports.getAuthors = function (req, res) {
+exports.getAuthors = function getAuthors(req, res) {
   Author.find({}, (err, authors) => {
     if (err) {
       return res.status(500).json({ message: err.message });
     }
-    res.json({ authors: authors });
+    res.json({ authors });
   });
 };
 
-exports.getAuthor = function (req, res) {
+exports.getAuthor = function getAuthor(req, res) {
   Author.findOne({ id: req.params.id }).exec((err, author) => {
     if (err) {
       return res.status(500).json({ message: err.message });

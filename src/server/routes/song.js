@@ -1,8 +1,8 @@
-var express = require('express');
+const express = require('express');
 
-var SongController = require('../controllers/songController');
+const SongController = require('../controllers/songController');
 
-var router = express.Router();
+const router = express.Router();
 
 router.route('/songs').get(SongController.getSongs);
 

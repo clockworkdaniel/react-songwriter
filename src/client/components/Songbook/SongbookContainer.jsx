@@ -17,8 +17,8 @@ const mapDispatchToProps = dispatch => ({
   fetchSongs: () => {
     dispatch(fetchSongs());
   },
-  deleteSongRequest: (songID) => {
-    dispatch(deleteSongRequest(songID));
+  deleteSongRequest: (songId) => {
+    dispatch(deleteSongRequest(songId));
   },
   newSongModal: () => {
     dispatch(newSongModal());
