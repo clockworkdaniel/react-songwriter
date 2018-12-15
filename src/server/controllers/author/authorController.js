@@ -1,4 +1,4 @@
-const Author = require('../models/author');
+const Author = require('../../models/author');
 
 exports.getAuthors = function getAuthors(req, res) {
   Author.find({}, (err, authors) => {
@@ -10,7 +10,7 @@ exports.getAuthors = function getAuthors(req, res) {
 };
 
 exports.getAuthor = function getAuthor(req, res) {
-  Author.findOne({ id: req.params.id }).exec((err, author) => {
+  Author.findOne({ _id: req.params.id }).exec((err, author) => {
     if (err) {
       return res.status(500).json({ message: err.message });
     }

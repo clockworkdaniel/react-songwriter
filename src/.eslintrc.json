@@ -11,6 +11,7 @@
     "react/prop-types": "off",
     "no-plusplus": "off",
     "brace-style": "off",
-    "no-underscore-dangle": "off"
+    "no-underscore-dangle": "off",
+    "consistent-return": "off"
   }
 }
