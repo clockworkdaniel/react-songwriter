@@ -1,8 +1,8 @@
-var express = require('express');
+const express = require('express');
 
-var AuthorController = require('../controllers/authorController');
+const AuthorController = require('../controllers/author/authorController');
 
-var router = express.Router();
+const router = express.Router();
 
 router.route('/authors').get(AuthorController.getAuthors);
 router.route('/author/:id').get(AuthorController.getAuthor);
