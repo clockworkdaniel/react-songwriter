@@ -10,7 +10,7 @@ export default class Songbook extends React.Component {
 
   componentDidMount() {
     const { fetchAuthors, fetchSongsByAuthor, match } = this.props;
-    this.matchesAuthorUrl = match.url.includes('/author/') ? true : false;
+    this.matchesAuthorUrl = !!match.url.includes('/author/');
     if (this.matchesAuthorUrl) {
       fetchSongsByAuthor(match.params.id);
     } else {

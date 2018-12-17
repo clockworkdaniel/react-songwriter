@@ -21,7 +21,7 @@ export default function Layout() {
       <div className="layout">
 
         <EditModalContainer />
-        <header className="layout__header" >
+        <header className="layout__header">
           <nav className="header">
             <ul className="header__nav-list">
               <li className="header__li--title">
