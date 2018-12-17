@@ -2,8 +2,12 @@ const Song = require('../../models/song');
 const Author = require('../../models/author');
 
 exports.getSongs = function getSongs(req, res) {
-  Song.find({}).populate('author', 'name')
+
+  const allOrByAuthor = req.params.id ? { author: req.params.id } : {};
+
+  Song.find(allOrByAuthor, null, { sort: { title: 1 } })
     .select('-structure')
+    .populate('author', 'name')
     .exec((err, songs) => {
       if (err) {
         return res.status(500).json({ message: err.message });
@@ -41,11 +45,10 @@ exports.postSong = function postSong(req, res) {
   const songTitle = song.title;
 
   if (authorName) {
-    Author.findOne({ name: authorName }).then((existingAuthor) => {
-      // NOTE: what happens if I add err to this?
-      // if (err) {
-      //   return res.status(500).json({ err: err.message });
-      // }
+    Author.findOne({ name: authorName }).exec((err, existingAuthor) => {
+      if (err) {
+        return res.status(500).json({ err: err.message });
+      }
       if (existingAuthor) {
         return createSongWithAuthor(existingAuthor, songTitle, res);
       }
@@ -86,7 +89,7 @@ function updateSongAuthor(song, newAuthor, res) {
   });
 
   const newAuthorId = new Promise((resolve, reject) => {
-    Author.findOne({ name: newAuthor.name }, (err, foundAuthor) => {
+    Author.findOne({ name: newAuthor.name }).exec((err, foundAuthor) => {
       if (err) {
         res.status(500).json({ err: err.message });
       }
@@ -134,7 +137,7 @@ exports.putSong = function putSong(req, res) {
 exports.deleteSong = function deleteSong(req, res) {
   const { id } = req.params;
 
-  Song.findByIdAndDelete(id, (err, song) => {
+  Song.findByIdAndDelete(id).exec((err, song) => {
     if (err) {
       return res.status(500).json({ err: err.message });
     }

@@ -5,6 +5,7 @@ const SongController = require('../controllers/song/songController');
 const router = express.Router();
 
 router.route('/songs').get(SongController.getSongs);
+router.route('/songs/:id').get(SongController.getSongs);
 
 router.route('/song/create').post(SongController.postSong);
 
