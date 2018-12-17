@@ -8,9 +8,6 @@ export default function Song({ song, deleteSongRequest }) {
     deleteSongRequest(song._id);
   }
 
-  const author = song.author ? song.author.name : 'Unknown Author';
-  const authorURL = author.replace(/\s+/g, '-').toLowerCase();
-
   return (
     <li className="song">
 
@@ -34,11 +31,6 @@ export default function Song({ song, deleteSongRequest }) {
           </Link>
         </div>
       </h3>
-      <Link to={`author/${authorURL}`}>
-        <h4 className="song__author">
-          {author}
-        </h4>
-      </Link>
     </li>
   );
 }

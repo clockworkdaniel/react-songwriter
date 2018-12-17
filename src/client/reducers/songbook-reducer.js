@@ -1,5 +1,5 @@
 const intialState = {
-  songList: [],
+  authorList: [],
   songTitle: ''
 };
 
@@ -7,14 +7,14 @@ const songbookReducer = (state = intialState, action) => {
   switch (action.type) {
     // need to change state re loading
 
-    case 'ADD_SONGS':
+    case 'ADD_AUTHORS':
       return Object.assign({}, state, {
-        songList: action.songs
+        authorList: action.authors
       });
-    case 'ADD_SONG':
-      return Object.assign({}, state, {
-        songList: [...state.songList, action.song]
-      });
+    // case 'ADD_SONG':
+    //   return Object.assign({}, state, {
+    //     songList: [...state.songList, action.song]
+    //   });
     case 'REMOVE_SONG':
       return Object.assign({}, state, {
         songList: state.songList.filter(song => song._id !== action.songId)

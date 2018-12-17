@@ -129,6 +129,14 @@ input, button, select {
 	display: inline;
 }
 
+ul {
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
+}
+
 p, input, button, label, select, a {
 	font-family: 'Muli';
 	color: #F9F8C8;

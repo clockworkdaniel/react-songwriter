@@ -1,10 +1,10 @@
 import callApi from '../../util/callApi';
 import { editModalTrigger } from '../EditModal/edit-modal-actions';
 
-export function addSongs(songs) {
+export function addAuthors(authors) {
   return {
-    type: 'ADD_SONGS',
-    songs
+    type: 'ADD_AUTHORS',
+    authors
   };
 }
 
@@ -72,10 +72,14 @@ export function fetchSong(songId) {
   return dispatch => callApi(`song/${songId}`).then(res => dispatch(addSong(res.song)));
 }
 
-export function fetchSongs() {
-  return dispatch => callApi('songs').then((res) => {
-    dispatch(addSongs(res.songs));
+export function fetchAuthors() {
+  return dispatch => callApi('authors').then((res) => {
+    dispatch(addAuthors(res.authors));
   });
+}
+
+export function fetchSongsByAuthor(authorId) {
+  return dispatch => callApi(`author/${authorId}`).then(res => dispatch(addAuthors(res.authors)));
 }
 
 export function deleteSongRequest(songId) {

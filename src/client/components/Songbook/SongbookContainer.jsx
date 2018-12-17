@@ -1,7 +1,8 @@
 import { connect } from 'react-redux';
 
 import {
-  fetchSongs,
+  fetchAuthors,
+  fetchSongsByAuthor,
   newSongModal,
   deleteSongRequest
 } from '../../actions/Songbook/songbook-actions';
@@ -9,13 +10,16 @@ import {
 import Songbook from './Songbook';
 
 const mapStateToProps = state => ({
-  songList: state.songbookState.songList,
+  authorList: state.songbookState.authorList,
   newSong: state.songbookState.newSong
 });
 
 const mapDispatchToProps = dispatch => ({
-  fetchSongs: () => {
-    dispatch(fetchSongs());
+  fetchAuthors: () => {
+    dispatch(fetchAuthors());
+  },
+  fetchSongsByAuthor: (authorId) => {
+    dispatch(fetchSongsByAuthor(authorId));
   },
   deleteSongRequest: (songId) => {
     dispatch(deleteSongRequest(songId));

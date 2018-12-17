@@ -4,32 +4,42 @@
 		display: inline-block;
 	}
 
-	&__list {
+	&__author-list {
 		list-style: none;
 		padding-left: 0;
+		margin-bottom: 32px;
+	}
+}
+
+.author {
+	&__name {
+		font-size: 1.375rem;
+		margin-bottom: 1rem;
+		opacity: 0.7;
+	}
+
+	&__song-list {
+		display: grid;
+		grid-template-columns: repeat( auto-fit, 17rem );
+		grid-gap: 1rem;
+		margin-bottom: 1rem;
 	}
 }
 
 .song {
-
-	width: 17rem;
-	padding-right: 1rem;
-	margin-bottom: 32px;
-	// NOTE: doesn't work with currenct controls
+	box-sizing: border-box;
+	border: 1px solid rgba(249, 248, 200, 0.2);
+	padding: 0.5rem;
+	// NOTE: doesn't work with current controls
 	// sort this out later
 	//overflow: hidden;
 	text-overflow: ellipsis;
 
 	&__title {
 		display: inline-block;
-		font-size: 1.375rem;
-		margin: 0 0 0.5rem;
-		white-space: nowrap;
-	}
-
-	&__author {
 		font-size: 1rem;
+		font-family: 'Muli';
 		margin: 0;
-		opacity: 0.7;
+		white-space: nowrap;
 	}
 }
