@@ -15,7 +15,7 @@ export default function breakDownLine(line, oldCharacterArray) {
     }
     // if it didnt make a new character and give it the last chord
     else {
-      newCharacterArray.push({ 'character': character, 'chord': lastChord(line) });
+      newCharacterArray.push({ character, chord: lastChord(line) });
     }
   });
 

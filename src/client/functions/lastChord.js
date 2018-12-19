@@ -4,7 +4,7 @@ export default function lastChord(line) {
   let chord;
 
   if (line.characters[length - 1]) {
-    // eslint-disable-next-line prefer-destructuring
+    // eslint-disable-next-line
     chord = line.characters[length - 1].chord;
   } else {
     chord = ' ';
