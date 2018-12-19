@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { sort } from '../../functions/arrayStuff';
+import { sortAlphabetically, sortByDate } from '../../functions/arrayStuff';
 
 import Song from './Song';
 
@@ -17,9 +17,21 @@ export default function Author({
   let songList;
 
   if (matchesAuthorUrl) {
-    songList = sort(songs, 'title', isAscending);
+    switch (orderLogic) {
+      case 'alphabetically':
+        songList = sortAlphabetically(songs, 'title', isAscending);
+        break;
+      case 'modified':
+        songList = sortByDate(songs, 'modified', isAscending);
+        break;
+      case 'created':
+        songList = sortByDate(songs, 'created', isAscending);
+        break;
+      default:
+        break;
+    }
   } else {
-    songList = songs.slice(0, 3);
+    songList = sortByDate(songs.slice(0, 3), 'modified', isAscending);
   }
 
   return (
