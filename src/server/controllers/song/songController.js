@@ -34,6 +34,7 @@ function createSongWithAuthor(author, songTitle, res) {
       return res.status(500).json({ err: err.message });
     }
     author.songs.push(song._id);
+    author.modified = Date.now();
     author.save();
     return res.json({ song, message: 'Song created' });
   });
