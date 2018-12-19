@@ -1,6 +1,11 @@
 const intialState = {
-  authorList: [],
-  songTitle: ''
+  authorSongList: [],
+  songTitle: '',
+  uiState: {
+    orderLogic: 'alphabetically',
+    songPriority: false,
+    isAscending: false
+  }
 };
 
 const songbookReducer = (state = intialState, action) => {
@@ -9,17 +14,36 @@ const songbookReducer = (state = intialState, action) => {
 
     case 'ADD_AUTHORS':
       return Object.assign({}, state, {
-        authorList: action.authors
+        authorSongList: action.authors
       });
-    // case 'ADD_SONG':
-    //   return Object.assign({}, state, {
-    //     songList: [...state.songList, action.song]
-    //   });
+    case 'SET_ORDER_LOGIC':
+      return {
+        ...state,
+        uiState: {
+          ...state.uiState,
+          orderLogic: action.orderLogic
+        }
+      };
+    case 'SET_SONG_PRIORITY':
+      return {
+        ...state,
+        uiState: {
+          ...state.uiState,
+          songPriority: action.songPriority
+        }
+      };
+    case 'SET_ASCENDING':
+      return {
+        ...state,
+        uiState: {
+          ...state.uiState,
+          isAscending: action.isAscending
+        }
+      };
     case 'REMOVE_SONG':
       return Object.assign({}, state, {
         songList: state.songList.filter(song => song._id !== action.songId)
       });
-
     case 'SET_NEW_SONG_TITLE':
       return Object.assign({}, state, {
         songTitle: action.songTitle

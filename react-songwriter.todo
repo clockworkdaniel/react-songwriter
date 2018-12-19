@@ -6,7 +6,7 @@ Exploration:
   ☐ PWA
 
 General Improvements:
-  ☐ @low Server-side sorting is not case sensitive
+  ☐ Server-side sorting is not case sensitive
 
 Site Design:
 
@@ -18,9 +18,9 @@ Site Design:
   Songbook Page:
     Here you can see a list of songs.
 
-    ☐ Songs can be ordered according to:
-      ☐ title
-      ☐ author
+    ✔ Songs can be ordered according to: @done (12/19/2018, 10:22:28 AM)
+      ✔ title @done (12/19/2018, 10:22:30 AM)
+      ✔ author @done (12/19/2018, 10:22:31 AM)
       ☐ date created
       ☐ date modified
     ☐ delete a song
