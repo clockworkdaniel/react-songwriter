@@ -1,5 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import { sort } from '../../functions/arrayStuff';
 
 import Song from './Song';
 
@@ -8,14 +9,21 @@ export default function Author({
   name,
   songs,
   matchesAuthorUrl,
-  deleteSongRequest
+  deleteSongRequest,
+  isAscending
 }) {
 
-  const songList = matchesAuthorUrl ? songs : songs.slice(0, 3);
+  let songList;
+
+  if (matchesAuthorUrl) {
+    songList = sort(songs, 'title', isAscending);
+  } else {
+    songList = songs.slice(0, 3);
+  }
 
   return (
     <li className="songbook__author-item author">
-      <Link to={`author/${_id}`}>
+      <Link to={`/author/${_id}`}>
         <h4 className="author__name">
           {name}
         </h4>
