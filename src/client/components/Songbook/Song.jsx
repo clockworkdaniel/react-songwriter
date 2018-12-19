@@ -1,8 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-  
 
-export default function Song({ song, deleteSongRequest }) {
+
+export default function Song({ song, deleteSongRequest, author }) {
 
   function handleDeleteSong() {
     deleteSongRequest(song._id);
@@ -10,7 +10,13 @@ export default function Song({ song, deleteSongRequest }) {
 
   return (
     <li className="song">
-
+      {author && (
+        <Link to={`/author/${author._id}`}>
+          <h4 className="song__author-name">
+            {author.name}
+          </h4>
+        </Link>
+      )}
       <h3 className="song__title controls__container">
         {song.title}
         <div className="controls">
@@ -21,7 +27,7 @@ export default function Song({ song, deleteSongRequest }) {
           >
             <span className="icon-cross" />
           </button>
-          <Link to={`song/${song._id}`}>
+          <Link to={`/song/${song._id}`}>
             <button
               className="controls__edit"
               type="button"
