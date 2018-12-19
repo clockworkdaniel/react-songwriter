@@ -95,6 +95,7 @@ function updateSongAuthor(song, newAuthor, res) {
       }
       if (foundAuthor) {
         foundAuthor.songs.push(song._id);
+        foundAuthor.modified = Date.now();
         foundAuthor.save();
         resolve(foundAuthor._id);
       } else {
@@ -121,7 +122,8 @@ exports.putSong = function putSong(req, res) {
 
   Song.findByIdAndUpdate(id, {
     title: song.title,
-    structure: song.structure
+    structure: song.structure,
+    modified: Date.now()
   }).populate('author', 'name')
     .exec((err, songAsItExisted) => {
       if (err) {

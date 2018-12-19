@@ -7,6 +7,8 @@ const songSchema = new Schema({
   author: { type: Schema.Types.ObjectId, ref: 'Author' },
   structure: Array,
   // user: { type: Schema.Types.ObjectId, ref: 'User' },
+  created: { type: Date, required: true, default: Date.now },
+  modified: { type: Date, required: true, default: Date.now },
 });
 
 songSchema.post('save', (doc, next) => {

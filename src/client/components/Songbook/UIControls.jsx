@@ -8,9 +8,12 @@ export default class UIControls extends React.Component {
   }
 
   handleAuthSongPrefChange(event) {
-    const { setSongPriority } = this.props;
+    const { setSongPriority, orderLogic, setOrderLogic } = this.props;
     if (event.target.value === 'author') {
       setSongPriority(false);
+      if (orderLogic === 'created') {
+        setOrderLogic('modified');
+      }
     } else {
       setSongPriority(true);
     }
@@ -35,8 +38,6 @@ export default class UIControls extends React.Component {
       songPriority,
       isAscending
     } = this.props;
-
-    // console.log(isAscending);
 
     return (
       <div className="ui-controls">
@@ -75,14 +76,24 @@ export default class UIControls extends React.Component {
           >
             Date Modified
           </button>
-          <button
+          {(songPriority) && (
+            <button
+              className="uic-order-btn"
+              type="button"
+              value="created"
+              onClick={this.handleOrderLogicChange}
+            >
+              Date created
+            </button>
+          )}
+          {/* <button
             className="uic-order-btn"
             type="button"
             value="favourites"
             onClick={this.handleOrderLogicChange}
           >
             Favourites
-          </button>
+          </button> */}
         </div>
       </div>
     );

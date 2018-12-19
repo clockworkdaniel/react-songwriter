@@ -2,7 +2,7 @@ import React from 'react';
 import Author from './Author';
 import Song from './Song';
 import UIControls from './UIControls';
-import { sort, toSongPriority } from '../../functions/arrayStuff';
+import { sortAlphabetically, sortByDate, toSongPriority } from '../../functions/arrayStuff';
 
 export default class Songbook extends React.Component {
   constructor(props) {
@@ -37,13 +37,23 @@ export default class Songbook extends React.Component {
     if (this.matchesAuthorUrl) {
       return authorSongList;
     }
-    if (orderLogic === 'alphabetically') {
-      if (!songPriority) {
-        return sort(authorSongList, 'name', isAscending);
-      }
-      return sort(toSongPriority(authorSongList), 'title', isAscending);
-    }
 
+    switch (orderLogic) {
+      case 'alphabetically':
+        if (!songPriority) {
+          return sortAlphabetically(authorSongList, 'name', isAscending);
+        }
+        return sortAlphabetically(toSongPriority(authorSongList), 'title', isAscending);
+      case 'modified':
+        if (!songPriority) {
+          return sortByDate(authorSongList, 'modified', isAscending);
+        }
+        return sortByDate(toSongPriority(authorSongList), 'modified', isAscending);
+      case 'created':
+        return sortByDate(toSongPriority(authorSongList), 'created', isAscending);
+      default:
+        break;
+    }
   }
 
 
@@ -102,6 +112,7 @@ export default class Songbook extends React.Component {
                 key={song._id}
                 song={song}
                 author={song.author}
+                orderLogic={orderLogic}
               />
             ))}
           </ul>
