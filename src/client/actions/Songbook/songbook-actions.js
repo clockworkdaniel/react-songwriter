@@ -8,13 +8,7 @@ export function addAuthors(authors) {
   };
 }
 
-export function addSong(song) {
-  return {
-    type: 'ADD_SONG',
-    song
-  };
-}
-
+// FIX
 export function removeSong(songId) {
   return {
     type: 'REMOVE_SONG',
@@ -22,11 +16,12 @@ export function removeSong(songId) {
   };
 }
 
+// FIX
 export function newSongRequest(song) {
   return dispatch => callApi('song/create', 'post', {
     title: song.title,
     author: song.author
-  }).then(res => dispatch(addSong(res.song)));
+  });
 }
 
 export function newSongModalSequenceComplete(songAuthor) {
@@ -68,10 +63,6 @@ export function newSongModal() {
   };
 }
 
-export function fetchSong(songId) {
-  return dispatch => callApi(`song/${songId}`).then(res => dispatch(addSong(res.song)));
-}
-
 export function fetchAuthors() {
   return dispatch => callApi('authors').then((res) => {
     dispatch(addAuthors(res.authors));
@@ -82,6 +73,28 @@ export function fetchSongsByAuthor(authorId) {
   return dispatch => callApi(`author/${authorId}`).then(res => dispatch(addAuthors(res.authors)));
 }
 
+// FIX
 export function deleteSongRequest(songId) {
   return dispatch => callApi(`song/${songId}`, 'delete').then(() => dispatch(removeSong(songId)));
+}
+
+export function setOrderLogic(orderLogic) {
+  return {
+    type: 'SET_ORDER_LOGIC',
+    orderLogic
+  };
+}
+
+export function setSongPriority(songPriority) {
+  return {
+    type: 'SET_SONG_PRIORITY',
+    songPriority
+  };
+}
+
+export function setAscending(isAscending) {
+  return {
+    type: 'SET_ASCENDING',
+    isAscending
+  };
 }
