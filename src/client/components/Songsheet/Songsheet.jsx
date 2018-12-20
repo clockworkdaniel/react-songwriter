@@ -37,8 +37,15 @@ export default class Songsheet extends React.Component {
           songSaved={uiState.songSaved}
           resetSongSaved={uiHandlers.resetSongSaved}
         />
-        <SongTitle title={song.title} rename={rename} />
-        <SongAuthor author={song.author.name} rename={rename} />
+        <SongTitle
+          title={song.title}
+          rename={rename}
+        />
+        <SongAuthor
+          author={song.author.name}
+          rename={rename}
+          _id={song.author._id}
+        />
         <div className="songsheet__structure">
           {song.structure.map((section, index) => (
             <Section

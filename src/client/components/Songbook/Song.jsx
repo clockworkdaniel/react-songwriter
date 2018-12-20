@@ -7,7 +7,8 @@ export default function Song({
   song, deleteSongRequest, author, orderLogic
 }) {
 
-  function handleDeleteSong() {
+  function handleDeleteSong(event) {
+    event.preventDefault();
     deleteSongRequest(song._id);
   }
 
@@ -33,11 +34,9 @@ export default function Song({
           </button>
         </div>
         {author && (
-        <Link to={`/author/${author._id}`}>
           <h4 className="song__author-name">
             {author.name}
           </h4>
-        </Link>
         )}
         {(orderLogic === 'created') ? (
           <p className="song__date">

@@ -41,13 +41,19 @@ const songbookReducer = (state = intialState, action) => {
         }
       };
     case 'REMOVE_SONG':
-      return Object.assign({}, state, {
-        songList: state.songList.filter(song => song._id !== action.songId)
-      });
+      return {
+        ...state,
+        authorSongList: state.authorSongList.map((author) => {
+          author.songs = author.songs.filter(song => song._id !== action.songId);
+          return author;
+        })
+      };
+
     case 'SET_NEW_SONG_TITLE':
-      return Object.assign({}, state, {
+      return {
+        ...state,
         songTitle: action.songTitle
-      });
+      };
 
     default:
       return state;

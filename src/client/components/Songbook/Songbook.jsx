@@ -113,6 +113,7 @@ export default class Songbook extends React.Component {
                 song={song}
                 author={song.author}
                 orderLogic={orderLogic}
+                deleteSongRequest={deleteSongRequest}
               />
             ))}
           </ul>
