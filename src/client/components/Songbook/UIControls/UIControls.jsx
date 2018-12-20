@@ -40,28 +40,33 @@ export default class UIControls extends React.Component {
     } = this.props;
 
     return (
-      <div className="ui-controls">
-        {!matchesAuthorUrl ? (
-          <div className="ui-controls__auth-song-priority">
-            <p>
-              Order by:
-            </p>
-            <select
-              value={songPriority ? 'song' : 'author'}
-              onChange={this.handleAuthSongPrefChange}
-            >
-              <option value="author">Author</option>
-              <option value="song">Song</option>
-            </select>
-          </div>
-        ) : (
-          <p>Order songs:</p>
-        )}
+      <div className="book-controls">
+
+        <div className="book-controls__auth-song-priority">
+          {matchesAuthorUrl ? (
+            <p>Order songs:</p>
+          ) : (
+            <div>
+              <p>
+                Order:
+              </p>
+              <div className="select-container">
+                <select
+                  value={songPriority ? 'song' : 'author'}
+                  onChange={this.handleAuthSongPrefChange}
+                >
+                  <option value="author">Authors</option>
+                  <option value="song">Songs</option>
+                </select>
+              </div>
+            </div>
+          )}
+        </div>
         <div className={
-          `ui-controls__ordering-logic ${(isAscending ? 'ascending' : 'descending ')} ${orderLogic}`}
+          `book-controls__ordering-logic ${(isAscending ? 'ascending' : 'descending ')} ${orderLogic}`}
         >
           <button
-            className="uic-order-btn"
+            className="book-controls__ordering-btn"
             type="button"
             value="alphabetically"
             onClick={this.handleOrderLogicChange}
@@ -69,21 +74,21 @@ export default class UIControls extends React.Component {
             Alphabetically
           </button>
           <button
-            className="uic-order-btn"
+            className="book-controls__ordering-btn"
             type="button"
             value="modified"
             onClick={this.handleOrderLogicChange}
           >
-            Date Modified
+            Modified
           </button>
           {(songPriority) && (
             <button
-              className="uic-order-btn"
+              className="book-controls__ordering-btn"
               type="button"
               value="created"
               onClick={this.handleOrderLogicChange}
             >
-              Date created
+              Created
             </button>
           )}
           {/* <button

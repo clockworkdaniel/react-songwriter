@@ -1,7 +1,7 @@
 import React from 'react';
 import Author from './Author';
 import Song from './Song';
-import UIControls from './UIControls';
+import UIControls from './UIControls/UIControls';
 import { sortAlphabetically, sortByDate, toSongPriority } from '../../functions/arrayStuff';
 
 export default class Songbook extends React.Component {

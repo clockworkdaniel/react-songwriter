@@ -11,7 +11,7 @@ export default class UIControls extends React.Component {
 
   componentDidMount() {
     const { resetSongSaved } = this.props;
-    const saveButton = document.querySelector('.ui-controls__save-button');
+    const saveButton = document.querySelector('.sheet-controls__save-button');
     saveButton.addEventListener('animationend', () => {
       resetSongSaved();
     });
@@ -43,19 +43,19 @@ export default class UIControls extends React.Component {
       songSaved
     } = this.props;
 
-    const songSavedModifier = songSaved ? 'ui-controls__save-button--saved' : '';
+    const songSavedModifier = songSaved ? 'sheet-controls__save-button--saved' : '';
 
     return (
-      <div className="ui-controls">
+      <div className="sheet-controls">
         <button
-          className="ui-controls__switch-button"
+          className="sheet-controls__switch-button"
           onClick={switchMode}
           type="button"
         >
           {chordMode ? 'Lyrics Mode' : 'Chord Mode' }
         </button>
         {chordMode && (
-          <div className="ui-controls__chord-input">
+          <div className="sheet-controls__chord-input">
             <p>Chord:</p>
             <input
               value={chordToPaint}
@@ -65,7 +65,7 @@ export default class UIControls extends React.Component {
           </div>
         )}
         {chordMode && (
-          <div className="ui-controls__specificity-select">
+          <div className="sheet-controls__specificity-select">
             <p>Assign chord by:</p>
             <select
               value={paintSpecificity}
@@ -78,7 +78,7 @@ export default class UIControls extends React.Component {
           </div>
         )}
         <button
-          className={`ui-controls__save-button ${songSavedModifier}`}
+          className={`sheet-controls__save-button ${songSavedModifier}`}
           onClick={this.handleSave}
           type="button"
         >
