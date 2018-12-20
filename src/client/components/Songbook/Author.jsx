@@ -11,7 +11,8 @@ export default function Author({
   matchesAuthorUrl,
   deleteSongRequest,
   orderLogic,
-  isAscending
+  isAscending,
+  songPriority
 }) {
 
   let songList;
@@ -43,7 +44,14 @@ export default function Author({
       </Link>
       <ul className="author__song-list">
         {songList && songList.map(song => (
-          <Song key={song._id} song={song} deleteSongRequest={deleteSongRequest} orderLogic={orderLogic} />
+          <Song
+            key={song._id}
+            song={song}
+            authorName={name}
+            deleteSongRequest={deleteSongRequest}
+            orderLogic={orderLogic}
+            songPriority={songPriority}
+          />
         ))}
       </ul>
     </li>

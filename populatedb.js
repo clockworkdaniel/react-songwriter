@@ -1,115 +1,109 @@
 #! /usr/bin/env node
 
-console.log('This script populates some test books, authors, genres and bookinstances to your database. Specified database as argument - e.g.: populatedb mongodb://your_username:your_password@your_dabase_url');
-
-// Get arguments passed on command line
-var userArgs = process.argv.slice(2);
-if (!userArgs[0].startsWith('mongodb://')) {
-    console.log('ERROR: You need to specify a valid mongodb URL as the first argument');
-    return
-}
-
-var async = require('async')
-var Song = require('./src/server/models/song')
-var Author = require('./src/server/models/author')
+console.log('This script populates some test songs and authors to your database.');
 
 
-var mongoose = require('mongoose');
-var mongoDB = userArgs[0];
+const mongoose = require('mongoose');
+const mongoDB = 'mongodb://127.0.0.1:27017';
+const db = mongoose.connection;
+
 mongoose.connect(mongoDB);
 mongoose.Promise = global.Promise;
-var db = mongoose.connection;
-mongoose.connection.on('error', console.error.bind(console, 'MongoDB connection error:'));
 
-var authors = []
-var songs = []
+db.on('error', console.error.bind(console, 'MongoDB connection error'));
 
-function songCreate(title, author, cb) {
-  songDetail = {title: title, author: author }
-  
-  var song = new Song(songDetail);
-       
-  song.save(function (err) {
-    if (err) {
-      cb(err, null)
-      return
-    }
-    //console.log('New Song: ' + song);
-    songs.push(song)
-    cb(null, song)
-  }  );
-}
+const Author = require('./src/server/models/author');
+const Song = require('./src/server/models/song');
 
-function authorCreate(name, cb) {
-  authorDetail = { 
-    name: name,
-  }
-    
-  var author = new Author(authorDetail);    
-  author.save(function (err) {
-    if (err) {
-      cb(err, null)
-      return
-    }
-    //console.log('New Author: ' + author);
-    authors.push(author)
-    cb(null, author)
-  }  );
-}
-
-function createAuthors(cb) {
-    async.parallel([
-        function(callback) {
-          authorCreate('Tom Waits', callback);
-        },
-        function(callback) {
-          authorCreate('Hinds', callback);
-        },
-        function(callback) {
-          authorCreate('Honeyblood', callback);
-        },
-        ],
-        // optional callback
-        cb);
-}
-
-
-function createSongs(cb) {
-  console.log('test')
-    async.parallel([
-        function(callback) {
-          songCreate('Falling Down', authors[0], callback);
-        },
-        function(callback) {
-          songCreate('Soberland', authors[1], callback);
-        },
-        function(callback) {
-          songCreate('Biro', authors[2], callback);
-        },
-        function(callback) {
-          songCreate('Step Right Up', authors[0], callback);
+function authorCreate(authorName) {
+  return new Promise((resolve, reject) => {
+    Author.create({ name: authorName, songs: [] },
+      (err, author) => {
+        if (err) {
+          reject(err);
         }
-        ],
-        // optional callback
-        cb);
+        console.log(author);
+        resolve(author);
+      });
+  });
 }
 
-async.series([
-    createAuthors,
-    createSongs
-],
-// Optional callback
-function(err, results) {
-    if (err) {
-        console.log('FINAL ERR: '+err);
-    }
-    // All done, disconnect from database
-    mongoose.connection.close();
-});
+function createSongWithAuthor(author, songTitle) {
+  return new Promise((resolve, reject) => {
+    Song.create({ title: songTitle, author: author._id }, (err, song) => {
+      if (err) {
+        reject(err);
+      }
+      author.songs.push(song._id);
+      author.modified = Date.now();
+      author.save();
+      resolve(author);
+    });
+  });
+}
 
-// mongoose.connection.collections['authors'].drop(function(err){
-//   console.log('collection dropped');
-// })
-// mongoose.connection.collections['songs'].drop(function(err){
-//   console.log('collection dropped');
-// })
+function createSong(songTitle, authorName) {
+  return new Promise((resolve, reject) => {
+    Author.findOne({ name: authorName })
+      .exec((err, existingAuthor) => {
+        if (err) {
+          reject(err);
+        }
+        resolve(createSongWithAuthor(existingAuthor, songTitle));
+      });
+  });
+}
+
+const theBeatles = 'The Beatles';
+const davidBowie = 'David Bowie';
+const theKinks = 'The Kinks';
+const theLas = 'The La\'s';
+const tomWaits = 'Tom Waits';
+
+function createAuthors() {
+  return Promise.all([
+    authorCreate(theBeatles),
+    authorCreate(davidBowie),
+    authorCreate(theKinks),
+    authorCreate(theLas),
+    authorCreate(tomWaits)
+  ]);
+}
+
+function createSongs() {
+  return Promise.all([
+    createSong('Get Back', theBeatles),
+    createSong('Across The Universe', theBeatles),
+    createSong('I Feel Fine', theBeatles),
+    createSong('Happiness Is A Warm Gun', theBeatles),
+    createSong('Dear Prudence', theBeatles),
+    createSong('I\'m Only Sleeping', theBeatles),
+    createSong('Baby\'s In Black', theBeatles),
+    createSong('Rocky Racoon', theBeatles),
+    createSong('Rock \'n\' Roll Suicide', davidBowie),
+    createSong('Diamond Dogs', davidBowie),
+    createSong('Rebel Rebel', davidBowie),
+    createSong('Ashes To Ashes', davidBowie),
+    createSong('Heroes', davidBowie),
+    createSong('The Jean Genie', davidBowie),
+    createSong('Waterloo Sunset', theKinks),
+    createSong('Sunny Afternoon', theKinks),
+    createSong('Big Sky', theKinks),
+    createSong('The Village Green Presevation Society', theKinks),
+    createSong('There She Goes', theLas),
+    createSong('Timeless Melody', theLas),
+    createSong('Son Of A Gun', theLas),
+    createSong('Doledrum', theLas),
+    createSong('Blue Valentine', tomWaits),
+    createSong('Old Shoes (& Picture Postcards)', tomWaits),
+    createSong('Christmas Card From A Hooker In Minneapolis', tomWaits),
+    createSong('Falling Down', tomWaits),
+    createSong('Town With No Cheer', tomWaits)
+  ])
+}
+
+createAuthors().then(createSongs).then(() => {
+  console.log('done');
+}, (err) => {
+  console.error(err);
+}) ;

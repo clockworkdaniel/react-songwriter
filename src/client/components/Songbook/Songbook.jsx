@@ -111,9 +111,10 @@ export default class Songbook extends React.Component {
               <Song
                 key={song._id}
                 song={song}
-                author={song.author}
+                authorName={song.author.name}
                 orderLogic={orderLogic}
                 deleteSongRequest={deleteSongRequest}
+                songPriority={songPriority}
               />
             ))}
           </ul>
