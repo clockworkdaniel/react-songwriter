@@ -1,6 +1,6 @@
 #! /usr/bin/env node
 
-console.log('This script populates some test songs and authors to your database.');
+console.log('This script populates some test songs and artists to your database.');
 
 
 const mongoose = require('mongoose');
@@ -12,43 +12,43 @@ mongoose.Promise = global.Promise;
 
 db.on('error', console.error.bind(console, 'MongoDB connection error'));
 
-const Author = require('./src/server/models/author');
+const Artist = require('./src/server/models/artist');
 const Song = require('./src/server/models/song');
 
-function authorCreate(authorName) {
+function artistCreate(artistName) {
   return new Promise((resolve, reject) => {
-    Author.create({ name: authorName, songs: [] },
-      (err, author) => {
+    Artist.create({ name: artistName, songs: [] },
+      (err, artist) => {
         if (err) {
           reject(err);
         }
-        resolve(author);
+        resolve(artist);
       });
   });
 }
 
-function createSongWithAuthor(author, songTitle) {
+function createSongWithArtist(artist, songTitle) {
   return new Promise((resolve, reject) => {
-    Song.create({ title: songTitle, author: author._id }, (err, song) => {
+    Song.create({ title: songTitle, artist: artist._id }, (err, song) => {
       if (err) {
         reject(err);
       }
-      author.songs.push(song._id);
-      author.modified = Date.now();
-      author.save();
-      resolve(author);
+      artist.songs.push(song._id);
+      artist.modified = Date.now();
+      artist.save();
+      resolve(artist);
     });
   });
 }
 
-function createSong(songTitle, authorName) {
+function createSong(songTitle, artistName) {
   return new Promise((resolve, reject) => {
-    Author.findOne({ name: authorName })
-      .exec((err, existingAuthor) => {
+    Artist.findOne({ name: artistName })
+      .exec((err, existingArtist) => {
         if (err) {
           reject(err);
         }
-        resolve(createSongWithAuthor(existingAuthor, songTitle));
+        resolve(createSongWithArtist(existingArtist, songTitle));
       });
   });
 }
@@ -59,13 +59,13 @@ const theKinks = 'The Kinks';
 const theLas = 'The La\'s';
 const tomWaits = 'Tom Waits';
 
-function createAuthors() {
+function createArtists() {
   return Promise.all([
-    authorCreate(theBeatles),
-    authorCreate(davidBowie),
-    authorCreate(theKinks),
-    authorCreate(theLas),
-    authorCreate(tomWaits)
+    artistCreate(theBeatles),
+    artistCreate(davidBowie),
+    artistCreate(theKinks),
+    artistCreate(theLas),
+    artistCreate(tomWaits)
   ]);
 }
 
@@ -101,7 +101,7 @@ function createSongs() {
   ])
 }
 
-createAuthors().then(createSongs).then(() => {
+createArtists().then(createSongs).then(() => {
   console.log('done');
 }, (err) => {
   console.error(err);

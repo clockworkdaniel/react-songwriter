@@ -2,7 +2,7 @@ import React from 'react';
 
 import UIControls from './UIControls/UIControls';
 import SongTitle from './SongTitle';
-import SongAuthor from './SongAuthor';
+import SongArtist from './SongArtist';
 import Section from './Section/Section';
 import NewSectionButton from './Section/NewSectionButton';
 
@@ -41,10 +41,10 @@ export default class Songsheet extends React.Component {
           title={song.title}
           rename={rename}
         />
-        <SongAuthor
-          author={song.author.name}
+        <SongArtist
+          artist={song.artist.name}
           rename={rename}
-          _id={song.author._id}
+          _id={song.artist._id}
         />
         <div className="songsheet__structure">
           {song.structure.map((section, index) => (

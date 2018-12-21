@@ -6,7 +6,7 @@
 		display: inline-block;
 	}
 
-	&__author-list {
+	&__artist-list {
 		list-style: none;
 		padding-left: 0;
 		margin-bottom: 32px;
@@ -19,7 +19,7 @@
 	}
 }
 
-.author {
+.artist {
 	&__name {
 		display: inline-block;
 		font-family: 'muli';
@@ -80,7 +80,7 @@
 		text-overflow: ellipsis;
 	}
 
-	&__author-name {
+	&__artist-name {
 		display: inline-block;
 		font-family: 'muli';
 		font-size: 0.9375rem;

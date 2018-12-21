@@ -20,7 +20,7 @@ Site Design:
 
     ✔ Songs can be ordered according to: @done (12/19/2018, 10:22:28 AM)
       ✔ title @done (12/19/2018, 10:22:30 AM)
-      ✔ author @done (12/19/2018, 10:22:31 AM)
+      ✔ artist @done (12/19/2018, 10:22:31 AM)
       ✔ date created @done (12/19/2018, 4:27:18 PM)
       ✔ date modified @done (12/19/2018, 4:27:17 PM)
     ☐ delete a song
@@ -29,7 +29,7 @@ Site Design:
     - Where you:
       write your song (lyrics)
       ascribe chords
-      ✔ update song title or author name @done (12/19/2018, 4:27:29 PM)
+      ✔ update song title or artist name @done (12/19/2018, 4:27:29 PM)
     
     Songsheet UI:
       ✔ edit mode @done (12/10/2018, 2:10:52 PM)

@@ -12,7 +12,7 @@ var state = {
 	},
 	"song": {
 		"title" : "I Feel Fine",
-		"author" : "Lennon and McCartney",
+		"artist" : "Lennon and McCartney",
 		"structure" : [
 			{
 				"sectionName" : "Verse",

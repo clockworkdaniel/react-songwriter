@@ -4,7 +4,7 @@ const { Schema } = mongoose;
 
 const songSchema = new Schema({
   title: { type: String, required: true },
-  author: { type: Schema.Types.ObjectId, ref: 'Author' },
+  artist: { type: Schema.Types.ObjectId, ref: 'Artist' },
   structure: Array,
   // user: { type: Schema.Types.ObjectId, ref: 'User' },
   created: { type: Date, required: true, default: Date.now },
@@ -12,7 +12,7 @@ const songSchema = new Schema({
 });
 
 songSchema.post('save', (doc, next) => {
-  doc.populate('author').execPopulate().then(() => {
+  doc.populate('artist').execPopulate().then(() => {
     next();
   });
 });

@@ -9,7 +9,7 @@ export default class UIControls extends React.Component {
 
   handleAuthSongPrefChange(event) {
     const { setSongPriority, orderLogic, setOrderLogic } = this.props;
-    if (event.target.value === 'author') {
+    if (event.target.value === 'artist') {
       setSongPriority(false);
       if (orderLogic === 'created') {
         setOrderLogic('modified');
@@ -33,7 +33,7 @@ export default class UIControls extends React.Component {
 
   render() {
     const {
-      matchesAuthorUrl,
+      matchesArtistUrl,
       orderLogic,
       songPriority,
       isAscending
@@ -43,7 +43,7 @@ export default class UIControls extends React.Component {
       <div className="book-controls">
 
         <div className="book-controls__auth-song-priority">
-          {matchesAuthorUrl ? (
+          {matchesArtistUrl ? (
             <p>Order songs:</p>
           ) : (
             <div>
@@ -52,10 +52,10 @@ export default class UIControls extends React.Component {
               </p>
               <div className="select-container">
                 <select
-                  value={songPriority ? 'song' : 'author'}
+                  value={songPriority ? 'song' : 'artist'}
                   onChange={this.handleAuthSongPrefChange}
                 >
-                  <option value="author">Authors</option>
+                  <option value="artist">Artists</option>
                   <option value="song">Songs</option>
                 </select>
               </div>

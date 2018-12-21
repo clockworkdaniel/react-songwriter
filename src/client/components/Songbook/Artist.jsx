@@ -4,11 +4,11 @@ import { sortAlphabetically, sortByDate } from '../../functions/arrayStuff';
 
 import Song from './Song';
 
-export default function Author({
+export default function Artist({
   _id,
   name,
   songs,
-  matchesAuthorUrl,
+  matchesArtistUrl,
   deleteSongRequest,
   orderLogic,
   isAscending,
@@ -17,7 +17,7 @@ export default function Author({
 
   let songList;
 
-  if (matchesAuthorUrl) {
+  if (matchesArtistUrl) {
     switch (orderLogic) {
       case 'alphabetically':
         songList = sortAlphabetically(songs, 'title', isAscending);
@@ -36,18 +36,18 @@ export default function Author({
   }
 
   return (
-    <li className="songbook__author-item author">
-      <Link to={`/author/${_id}`}>
-        <h4 className="author__name">
+    <li className="songbook__artist-item artist">
+      <Link to={`/artist/${_id}`}>
+        <h4 className="artist__name">
           {name}
         </h4>
       </Link>
-      <ul className="author__song-list">
+      <ul className="artist__song-list">
         {songList && songList.map(song => (
           <Song
             key={song._id}
             song={song}
-            authorName={name}
+            artistName={name}
             deleteSongRequest={deleteSongRequest}
             orderLogic={orderLogic}
             songPriority={songPriority}

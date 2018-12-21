@@ -2,7 +2,7 @@ import { connect } from 'react-redux';
 
 import {
   fetchSongs,
-  fetchSongsBySingleAuthor,
+  fetchSongsBySingleArtist,
   newSongModal,
   deleteSongRequest,
   setOrderLogic,
@@ -13,7 +13,7 @@ import {
 import Songbook from './Songbook';
 
 const mapStateToProps = state => ({
-  authorSongList: state.songbookState.authorSongList,
+  artistSongList: state.songbookState.artistSongList,
   newSong: state.songbookState.newSong,
   uiState: state.songbookState.uiState
 });
@@ -22,8 +22,8 @@ const mapDispatchToProps = dispatch => ({
   fetchSongs: () => {
     dispatch(fetchSongs());
   },
-  fetchSongsBySingleAuthor: (authorId) => {
-    dispatch(fetchSongsBySingleAuthor(authorId));
+  fetchSongsBySingleArtist: (artistId) => {
+    dispatch(fetchSongsBySingleArtist(artistId));
   },
   deleteSongRequest: (songId) => {
     dispatch(deleteSongRequest(songId));

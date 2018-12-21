@@ -21,13 +21,13 @@ export function sortByDate(array, dateToSortBy, isAscending) {
 
 export function toSongPriority(array) {
 
-  const arraysOfSongsByAuthor = array.map(author => author.songs.map((song) => {
-    song.author = {
-      _id: author._id,
-      name: author.name
+  const arraysOfSongsByArtist = array.map(artist => artist.songs.map((song) => {
+    song.artist = {
+      _id: artist._id,
+      name: artist.name
     };
     return song;
   }));
 
-  return [].concat(...arraysOfSongsByAuthor);
+  return [].concat(...arraysOfSongsByArtist);
 }

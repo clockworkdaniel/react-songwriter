@@ -1,5 +1,5 @@
 import React from 'react';
-import Author from './Author';
+import Artist from './Artist';
 import Song from './Song';
 import UIControls from './UIControls/UIControls';
 import { sortAlphabetically, sortByDate, toSongPriority } from '../../functions/arrayStuff';
@@ -13,19 +13,19 @@ export default class Songbook extends React.Component {
 
   componentDidMount() {
     const {
-      fetchSongs, fetchSongsBySingleAuthor, match, setSongPriority
+      fetchSongs, fetchSongsBySingleArtist, match, setSongPriority
     } = this.props;
-    this.matchesAuthorUrl = !!match.url.includes('/author/');
-    if (this.matchesAuthorUrl) {
-      setSongPriority(true); // defaults to author priority
-      fetchSongsBySingleAuthor(match.params.id);
+    this.matchesArtistUrl = !!match.url.includes('/artist/');
+    if (this.matchesArtistUrl) {
+      setSongPriority(true); // defaults to artist priority
+      fetchSongsBySingleArtist(match.params.id);
     } else {
       setSongPriority(false); // defaults to song priority
       fetchSongs();
     }
   }
 
-  orderAuthorSongList(authorSongList) {
+  orderArtistSongList(artistSongList) {
     const {
       uiState: {
         isAscending,
@@ -34,23 +34,23 @@ export default class Songbook extends React.Component {
       },
     } = this.props;
 
-    if (this.matchesAuthorUrl) {
-      return authorSongList;
+    if (this.matchesArtistUrl) {
+      return artistSongList;
     }
 
     switch (orderLogic) {
       case 'alphabetically':
         if (!songPriority) {
-          return sortAlphabetically(authorSongList, 'name', isAscending);
+          return sortAlphabetically(artistSongList, 'name', isAscending);
         }
-        return sortAlphabetically(toSongPriority(authorSongList), 'title', isAscending);
+        return sortAlphabetically(toSongPriority(artistSongList), 'title', isAscending);
       case 'modified':
         if (!songPriority) {
-          return sortByDate(authorSongList, 'modified', isAscending);
+          return sortByDate(artistSongList, 'modified', isAscending);
         }
-        return sortByDate(toSongPriority(authorSongList), 'modified', isAscending);
+        return sortByDate(toSongPriority(artistSongList), 'modified', isAscending);
       case 'created':
-        return sortByDate(toSongPriority(authorSongList), 'created', isAscending);
+        return sortByDate(toSongPriority(artistSongList), 'created', isAscending);
       default:
         break;
     }
@@ -64,7 +64,7 @@ export default class Songbook extends React.Component {
 
   render() {
     const {
-      authorSongList,
+      artistSongList,
       deleteSongRequest,
       uiState: {
         isAscending,
@@ -76,12 +76,12 @@ export default class Songbook extends React.Component {
       setAscending
     } = this.props;
 
-    const sortedAuthorSongList = this.orderAuthorSongList(authorSongList);
+    const sortedArtistSongList = this.orderArtistSongList(artistSongList);
 
     return (
       <div className="songbook">
         <UIControls
-          matchesAuthorUrl={this.matchesAuthorUrl}
+          matchesArtistUrl={this.matchesArtistUrl}
           orderLogic={orderLogic}
           songPriority={songPriority}
           isAscending={isAscending}
@@ -89,15 +89,15 @@ export default class Songbook extends React.Component {
           setSongPriority={setSongPriority}
           setAscending={setAscending}
         />
-        {(!songPriority || this.matchesAuthorUrl) ? (
-          <ul className="songbook__author-list">
-            {sortedAuthorSongList && sortedAuthorSongList.map(author => (
-              <Author
-                key={author._id}
-                name={author.name}
-                _id={author._id}
-                songs={author.songs}
-                matchesAuthorUrl={this.matchesAuthorUrl}
+        {(!songPriority || this.matchesArtistUrl) ? (
+          <ul className="songbook__artist-list">
+            {sortedArtistSongList && sortedArtistSongList.map(artist => (
+              <Artist
+                key={artist._id}
+                name={artist.name}
+                _id={artist._id}
+                songs={artist.songs}
+                matchesArtistUrl={this.matchesArtistUrl}
                 orderLogic={orderLogic}
                 songPriority={songPriority}
                 isAscending={isAscending}
@@ -107,11 +107,11 @@ export default class Songbook extends React.Component {
           </ul>
         ) : (
           <ul className="songbook__song-list">
-            {sortedAuthorSongList && sortedAuthorSongList.map(song => (
+            {sortedArtistSongList && sortedArtistSongList.map(song => (
               <Song
                 key={song._id}
                 song={song}
-                authorName={song.author.name}
+                artistName={song.artist.name}
                 orderLogic={orderLogic}
                 deleteSongRequest={deleteSongRequest}
                 songPriority={songPriority}
