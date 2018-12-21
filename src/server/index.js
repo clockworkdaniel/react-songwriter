@@ -17,7 +17,7 @@ db.on('error', console.error.bind(console, 'MongoDB connection error'));
 const app = express();
 
 const songsRouter = require('./routes/song');
-const authorsRouter = require('./routes/author');
+const artistsRouter = require('./routes/artist');
 
 const PORT = 8000;
 
@@ -35,7 +35,7 @@ app.use((req, res, next) => {
 app.use(parser.json());
 
 app.use('/api', songsRouter);
-app.use('/api', authorsRouter);
+app.use('/api', artistsRouter);
 
 // app.listen - Binds and listens for connections on the specified host and port
 app.listen(PORT, () => {

@@ -1,13 +1,13 @@
 const Song = require('../../models/song');
-const Author = require('../../models/author');
+const Artist = require('../../models/artist');
 
 exports.getSongs = function getSongs(req, res) {
 
-  const allOrByAuthor = req.params.id ? { author: req.params.id } : {};
+  const allOrByArtist = req.params.id ? { artist: req.params.id } : {};
 
-  Song.find(allOrByAuthor, null, { sort: { title: 1 } })
+  Song.find(allOrByArtist, null, { sort: { title: 1 } })
     .select('-structure')
-    .populate('author', 'name')
+    .populate('artist', 'name')
     .exec((err, songs) => {
       if (err) {
         return res.status(500).json({ message: err.message });
@@ -18,7 +18,7 @@ exports.getSongs = function getSongs(req, res) {
 
 exports.getSong = function getSong(req, res) {
   Song.findById(req.params.id)
-    .populate('author', 'name')
+    .populate('artist', 'name')
     .exec((err, song) => {
       if (err) {
         return res.status(500).json({ message: err.message });
@@ -28,36 +28,36 @@ exports.getSong = function getSong(req, res) {
 };
 
 
-function createSongWithAuthor(author, songTitle, res) {
-  Song.create({ title: songTitle, author: author._id }, (err, song) => {
+function createSongWithArtist(artist, songTitle, res) {
+  Song.create({ title: songTitle, artist: artist._id }, (err, song) => {
     if (err) {
       return res.status(500).json({ err: err.message });
     }
-    author.songs.push(song._id);
-    author.modified = Date.now();
-    author.save();
+    artist.songs.push(song._id);
+    artist.modified = Date.now();
+    artist.save();
     res.json({ song, message: 'Song created' });
   });
 }
 
 exports.postSong = function postSong(req, res) {
   const song = req.body;
-  const authorName = song.author;
+  const artistName = song.artist;
   const songTitle = song.title;
 
-  if (authorName) {
-    Author.findOne({ name: authorName }).exec((err, existingAuthor) => {
+  if (artistName) {
+    Artist.findOne({ name: artistName }).exec((err, existingArtist) => {
       if (err) {
         return res.status(500).json({ err: err.message });
       }
-      if (existingAuthor) {
-        return createSongWithAuthor(existingAuthor, songTitle, res);
+      if (existingArtist) {
+        return createSongWithArtist(existingArtist, songTitle, res);
       }
-      Author.create({ name: authorName, songs: [] }, (err, createdAuthor) => {
+      Artist.create({ name: artistName, songs: [] }, (err, createdArtist) => {
         if (err) {
           return res.status(500).json({ err: err.message });
         }
-        createSongWithAuthor(createdAuthor, songTitle, res);
+        createSongWithArtist(createdArtist, songTitle, res);
       });
     });
   } else {
@@ -71,56 +71,56 @@ exports.postSong = function postSong(req, res) {
 
 };
 
-function deleteAuthorIfSongsEmpty(author) {
-  if (!author.songs.length) {
-    author.remove();
+function deleteArtistIfSongsEmpty(artist) {
+  if (!artist.songs.length) {
+    artist.remove();
   }
 }
 
-function updateSongAuthor(song, newAuthor, res) {
+function updateSongArtist(song, newArtist, res) {
 
-  if (song.author.name === newAuthor.name) {
-    Author.findById(song.author._id).exec((err, foundAuthor) => {
+  if (song.artist.name === newArtist.name) {
+    Artist.findById(song.artist._id).exec((err, foundArtist) => {
       if (err) {
         res.status(500).json({ message: err.message });
       }
-      foundAuthor.modified = Date.now();
-      foundAuthor.save();
-      res.json({ song, message: 'Song updated and author modified updated' });
+      foundArtist.modified = Date.now();
+      foundArtist.save();
+      res.json({ song, message: 'Song updated and artist modified updated' });
     });
   } else {
-    Author.findById(song.author._id).exec((err, oldAuthor) => {
-      const pullAuthorPromise = new Promise((resolve, reject) => {
-        oldAuthor.songs.pull(song._id);
-        resolve(oldAuthor.save());
+    Artist.findById(song.artist._id).exec((err, oldArtist) => {
+      const pullArtistPromise = new Promise((resolve, reject) => {
+        oldArtist.songs.pull(song._id);
+        resolve(oldArtist.save());
       });
-      pullAuthorPromise.then((author) => {
-        deleteAuthorIfSongsEmpty(author);
+      pullArtistPromise.then((artist) => {
+        deleteArtistIfSongsEmpty(artist);
       });
     });
 
-    const newAuthorId = new Promise((resolve, reject) => {
-      Author.findOne({ name: newAuthor.name }).exec((err, foundAuthor) => {
+    const newArtistId = new Promise((resolve, reject) => {
+      Artist.findOne({ name: newArtist.name }).exec((err, foundArtist) => {
         if (err) {
           res.status(500).json({ err: err.message });
         }
-        if (foundAuthor) {
-          foundAuthor.songs.push(song._id);
-          foundAuthor.modified = Date.now();
-          foundAuthor.save();
-          resolve(foundAuthor._id);
+        if (foundArtist) {
+          foundArtist.songs.push(song._id);
+          foundArtist.modified = Date.now();
+          foundArtist.save();
+          resolve(foundArtist._id);
         } else {
-          Author.create({ name: newAuthor.name, songs: [song._id] }, (err, createdAuthor) => {
+          Artist.create({ name: newArtist.name, songs: [song._id] }, (err, createdArtist) => {
             if (err) {
               res.status(500).json({ err: err.message });
             }
-            resolve(createdAuthor._id);
+            resolve(createdArtist._id);
           });
         }
       });
     });
-    newAuthorId.then((authorId) => {
-      song.author = authorId;
+    newArtistId.then((artistId) => {
+      song.artist = artistId;
       song.save();
       res.json({ song, message: 'Song updated' });
     });
@@ -135,12 +135,12 @@ exports.putSong = function putSong(req, res) {
     title: song.title,
     structure: song.structure,
     modified: Date.now()
-  }).populate('author', 'name')
+  }).populate('artist', 'name')
     .exec((err, songAsItExisted) => {
       if (err) {
         return res.status(500).json({ message: err.message });
       }
-      updateSongAuthor(songAsItExisted, song.author, res);
+      updateSongArtist(songAsItExisted, song.artist, res);
     });
 };
 
@@ -151,13 +151,13 @@ exports.deleteSong = function deleteSong(req, res) {
     if (err) {
       return res.status(500).json({ err: err.message });
     }
-    Author.findById(song.author._id).exec((err, foundAuthor) => {
-      const pullAuthorPromise = new Promise((resolve, reject) => {
-        foundAuthor.songs.pull(song._id);
-        resolve(foundAuthor.save());
+    Artist.findById(song.artist._id).exec((err, foundArtist) => {
+      const pullArtistPromise = new Promise((resolve, reject) => {
+        foundArtist.songs.pull(song._id);
+        resolve(foundArtist.save());
       });
-      pullAuthorPromise.then((author) => {
-        deleteAuthorIfSongsEmpty(author);
+      pullArtistPromise.then((artist) => {
+        deleteArtistIfSongsEmpty(artist);
         res.json({ message: 'Song Deleted' });
       });
     });

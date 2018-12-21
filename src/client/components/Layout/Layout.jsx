@@ -56,7 +56,7 @@ export default function Layout() {
 
         <section className="layout__content">
           <Route exact path="/" component={SongbookContainer} />
-          <Route path="/author/:id" component={SongbookContainer} />
+          <Route path="/artist/:id" component={SongbookContainer} />
           <Route path="/song/:id" component={SongsheetContainer} />
           <Route exact path="/help" component={Help} />
           <Route exact path="/settings" component={Settings} />

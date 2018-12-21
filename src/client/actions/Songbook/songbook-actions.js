@@ -2,10 +2,10 @@ import callApi from '../../util/callApi';
 import history from '../../history';
 import { editModalTrigger } from '../EditModal/edit-modal-actions';
 
-export function addSongs(authors) {
+export function addSongs(artists) {
   return {
     type: 'ADD_AUTHORS',
-    authors
+    artists
   };
 }
 
@@ -40,19 +40,19 @@ export function setAscending(isAscending) {
 export function newSongRequest(song) {
   return dispatch => callApi('song/create', 'post', {
     title: song.title,
-    author: song.author
+    artist: song.artist
   }).then((res) => {
     history.push(`/song/${res.song._id}`);
     dispatch(setSongPriority('modified'));
   });
 }
 
-export function newSongModalSequenceComplete(songAuthor) {
+export function newSongModalSequenceComplete(songArtist) {
   return (dispatch, getState) => {
     const { songTitle } = getState().songbookState;
     const song = {
       title: songTitle,
-      author: songAuthor
+      artist: songArtist
     };
     dispatch(newSongRequest(song));
   };
@@ -65,11 +65,11 @@ export function setNewSongTitle(songTitle) {
   };
 }
 
-export function assignSongAuthorModal(songTitle) {
+export function assignSongArtistModal(songTitle) {
   return (dispatch) => {
     dispatch(setNewSongTitle(songTitle));
     dispatch(editModalTrigger({
-      userPrompt: 'Song author',
+      userPrompt: 'Song artist',
       actionToTriggerOnCommit: newSongModalSequenceComplete,
       shouldCloseModal: true
     }));
@@ -80,20 +80,20 @@ export function newSongModal() {
   return (dispatch) => {
     dispatch(editModalTrigger({
       userPrompt: 'Song title',
-      actionToTriggerOnCommit: assignSongAuthorModal,
+      actionToTriggerOnCommit: assignSongArtistModal,
       shouldCloseModal: false
     }));
   };
 }
 
 export function fetchSongs() {
-  return dispatch => callApi('authors').then((res) => {
-    dispatch(addSongs(res.authors));
+  return dispatch => callApi('artists').then((res) => {
+    dispatch(addSongs(res.artists));
   });
 }
 
-export function fetchSongsBySingleAuthor(authorId) {
-  return dispatch => callApi(`author/${authorId}`).then(res => dispatch(addSongs(res.authors)));
+export function fetchSongsBySingleArtist(artistId) {
+  return dispatch => callApi(`artist/${artistId}`).then(res => dispatch(addSongs(res.artists)));
 }
 
 export function deleteSongRequest(songId) {

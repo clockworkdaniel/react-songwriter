@@ -1,5 +1,5 @@
 const intialState = {
-  authorSongList: [],
+  artistSongList: [],
   songTitle: '',
   uiState: {
     orderLogic: 'modified',
@@ -14,7 +14,7 @@ const songbookReducer = (state = intialState, action) => {
 
     case 'ADD_AUTHORS':
       return Object.assign({}, state, {
-        authorSongList: action.authors
+        artistSongList: action.artists
       });
     case 'SET_ORDER_LOGIC':
       return {
@@ -43,9 +43,9 @@ const songbookReducer = (state = intialState, action) => {
     case 'REMOVE_SONG':
       return {
         ...state,
-        authorSongList: state.authorSongList.map((author) => {
-          author.songs = author.songs.filter(song => song._id !== action.songId);
-          return author;
+        artistSongList: state.artistSongList.map((artist) => {
+          artist.songs = artist.songs.filter(song => song._id !== action.songId);
+          return artist;
         })
       };
 
