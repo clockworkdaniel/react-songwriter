@@ -22,7 +22,6 @@ function authorCreate(authorName) {
         if (err) {
           reject(err);
         }
-        console.log(author);
         resolve(author);
       });
   });
