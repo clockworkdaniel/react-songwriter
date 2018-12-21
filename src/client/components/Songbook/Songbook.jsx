@@ -13,15 +13,15 @@ export default class Songbook extends React.Component {
 
   componentDidMount() {
     const {
-      fetchAuthors, fetchSongsByAuthor, match, setSongPriority
+      fetchSongs, fetchSongsBySingleAuthor, match, setSongPriority
     } = this.props;
     this.matchesAuthorUrl = !!match.url.includes('/author/');
     if (this.matchesAuthorUrl) {
       setSongPriority(true); // defaults to author priority
-      fetchSongsByAuthor(match.params.id);
+      fetchSongsBySingleAuthor(match.params.id);
     } else {
       setSongPriority(false); // defaults to song priority
-      fetchAuthors();
+      fetchSongs();
     }
   }
 
