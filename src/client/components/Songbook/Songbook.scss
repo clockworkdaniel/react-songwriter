@@ -1,35 +1,101 @@
+@import './UIControls/UIControls';
+
 .songbook {
 	
 	&__heading {
 		display: inline-block;
 	}
 
-	&__list {
+	&__author-list {
 		list-style: none;
 		padding-left: 0;
+		margin-bottom: 32px;
+	}
+	&__song-list {
+		display: grid;
+		grid-template-columns: repeat( auto-fit, 17rem );
+		grid-gap: 1rem;
+		margin-bottom: 1rem;
+	}
+}
+
+.author {
+	&__name {
+		display: inline-block;
+		font-family: 'muli';
+		opacity: 0.6;
+		letter-spacing: 0.05em;
+		font-size: 1rem;
+		margin-bottom: 0.75rem;
+		margin-left: -0.75rem;
+		&:hover {
+			opacity: 0.75;
+		}
+	}
+
+	&__song-list {
+		@extend .songbook__song-list;
+	}
+}
+
+
+
+// NOTE: seperate
+.uic-order-btn {
+	margin: 0.25rem 0;
+	&:first-child {
+		margin-top: 0;
+	}
+	&:last-child {
+		margin-bottom: 0;
 	}
 }
 
 .song {
-
-	width: 17rem;
-	padding-right: 1rem;
-	margin-bottom: 32px;
-	// NOTE: doesn't work with currenct controls
-	// sort this out later
-	//overflow: hidden;
-	text-overflow: ellipsis;
-
-	&__title {
-		display: inline-block;
-		font-size: 1.375rem;
-		margin: 0 0 0.5rem;
-		white-space: nowrap;
+	box-sizing: border-box;
+	border: 1px solid rgba(249, 248, 200, 0.3);
+	padding: 0.75rem 0.75rem 0.625rem;
+	opacity: 0.9;
+	display: flex;
+	flex-direction: column;
+	cursor: pointer;
+	&:hover {
+		opacity: 1;
+		background-color: rgba(46, 113, 140, 0.2);
 	}
 
-	&__author {
-		font-size: 1rem;
+	.controls {
+		left: auto;
+		right: 0.125rem;
+    top: 0.25rem;
+	}
+
+
+	&__title {
+		width: calc(100% - 48px);
+		font-size: 1.25rem;
 		margin: 0;
-		opacity: 0.7;
+		white-space: nowrap;
+		overflow: hidden;
+		text-overflow: ellipsis;
+	}
+
+	&__author-name {
+		display: inline-block;
+		font-family: 'muli';
+		font-size: 0.9375rem;
+    opacity: 0.6;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    margin: 0.25rem 0 0.125rem;
+	}
+
+	&__date {
+		font-size: 0.75rem;
+    font-style: italic;
+    font-weight: bold;
+    letter-spacing: 0.01em;
+    opacity: 0.5;
+    margin-bottom: 0;
 	}
 }

@@ -1,0 +1,66 @@
+.book-controls {
+  position: fixed;
+  z-index: 1;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+
+  &__auth-song-priority {
+    p {
+      font-size: 0.9rem;
+      display: inline-block;
+      margin: 0 0.75rem 0 0;
+      font-weight: bold;
+    }
+    .select-container {
+      display: inline-block;
+      color: #D8D8B5;
+      background: none;
+      border: 1px solid #D8D8B5;
+      cursor: pointer;
+      border-radius: 3px;
+      padding-right: 0.25rem;
+      margin: 0 0.25rem;
+      opacity: 0.95;
+      select {
+        font-size: 0.9rem;
+        opacity: 0.95;
+      }
+    }
+  }
+
+  &__ordering-logic {
+    display: flex;
+    flex-direction: row;
+  }
+
+  &__ordering-btn {
+    padding-right: 1rem;
+    margin: 0 0.25rem;
+    position: relative;
+    &:last-child {
+      margin-right: 0;
+    }
+
+    &::after {
+      content: '';
+      position: absolute;
+      right: 0.3125rem;
+      top: 0.3125rem;
+      font-size: 0.5rem;
+      .ascending & {
+        transform: rotate(180deg);
+      }
+    }
+    .alphabetically &[value='alphabetically'],
+    .modified &[value='modified'],
+    .created &[value='created'] {
+      opacity: 0.95;
+      &::after {
+        content: '\25BC';
+      }
+    }
+  }
+}

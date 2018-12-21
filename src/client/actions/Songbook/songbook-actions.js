@@ -1,17 +1,11 @@
 import callApi from '../../util/callApi';
+import history from '../../history';
 import { editModalTrigger } from '../EditModal/edit-modal-actions';
 
-export function addSongs(songs) {
+export function addSongs(authors) {
   return {
-    type: 'ADD_SONGS',
-    songs
-  };
-}
-
-export function addSong(song) {
-  return {
-    type: 'ADD_SONG',
-    song
+    type: 'ADD_AUTHORS',
+    authors
   };
 }
 
@@ -22,11 +16,35 @@ export function removeSong(songId) {
   };
 }
 
+export function setOrderLogic(orderLogic) {
+  return {
+    type: 'SET_ORDER_LOGIC',
+    orderLogic
+  };
+}
+
+export function setSongPriority(songPriority) {
+  return {
+    type: 'SET_SONG_PRIORITY',
+    songPriority
+  };
+}
+
+export function setAscending(isAscending) {
+  return {
+    type: 'SET_ASCENDING',
+    isAscending
+  };
+}
+
 export function newSongRequest(song) {
   return dispatch => callApi('song/create', 'post', {
     title: song.title,
     author: song.author
-  }).then(res => dispatch(addSong(res.song)));
+  }).then((res) => {
+    history.push(`/song/${res.song._id}`);
+    dispatch(setSongPriority('modified'));
+  });
 }
 
 export function newSongModalSequenceComplete(songAuthor) {
@@ -68,14 +86,14 @@ export function newSongModal() {
   };
 }
 
-export function fetchSong(songId) {
-  return dispatch => callApi(`song/${songId}`).then(res => dispatch(addSong(res.song)));
+export function fetchSongs() {
+  return dispatch => callApi('authors').then((res) => {
+    dispatch(addSongs(res.authors));
+  });
 }
 
-export function fetchSongs() {
-  return dispatch => callApi('songs').then((res) => {
-    dispatch(addSongs(res.songs));
-  });
+export function fetchSongsBySingleAuthor(authorId) {
+  return dispatch => callApi(`author/${authorId}`).then(res => dispatch(addSongs(res.authors)));
 }
 
 export function deleteSongRequest(songId) {

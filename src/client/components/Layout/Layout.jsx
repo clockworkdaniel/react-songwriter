@@ -1,11 +1,13 @@
 import React from 'react';
 
 import {
-  BrowserRouter,
+  Router,
   Route,
   NavLink,
   Link
 } from 'react-router-dom';
+
+import history from '../../history';
 
 import SongbookContainer from '../Songbook/SongbookContainer';
 import SongsheetContainer from '../Songsheet/SongsheetContainer';
@@ -17,11 +19,11 @@ export default function Layout() {
 
   return (
 
-    <BrowserRouter>
+    <Router history={history}>
       <div className="layout">
 
         <EditModalContainer />
-        <header className="layout__header" >
+        <header className="layout__header">
           <nav className="header">
             <ul className="header__nav-list">
               <li className="header__li--title">
@@ -54,13 +56,14 @@ export default function Layout() {
 
         <section className="layout__content">
           <Route exact path="/" component={SongbookContainer} />
+          <Route path="/author/:id" component={SongbookContainer} />
           <Route path="/song/:id" component={SongsheetContainer} />
           <Route exact path="/help" component={Help} />
           <Route exact path="/settings" component={Settings} />
         </section>
 
       </div>
-    </BrowserRouter>
+    </Router>
 
   );
 

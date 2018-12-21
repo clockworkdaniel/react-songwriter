@@ -2,6 +2,11 @@ Exploration:
   ☐ Can using componentDidUpdate() be avoided in LineInput.jsx?
   ☐ Animation between Lyrics/Chord UI state
   ☐ Split up songsheet reducer further?
+  ☐ Next js?
+  ☐ PWA
+
+General Improvements:
+  ☐ Server-side sorting is not case sensitive
 
 Site Design:
 
@@ -13,18 +18,18 @@ Site Design:
   Songbook Page:
     Here you can see a list of songs.
 
-    ☐ Songs can be ordered according to:
-      ☐ title
-      ☐ author
-      ☐ date created
-      ☐ date modified
+    ✔ Songs can be ordered according to: @done (12/19/2018, 10:22:28 AM)
+      ✔ title @done (12/19/2018, 10:22:30 AM)
+      ✔ author @done (12/19/2018, 10:22:31 AM)
+      ✔ date created @done (12/19/2018, 4:27:18 PM)
+      ✔ date modified @done (12/19/2018, 4:27:17 PM)
     ☐ delete a song
 
   Songsheet Page:
     - Where you:
       write your song (lyrics)
       ascribe chords
-      ☐ update song title or author name
+      ✔ update song title or author name @done (12/19/2018, 4:27:29 PM)
     
     Songsheet UI:
       ✔ edit mode @done (12/10/2018, 2:10:52 PM)
@@ -35,7 +40,7 @@ Site Design:
         ☐ style
       ☐ chord palette (later)
         ☐ style
-      ☐ save
+      ✔ save @done (12/17/2018, 11:56:34 AM)
       ☐ playmode
 
   Settings Page:
@@ -52,6 +57,7 @@ Lyrics editing:
     ☐ Implement undo button button (which is triggered by shift Z)
   Bugs:
     ☐ When merging lines, a space should not be added in between the two strings being merged
+    ☐ Bug when returning
 
 Chord editing:
 

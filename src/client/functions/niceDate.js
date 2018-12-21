@@ -1,0 +1,5 @@
+export default function niceDate(jsDate) {
+  const re = /^\d\d(\d\d).(\d\d).(\d\d)T(\d\d:\d\d)/;
+  const c = re.exec(jsDate);
+  return `${c[3]}-${c[2]}-${c[1]} at ${c[4]}`;
+}

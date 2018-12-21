@@ -1,16 +1,17 @@
 import React from 'react';
+import { Link } from 'react-router-dom';
 
-export default function SongAuthor({ author, rename }) {
+export default function SongAuthor({ author, rename, _id }) {
 
-  function handleAuthorRename() {
+  function handleAuthorRename(event) {
+    event.preventDefault();
     const editableText = author;
     const path = ['song', 'author', 'name'];
     rename(editableText, 'Edit author', path);
   }
 
   return (
-
-    <div>
+    <Link to={`/author/${_id}`}>
       <h3 className="songsheet__author controls__container">
         {author}
         <span className="controls">
@@ -19,6 +20,6 @@ export default function SongAuthor({ author, rename }) {
           </button>
         </span>
       </h3>
-    </div>
+    </Link>
   );
 }
