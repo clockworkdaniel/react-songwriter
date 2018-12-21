@@ -1,11 +1,13 @@
 import React from 'react';
 
 import {
-  BrowserRouter,
+  Router,
   Route,
   NavLink,
   Link
 } from 'react-router-dom';
+
+import history from '../../history';
 
 import SongbookContainer from '../Songbook/SongbookContainer';
 import SongsheetContainer from '../Songsheet/SongsheetContainer';
@@ -17,7 +19,7 @@ export default function Layout() {
 
   return (
 
-    <BrowserRouter>
+    <Router history={history}>
       <div className="layout">
 
         <EditModalContainer />
@@ -61,7 +63,7 @@ export default function Layout() {
         </section>
 
       </div>
-    </BrowserRouter>
+    </Router>
 
   );
 

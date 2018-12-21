@@ -1,4 +1,5 @@
 import callApi from '../../util/callApi';
+import history from '../../history';
 import { editModalTrigger } from '../EditModal/edit-modal-actions';
 
 export function addAuthors(authors) {
@@ -8,7 +9,6 @@ export function addAuthors(authors) {
   };
 }
 
-// FIX
 export function removeSong(songId) {
   return {
     type: 'REMOVE_SONG',
@@ -16,11 +16,12 @@ export function removeSong(songId) {
   };
 }
 
-// FIX
 export function newSongRequest(song) {
   return dispatch => callApi('song/create', 'post', {
     title: song.title,
     author: song.author
+  }).then((res) => {
+    history.push(`/song/${res.song._id}`);
   });
 }
 
