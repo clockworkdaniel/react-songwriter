@@ -2,7 +2,7 @@ const intialState = {
   authorSongList: [],
   songTitle: '',
   uiState: {
-    orderLogic: 'alphabetically',
+    orderLogic: 'modified',
     songPriority: false,
     isAscending: false
   }
