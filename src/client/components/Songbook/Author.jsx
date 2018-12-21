@@ -32,7 +32,8 @@ export default function Author({
         break;
     }
   } else {
-    songList = sortByDate(songs.slice(0, 3), 'modified', isAscending);
+    songList = sortByDate(songs, 'modified', isAscending).slice(0, 3);
+    console.log(songList);
   }
 
   return (
