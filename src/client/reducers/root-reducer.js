@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux';
-import songsheetReducer from './songsheet-reducer';
-import editModalReducer from './edit-modal-reducer';
+import layoutReducer from './layout-reducer';
 import songbookReducer from './songbook-reducer';
+import songsheetReducer from './songsheet-reducer';
 
 export default combineReducers({
+  layoutState: layoutReducer,
   songsheetState: songsheetReducer,
-  editModalState: editModalReducer,
   songbookState: songbookReducer
 });

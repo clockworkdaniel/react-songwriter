@@ -5,10 +5,10 @@ import {
   commitTextChange
 } from '../../actions/EditModal/edit-modal-actions';
 
-import EditModal from './EditModal';
+import Layout from './Layout';
 
 const mapStateToProps = state => ({
-  editModalState: state.editModalState
+  editModalState: state.layoutState.editModal
 });
 
 const mapDispatchToProps = dispatch => ({
@@ -24,9 +24,9 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-const EditModalContainer = connect(
+const LayoutContainer = connect(
   mapStateToProps,
   mapDispatchToProps
-)(EditModal);
+)(Layout);
 
-export default EditModalContainer;
+export default LayoutContainer;

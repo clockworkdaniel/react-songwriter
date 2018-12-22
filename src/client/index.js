@@ -9,7 +9,7 @@ import thunk from 'redux-thunk';
 
 import rootReducer from './reducers/root-reducer';
 
-import Layout from './components/Layout/Layout';
+import LayoutContainer from './components/Layout/LayoutContainer';
 
 import './main.scss';
 
@@ -17,7 +17,7 @@ const store = createStore(rootReducer, applyMiddleware(thunk));
 
 ReactDOM.render(
   <Provider store={store}>
-    <Layout />
+    <LayoutContainer />
   </Provider>,
   document.getElementById('app')
 );

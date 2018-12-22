@@ -8,21 +8,25 @@ import {
 } from 'react-router-dom';
 
 import history from '../../history';
-
+import EditModal from '../EditModal/EditModal';
 import SongbookContainer from '../Songbook/SongbookContainer';
 import SongsheetContainer from '../Songsheet/SongsheetContainer';
-import EditModalContainer from '../EditModal/EditModalContainer';
+import SignIn from '../SignIn/SignIn';
 import Help from '../Help';
 import Settings from '../Settings';
 
-export default function Layout() {
+export default function Layout({ editModalState, updateEditableText, commitTextChange }) {
 
   return (
-
     <Router history={history}>
       <div className="layout">
 
-        <EditModalContainer />
+        <EditModal
+          editModalState={editModalState}
+          updateEditableText={updateEditableText}
+          commitTextChange={commitTextChange}
+        />
+
         <header className="layout__header">
           <nav className="header">
             <ul className="header__nav-list">
