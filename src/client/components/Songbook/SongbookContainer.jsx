@@ -14,6 +14,7 @@ import Songbook from './Songbook';
 
 const mapStateToProps = state => ({
   artistSongList: state.songbookState.artistSongList,
+  orderedArtistSongList: state.songbookState.orderedArtistSongList,
   newSong: state.songbookState.newSong,
   uiState: state.songbookState.uiState
 });

@@ -1,11 +1,11 @@
 import callApi from '../../util/callApi';
 import history from '../../history';
-import { editModalTrigger } from '../EditModal/edit-modal-actions';
+import { editModalTrigger } from '../Layout/edit-modal-actions';
 
-export function addSongs(artists) {
+export function addSongs(artistSongs) {
   return {
-    type: 'ADD_AUTHORS',
-    artists
+    type: 'ADD_SONGS',
+    artistSongs
   };
 }
 
