@@ -18,24 +18,26 @@ export default function Artist({
   }
 
   return (
-    <li className="songbook__artist-item artist">
-      <Link to={`/artist/${_id}`}>
-        <h4 className="artist__name">
-          {name}
-        </h4>
-      </Link>
-      <ul className="artist__song-list">
-        {songs && songs.map(song => (
-          <Song
-            key={song._id}
-            song={song}
-            artistName={name}
-            deleteSongRequest={deleteSongRequest}
-            orderLogic={orderLogic}
-            songPriority={songPriority}
-          />
-        ))}
-      </ul>
-    </li>
+    (!!songs.length) && (
+      <li className="songbook__artist-item artist">
+        <Link to={`/artist/${_id}`}>
+          <h4 className="artist__name">
+            {name}
+          </h4>
+        </Link>
+        <ul className="artist__song-list">
+          {songs && songs.map(song => (
+            <Song
+              key={song._id}
+              song={song}
+              artistName={name}
+              deleteSongRequest={deleteSongRequest}
+              orderLogic={orderLogic}
+              songPriority={songPriority}
+            />
+          ))}
+        </ul>
+      </li>
+    )
   );
 }
