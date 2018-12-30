@@ -5,6 +5,21 @@ const initialState = {
     userPrompt: '',
     commitedTextObj: {},
     actionToTriggerOnCommit: undefined
+  },
+  signIn: {
+    signedIn: false,
+    showSignIn: false,
+    showSignUp: false,
+    signUpForm: {
+      username: '',
+      email: '',
+      password: '',
+      passwordConfirmation: ''
+    },
+    signInForm: {
+      usernameOrEmail: '',
+      password: ''
+    }
   }
 };
 
@@ -42,6 +57,75 @@ const editModalReducer = (state = initialState, action) => {
         editModal: {
           ...state.editModal,
           showEditModal: false
+        }
+      };
+    }
+
+    case 'SET_SIGNED_IN_STATE': {
+      return {
+        ...state,
+        signIn: {
+          ...state.signIn,
+          signedIn: action.signedIn
+        }
+      };
+    }
+
+    case 'SHOW_SIGN_IN': {
+      return {
+        ...state,
+        signIn: {
+          ...state.signIn,
+          showSignIn: true,
+          showSignUp: false
+        }
+      };
+    }
+
+    case 'SHOW_SIGN_UP': {
+      return {
+        ...state,
+        signIn: {
+          ...state.signIn,
+          showSignUp: true,
+          showSignIn: false
+        }
+      };
+    }
+
+    case 'HIDE_SIGN_IN_SIGN_UP': {
+      return {
+        ...state,
+        signIn: {
+          ...state.signIn,
+          showSignIn: false,
+          showSignUp: false
+        }
+      };
+    }
+
+    case 'UPDATE_SIGNUP_INPUT_VALUE': {
+      return {
+        ...state,
+        signIn: {
+          ...state.signIn,
+          signUpForm: {
+            ...state.signIn.signUpForm,
+            [action.name]: action.value
+          }
+        }
+      };
+    }
+
+    case 'UPDATE_SIGNIN_INPUT_VALUE': {
+      return {
+        ...state,
+        signIn: {
+          ...state.signIn,
+          signInForm: {
+            ...state.signIn.signInForm,
+            [action.name]: action.value
+          }
         }
       };
     }
