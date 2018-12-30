@@ -1,7 +1,9 @@
 const express = require('express');
-const parser = require('body-parser');
+const bodyParser = require('body-parser');
 // var path = require('path');
 const mongoose = require('mongoose');
+const session = require('express-session');
+const MongoStore = require('connect-mongo')(session);
 
 const mongoDB = 'mongodb://127.0.0.1:27017';
 const db = mongoose.connection;
@@ -18,6 +20,7 @@ const app = express();
 
 const songsRouter = require('./routes/song');
 const artistsRouter = require('./routes/artist');
+const usersRouter = require('./routes/user');
 
 const PORT = 8000;
 
@@ -27,15 +30,26 @@ const PORT = 8000;
 
 // app.use - mounts the specified middleware function or functions at the specified path
 app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
+  res.header('Access-Control-Allow-Origin', 'http://localhost:3000');
+  res.header('Access-Control-Allow-Credentials', 'true');
   res.header('Access-Control-Allow-Methods', 'GET, HEAD, OPTIONS, POST, PUT, DELETE');
   res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
   next();
 });
-app.use(parser.json());
+app.use(session({
+  secret: 'giddy up',
+  resave: false,
+  saveUninitialized: false,
+  cookie: {
+    httpOnly: false, // NOTE: look into changing this
+  },
+  store: new MongoStore({ mongooseConnection: db })
+}));
+app.use(bodyParser.json());
 
 app.use('/api', songsRouter);
 app.use('/api', artistsRouter);
+app.use('/api', usersRouter);
 
 // app.listen - Binds and listens for connections on the specified host and port
 app.listen(PORT, () => {
