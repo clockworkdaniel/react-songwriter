@@ -31,11 +31,11 @@ exports.getSong = function getSong(req, res) {
       if (err) {
         return res.status(500).json({ message: err.message });
       }
-      if (!song.public && song.user !== userId) {
+      if (!song.public && (userId !== song.user.toString())) {
         return res.status(401).json({ message: 'Private song, please sign in' });
       }
-      if (song.user !== userId) {
-        res.status(200).json({ song, editable: false });
+      if (userId !== song.user.toString()) {
+        return res.status(200).json({ song, editable: false });
       }
       res.status(200).json({ song, editable: true });
     });
@@ -72,7 +72,7 @@ exports.postSong = function postSong(req, res) {
       }
       resolve(foundUser);
     });
-  }); 
+  });
 
   // can result in: no artistName (undefined), artist doesn't exist (null) or artist exists
   const existingArtistPromise = artistName && new Promise((resolve, reject) => {
