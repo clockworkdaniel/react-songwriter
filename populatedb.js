@@ -81,7 +81,6 @@ function createSong(songTitle, artistName, username, public) {
       user.songs.push(song._id);
       user.save();
       artist.songs.push(song._id);
-      console.log(artist.songs)
       artist.modified = Date.now();
       artist.save();
     });
@@ -145,8 +144,6 @@ function createSongs() {
 
 // Note: There are no public songs by The La's - They all belong to Solo
 // Heroes is the only public David Bowie song, all belong to Han Solo exc
-
-
 
 createArtists().then(createUsers).then(createSongs).then(() => {
   console.log('database populated');
