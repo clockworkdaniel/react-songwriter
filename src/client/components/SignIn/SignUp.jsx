@@ -22,65 +22,78 @@ export default function SignUp({
   return (
     <form className="sign-in__form" onSubmit={handleSubmit}>
       <h2 className="sign-in__heading">Sign Up</h2>
-      <div className="sign-in__input-group">
-        <label className="sign-in__label" htmlFor="username">
-          Username
-        </label>
-        <input
-          className="sign-in__text-input"
-          type="text"
-          name="username"
-          id="username"
-          value={signUpForm.username}
-          onChange={handleFieldChange}
-        />
-      </div>
-      <div className="sign-in__input-group">
-        <label className="sign-in__label" htmlFor="email">
-          Email
-        </label>
-        <input
-          className="sign-in__text-input"
-          type="text"
-          name="email"
-          id="email"
-          value={signUpForm.email}
-          onChange={handleFieldChange}
-        />
-      </div>
-      {/* {(!firstPasswordEntered) ? (  */}
-      <div className="sign-in__input-group">
-        <label className="sign-in__label" htmlFor="password">
-            Password
-        </label>
-        <input
-          className="sign-in__text-input"
-          type="password"
-          name="password"
-          id="password"
-          value={signUpForm.password}
-          onChange={handleFieldChange}
-        />
-      </div>
-      {/* ) : ( */}
-      {/* <div className="sign-in__input-group">
-          <label className="sign-in__label" htmlFor="passwordConfirm">
-            Confirm Password
-          </label>
-          <input
-            className="sign-in__text-input"
-            type="password" name="passwordConfirm"
-            value={signUpForm.passwordConfirmation}
-            id="passwordConfirmation"
-            onChange={handleFieldChange}
-          />
-        </div> */}
-      {/* )} */}
-      <button type="submit">
-        Proceed
-      </button>
+      {(signUpForm.stage === 1) && (
+        <div className="sign-in__stage">
+          <div className="sign-in__input-group">
+            <label className="sign-in__label" htmlFor="username">
+              Username
+            </label>
+            <input
+              className="sign-in__text-input"
+              type="text"
+              name="username"
+              id="username"
+              value={signUpForm.username}
+              onChange={handleFieldChange}
+            />
+          </div>
+          <div className="sign-in__input-group">
+            <label className="sign-in__label" htmlFor="email">
+              Email
+            </label>
+            <input
+              className="sign-in__text-input"
+              type="text"
+              name="email"
+              id="email"
+              value={signUpForm.email}
+              onChange={handleFieldChange}
+            />
+          </div>
+          <button
+            type="button"
+            className=""
+          >
+            Proceed
+          </button>
+        </div>
+      )}
+      {(signUpForm.stage === 2) && (
+        <div className="sign-in__stage">
+          <div className="sign-in__input-group">
+            <label className="sign-in__label" htmlFor="password">
+                Password
+            </label>
+            <input
+              className="sign-in__text-input"
+              type="password"
+              name="password"
+              id="password"
+              value={signUpForm.password}
+              onChange={handleFieldChange}
+            />
+          </div>
+          <div className="sign-in__input-group">
+            <label className="sign-in__label" htmlFor="passwordConfirm">
+              Confirm Password
+            </label>
+            <input
+              className="sign-in__text-input"
+              type="password"
+              name="passwordConfirm"
+              value={signUpForm.passwordConfirmation}
+              id="passwordConfirmation"
+              onChange={handleFieldChange}
+            />
+          </div>
+          <button type="submit">
+            Create account
+          </button>
+        </div>
+      )}
       <p>Already have an account?</p>
       <button
+        className="sign-in__alternate-btn"
         type="button"
         onClick={showSignIn}
       >

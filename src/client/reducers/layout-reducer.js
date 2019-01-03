@@ -11,6 +11,7 @@ const initialState = {
     showSignIn: false,
     showSignUp: false,
     signUpForm: {
+      stage: 1,
       username: '',
       email: '',
       password: '',

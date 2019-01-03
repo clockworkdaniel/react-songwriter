@@ -61,7 +61,8 @@ export default function SignIn({
             Proceed
           </button>
           <p>Don't have an account yet?</p>
-          <button 
+          <button
+            className="sign-in__alternate-btn"
             type="submit"
             onClick={showSignUp}
           >
