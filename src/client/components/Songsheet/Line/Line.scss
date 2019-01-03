@@ -1,5 +1,4 @@
 .line {
-
   transition: margin 250ms ease;
 
   &:last-of-type,
@@ -36,13 +35,18 @@
     position: absolute;
     transform: translate(0, -1.2em);
     opacity: 0;
-    font-size: 1.05rem;
+    font-size: rem(17px);
     animation: FADE-IN 300ms 350ms 1 forwards;
   }
-
 }
 
 @keyframes FADE-IN {
-	0% 		{ opacity: 0; transform: translate(0, -1.5em); }
-	100%	{ opacity: 0.6; transform: translate(0, -1.2em); }
+  0% {
+    opacity: 0;
+    transform: translate(0, -1.5em);
+  }
+  100% {
+    opacity: 0.6;
+    transform: translate(0, -1.2em);
+  }
 }

@@ -1,38 +1,46 @@
-@import './icons.scss';
-@import './fonts.scss';
+@import "./icons.scss";
+@import "./fonts.scss";
+@import "./functions.scss";
+@import "./colour-scheme.scss"
 
 html {
-	font-size: 16px;
-	color: #D8D8B5;
+  color: #d8d8b5;
 }
 
 body {
-	background-color: black;
-	margin: 8px;
+  background-color: black;
+  margin: 8px;
 }
 
-h1, h2, h3, h4, h5, h6 {
-	font-family: 'Ovo';
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  font-family: "Ovo";
 }
 
 h1 {
-	font-size: 3rem;
-	font-family: 'Ovo';
-	color: #D8D8B5;
-	margin: 0.625rem 0;
+  font-size: 3rem;
+  font-family: "Ovo";
+  color: #d8d8b5;
+  margin: rem(10px) 0;
 }
 
 h2 {
   font-size: 2rem;
 }
 
-input, button, select {
-	background: none;
-	appearance: none;
-	border: none;
-	outline-offset: 0;
-	outline: none;
-	display: inline;
+input,
+button,
+select {
+  background: none;
+  appearance: none;
+  border: none;
+  outline-offset: 0;
+  outline: none;
+  display: inline;
 }
 
 ul {
@@ -43,18 +51,23 @@ li {
   list-style: none;
 }
 
-p, input, button, label, select, a {
-	font-family: 'Muli';
-	color: #F9F8C8;
-	font-size: 1rem;
-	font-weight: 300;
-	font-kerning: none;
+p,
+input,
+button,
+label,
+select,
+a {
+  font-family: "Muli";
+  color: #f9f8c8;
+  font-size: 1rem;
+  font-weight: 300;
+  font-kerning: none;
 }
 
 a,
 a:visited,
 a:active {
-	text-decoration: none;
+  text-decoration: none;
 }
 
 select {
@@ -63,17 +76,17 @@ select {
 }
 
 button {
-	font-size: 0.9rem;
-	color: #D8D8B5;
-	background: none;
-	border: 1px solid #D8D8B5;
-	cursor: pointer;
-	border-radius: 3px;
-	display: block;
+  font-size: rem(15px);
+  color: #d8d8b5;
+  background: none;
+  border: 1px solid #d8d8b5;
+  cursor: pointer;
+  border-radius: 3px;
+  display: block;
   margin: 0.75rem 0;
   opacity: 0.7;
 }
 
 button:hover {
-	opacity: 1;
+  opacity: 1;
 }

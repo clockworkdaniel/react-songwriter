@@ -11,7 +11,7 @@
 	&__chord-input,
 	&__specificity-select {
 		display: inline-block;
-		padding: 0.125rem 0.375rem 0.1875rem;
+		padding: rem(2px) rem(6px) rem(3px);
 		border-style: solid;
 		border-radius: 3px;
 		border-width: 1px;
@@ -25,12 +25,12 @@
 
 	&__chord-input {
 		input {
-			font-size: 0.9rem;
+			font-size: rem(15px);
 			display: inline-block;
 			width: 3rem;
 		}
 		p {
-			font-size: 0.9rem;
+			font-size: rem(15px);
 			display: inline-block;
 			margin: 0 0.5rem 0 0;
 		}
@@ -39,16 +39,16 @@
 	&__specificity-select {
 		text-align: right;
 		select {
-			font-size: 0.9rem;
+			font-size: rem(15px);
 			display: inline-block;
 			text-align: right;
 			text-align-last: right;
-			margin-right: -0.1rem;
+			margin-right: - rem(2px);
 		}
 		p {
 			font-size: 0.9rem;
 			display: block;
-			margin: 0 0 0.125rem;
+			margin: 0 0 rem(2px);
 		}
 	}
 
