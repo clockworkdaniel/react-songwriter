@@ -1,17 +1,4 @@
 @font-face {
-  font-family: 'Muli';
-  font-style: normal;
-  font-weight: 300;
-  src: url('./fonts/Muli-Light.ttf');
-}
-@font-face {
-  font-family: 'Ovo';
-  font-style: normal;
-  font-weight: 400;
-  src: url('./fonts/Ovo-Regular.ttf');
-}
-
-@font-face {
   font-family: 'icomoon';
   src:	url('./fonts/icomoon.ttf?uqw53b') format('truetype'),
     		url('./fonts/icomoon.woff?uqw53b') format('woff'),
@@ -93,81 +80,4 @@
 }
 .icon-move-down:before {
   content: "\ea47";
-}
-
-html {
-	font-size: 16px;
-	color: #D8D8B5;
-}
-
-body {
-	background-color: black;
-	margin: 8px;
-}
-
-h1, h2, h3, h4, h5, h6 {
-	font-family: 'Ovo';
-}
-
-h1 {
-	font-size: 3rem;
-	font-family: 'Ovo';
-	color: #D8D8B5;
-	margin: 0.625rem 0;
-}
-
-h2 {
-  font-size: 2rem;
-}
-
-input, button, select {
-	background: none;
-	appearance: none;
-	border: none;
-	outline-offset: 0;
-	outline: none;
-	display: inline;
-}
-
-ul {
-  padding-left: 0;
-}
-
-li {
-  list-style: none;
-}
-
-p, input, button, label, select, a {
-	font-family: 'Muli';
-	color: #F9F8C8;
-	font-size: 1rem;
-	font-weight: 300;
-	font-kerning: none;
-}
-
-a,
-a:visited,
-a:active {
-	text-decoration: none;
-}
-
-select {
-  background-color: initial;
-  border: 0;
-}
-
-button {
-	font-size: 0.9rem;
-	color: #D8D8B5;
-	background: none;
-	border: 1px solid #D8D8B5;
-	cursor: pointer;
-	border-radius: 3px;
-	display: block;
-  margin: 0.75rem 0;
-  opacity: 0.7;
-}
-
-button:hover {
-	opacity: 1;
 }
