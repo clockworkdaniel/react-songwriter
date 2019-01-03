@@ -64,10 +64,7 @@ export default class Layout extends React.Component {
               <ul className="header__nav-list">
                 <li className="header__li--title">
                   <Link to="/">
-                    <h1 className="header__title-container">
-                      <span className="header__title">React</span>
-                      <span className="header__sub-title">Songwriter</span>
-                    </h1>
+                    <h1 className="header__title">Songbird</h1>
                   </Link>
                 </li>
                 <li className="header__li">

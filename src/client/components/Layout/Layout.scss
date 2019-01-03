@@ -1,54 +1,45 @@
 .layout {
-	&__header{
-
-	}
-	&__content {
-		margin-top: 32px;
-		margin-left: 32px;
-	}
+  &__header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 63px;
+    border-bottom: grey 1px solid;
+  }
+  &__content {
+    padding-top: 4.8125rem;
+    margin-left: 32px;
+  }
 }
 
 .header {
+  &__nav-list {
+    list-style: none;
+    margin: 0.5rem;
+    padding: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+  }
 
-	padding: 0 8px;
+  &__li {
+    padding: 8px;
+    margin-left: 8px;
+    &--title {
+      padding: 0;
+      margin: 0 2rem 0 0;
+      text-shadow: 1px 1px 5px black, -1px -1px 5px black;
+    }
+    &:last-child {
+      padding-right: 0;
+    }
+  }
 
-	&__nav-list {
-		list-style: none;
-		padding-left: 0;
-		display: flex;
-		flex-direction: row;
-		align-items: center;
-	}
-
-	&__li {
-		padding: 8px;
-		margin-left: 8px;
-		&--title {
-			padding: 0;
-			margin: 0 2rem 0 0;
-		}
-		&:last-child {
-			padding-right: 0;
-		}
-	}
-
-	&__title-container {
-		display: flex;
-		flex-direction: column;
-		font-size: 1rem;
-		margin: 0;
-	}
-
-	&__title {
-		display: inline-block;
-		font-size: 4em;
-		line-height: 0.8;
-	}
-
-	&__sub-title {
-		display: inline-block;
-		font-size: 1.75em;
-		letter-spacing: 0.08em;
-		line-height: 0.8;
-	}
+  &__title {
+    display: inline-block;
+    font-size: 3.5rem;
+    margin: 0;
+    line-height: 1;
+  }
 }
