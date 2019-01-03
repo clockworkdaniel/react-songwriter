@@ -116,7 +116,7 @@ export default class LineInput extends React.Component {
           onKeyDown={e => this.handleKeyDown(e, fullLine, caretPosition, lineKey, sectionKey)}
           onClick={e => this.getCaretAndPosition(e, caretIsBeingSet, lineKey, sectionKey)}
           onKeyUp={e => this.getCaretAndPosition(e, caretIsBeingSet, lineKey, sectionKey)}
-          ref={(input) => { this.textInput = input; }}
+          ref={(input) => { this.textInput = input; }} // NOTE: interesting – check here https://reactjs.org/docs/uncontrolled-components.html
         />
       </div>
     );

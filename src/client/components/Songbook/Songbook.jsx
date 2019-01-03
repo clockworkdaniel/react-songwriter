@@ -2,7 +2,6 @@ import React from 'react';
 import Artist from './Artist';
 import Song from './Song';
 import UIControls from './UIControls/UIControls';
-import { sortAlphabetically, sortByDate, toSongPriority } from '../../functions/arrayStuff';
 
 export default class Songbook extends React.Component {
   constructor(props) {
@@ -13,7 +12,14 @@ export default class Songbook extends React.Component {
 
   componentDidMount() {
     const {
-      fetchSongs, fetchSongsBySingleArtist, match, setSongPriority
+      fetchSongs,
+      fetchSongsBySingleArtist,
+      match,
+      setSongPriority,
+      setOrderLogic,
+      uiState: {
+        orderLogic
+      }
     } = this.props;
     this.matchesArtistUrl = !!match.url.includes('/artist/');
     if (this.matchesArtistUrl) {
@@ -21,41 +27,10 @@ export default class Songbook extends React.Component {
       fetchSongsBySingleArtist(match.params.id);
     } else {
       setSongPriority(false); // defaults to song priority
+      (orderLogic === 'created') && setOrderLogic('modified');
       fetchSongs();
     }
   }
-
-  orderArtistSongList(artistSongList) {
-    const {
-      uiState: {
-        isAscending,
-        songPriority,
-        orderLogic
-      },
-    } = this.props;
-
-    if (this.matchesArtistUrl) {
-      return artistSongList;
-    }
-
-    switch (orderLogic) {
-      case 'alphabetically':
-        if (!songPriority) {
-          return sortAlphabetically(artistSongList, 'name', isAscending);
-        }
-        return sortAlphabetically(toSongPriority(artistSongList), 'title', isAscending);
-      case 'modified':
-        if (!songPriority) {
-          return sortByDate(artistSongList, 'modified', isAscending);
-        }
-        return sortByDate(toSongPriority(artistSongList), 'modified', isAscending);
-      case 'created':
-        return sortByDate(toSongPriority(artistSongList), 'created', isAscending);
-      default:
-        break;
-    }
-  }
-
 
   handleNewSongModal() {
     const { newSongModal } = this.props;
@@ -65,6 +40,7 @@ export default class Songbook extends React.Component {
   render() {
     const {
       artistSongList,
+      orderedArtistSongList,
       deleteSongRequest,
       uiState: {
         isAscending,
@@ -76,22 +52,12 @@ export default class Songbook extends React.Component {
       setAscending
     } = this.props;
 
-    const sortedArtistSongList = this.orderArtistSongList(artistSongList);
 
-    return (
-      <div className="songbook">
-        <UIControls
-          matchesArtistUrl={this.matchesArtistUrl}
-          orderLogic={orderLogic}
-          songPriority={songPriority}
-          isAscending={isAscending}
-          setOrderLogic={setOrderLogic}
-          setSongPriority={setSongPriority}
-          setAscending={setAscending}
-        />
-        {(!songPriority || this.matchesArtistUrl) ? (
+    const artistListJsx = () => {
+      if (!this.matchesArtistUrl) {
+        return (
           <ul className="songbook__artist-list">
-            {sortedArtistSongList && sortedArtistSongList.map(artist => (
+            {orderedArtistSongList && orderedArtistSongList.map(artist => (
               <Artist
                 key={artist._id}
                 name={artist.name}
@@ -105,20 +71,57 @@ export default class Songbook extends React.Component {
               />
             ))}
           </ul>
-        ) : (
-          <ul className="songbook__song-list">
-            {sortedArtistSongList && sortedArtistSongList.map(song => (
-              <Song
-                key={song._id}
-                song={song}
-                artistName={song.artist.name}
-                orderLogic={orderLogic}
-                deleteSongRequest={deleteSongRequest}
-                songPriority={songPriority}
-              />
-            ))}
-          </ul>
-        )}
+        );
+      }
+      return (
+        <ul className="songbook__artist-list">
+          {(artistSongList && orderedArtistSongList) && (
+            <Artist
+              key={artistSongList[0]._id}
+              name={artistSongList[0].name}
+              _id={artistSongList[0]._id}
+              songs={orderedArtistSongList}
+              matchesArtistUrl={this.matchesArtistUrl}
+              orderLogic={orderLogic}
+              songPriority={songPriority}
+              isAscending={isAscending}
+              deleteSongRequest={deleteSongRequest}
+            />
+          )}
+        </ul>
+      );
+    };
+
+    return (
+      <div className="songbook">
+        <UIControls
+          matchesArtistUrl={this.matchesArtistUrl}
+          orderLogic={orderLogic}
+          songPriority={songPriority}
+          isAscending={isAscending}
+          setOrderLogic={setOrderLogic}
+          setSongPriority={setSongPriority}
+          setAscending={setAscending}
+        />
+        {(artistSongList && orderedArtistSongList)
+          && (!songPriority || this.matchesArtistUrl) ? (
+            artistListJsx()
+          ) : (
+            <ul className="songbook__song-list">
+              {orderedArtistSongList.map(song => (
+                <Song
+                  key={song._id}
+                  song={song}
+                  artistName={song.artist.name}
+                  orderLogic={orderLogic}
+                  deleteSongRequest={deleteSongRequest}
+                  songPriority={songPriority}
+                />
+              ))}
+            </ul>
+          )
+        }
+
         <button
           className="songbook__new-song"
           type="button"

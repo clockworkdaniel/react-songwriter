@@ -1,5 +1,5 @@
 import callApi from '../../util/callApi';
-import { editModalTrigger } from '../EditModal/edit-modal-actions';
+import { editModalTrigger } from '../Layout/edit-modal-actions';
 
 export function updateTextBeingEditedPath(path) {
   return {

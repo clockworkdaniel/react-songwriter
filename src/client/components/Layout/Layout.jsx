@@ -3,68 +3,107 @@ import React from 'react';
 import {
   Router,
   Route,
-  NavLink,
   Link
 } from 'react-router-dom';
 
-import history from '../../history';
+import { getCookie } from '../../functions/cookie';
 
+import history from '../../history';
+import EditModal from '../EditModal/EditModal';
 import SongbookContainer from '../Songbook/SongbookContainer';
 import SongsheetContainer from '../Songsheet/SongsheetContainer';
-import EditModalContainer from '../EditModal/EditModalContainer';
-import Help from '../Help';
-import Settings from '../Settings';
+import SignIn from '../SignIn/SignIn';
 
-export default function Layout() {
+export default class Layout extends React.Component {
 
-  return (
+  componentDidMount() {
+    const { setSignedInState } = this.props;
+    const sessionCookie = getCookie('connect.sid');
+    setSignedInState(!!sessionCookie);
+  }
 
-    <Router history={history}>
-      <div className="layout">
+  render() {
+    const {
+      editModalState,
+      updateEditableText,
+      commitTextChange,
+      signInState,
+      showSignIn,
+      showSignUp,
+      hideSignInSignUp,
+      updateSignInInputValue,
+      attemptSignIn,
+      updateSignUpInputValue,
+      createUser,
+      signOut
+    } = this.props;
 
-        <EditModalContainer />
-        <header className="layout__header">
-          <nav className="header">
-            <ul className="header__nav-list">
-              <li className="header__li--title">
-                <Link to="/">
-                  <h1 className="header__title-container">
-                    <span className="header__title">React</span>
-                    <span className="header__sub-title">Songwriter</span>
-                  </h1>
-                </Link>
-              </li>
-              {/* <li className="header__li">
-                <NavLink
-                  className="header__link"
-                  to="/help"
-                >
-                  help
-                </NavLink>
-              </li>
-              <li className="header__li">
-                <NavLink
-                  className="header__link"
-                  to="/settings"
-                >
-                  settings
-                </NavLink>
-              </li> */}
-            </ul>
-          </nav>
-        </header>
+    return (
+      <Router history={history}>
+        <div className="layout">
 
-        <section className="layout__content">
-          <Route exact path="/" component={SongbookContainer} />
-          <Route path="/artist/:id" component={SongbookContainer} />
-          <Route path="/song/:id" component={SongsheetContainer} />
-          <Route exact path="/help" component={Help} />
-          <Route exact path="/settings" component={Settings} />
-        </section>
+          <EditModal
+            editModalState={editModalState}
+            updateEditableText={updateEditableText}
+            commitTextChange={commitTextChange}
+          />
 
-      </div>
-    </Router>
+          <SignIn
+            signInState={signInState}
+            showSignIn={showSignIn}
+            showSignUp={showSignUp}
+            hideSignInSignUp={hideSignInSignUp}
+            updateSignInInputValue={updateSignInInputValue}
+            attemptSignIn={attemptSignIn}
+            updateSignUpInputValue={updateSignUpInputValue}
+            createUser={createUser}
+          />
 
-  );
+          <header className="layout__header">
+            <nav className="header">
+              <ul className="header__nav-list">
+                <li className="header__li--title">
+                  <Link to="/">
+                    <h1 className="header__title-container">
+                      <span className="header__title">React</span>
+                      <span className="header__sub-title">Songwriter</span>
+                    </h1>
+                  </Link>
+                </li>
+                <li className="header__li">
+                  {signInState.signedIn ? (
+                    <button
+                      className="header__link"
+                      type="button"
+                      onClick={signOut}
+                    >
+                        Sign out
+                    </button>
+                  ) : (
+                    <button
+                      className="header__link"
+                      type="button"
+                      onClick={showSignIn}
+                    >
+                        Sign in
+                    </button>
+                  )}
+                </li>
+              </ul>
+            </nav>
+          </header>
 
+          <section className="layout__content">
+            <Route exact path="/" component={SongbookContainer} />
+            <Route path="/artist/:id" component={SongbookContainer} />
+            <Route path="/song/:id" component={SongsheetContainer} />
+            {/* <Route exact path="/help" component={Help} />
+            <Route exact path="/settings" component={Settings} /> */}
+          </section>
+
+        </div>
+      </Router>
+
+    );
+  }
 }
