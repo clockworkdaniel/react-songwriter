@@ -3,7 +3,6 @@ import { connect } from 'react-redux';
 import {
   fetchSongs,
   fetchSongsBySingleArtist,
-  newSongModal,
   deleteSongRequest,
   setOrderLogic,
   setSongPriority,
@@ -28,9 +27,6 @@ const mapDispatchToProps = dispatch => ({
   },
   deleteSongRequest: (songId) => {
     dispatch(deleteSongRequest(songId));
-  },
-  newSongModal: () => {
-    dispatch(newSongModal());
   },
   setOrderLogic: (orderLogic) => {
     dispatch(setOrderLogic(orderLogic));

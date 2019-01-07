@@ -7,7 +7,6 @@ export default class Songbook extends React.Component {
   constructor(props) {
     super();
     this.props = props;
-    this.handleNewSongModal = this.handleNewSongModal.bind(this);
   }
 
   componentDidMount() {
@@ -32,11 +31,6 @@ export default class Songbook extends React.Component {
     }
   }
 
-  handleNewSongModal() {
-    const { newSongModal } = this.props;
-    newSongModal();
-  }
-
   render() {
     const {
       artistSongList,
@@ -51,7 +45,6 @@ export default class Songbook extends React.Component {
       setSongPriority,
       setAscending
     } = this.props;
-
 
     const artistListJsx = () => {
       if (!this.matchesArtistUrl) {
@@ -75,7 +68,7 @@ export default class Songbook extends React.Component {
       }
       return (
         <ul className="songbook__artist-list">
-          {(artistSongList && orderedArtistSongList) && (
+          {(artistSongList.length && orderedArtistSongList) && (
             <Artist
               key={artistSongList[0]._id}
               name={artistSongList[0].name}
@@ -121,14 +114,6 @@ export default class Songbook extends React.Component {
             </ul>
           )
         }
-
-        <button
-          className="songbook__new-song"
-          type="button"
-          onClick={this.handleNewSongModal}
-        >
-          New Song
-        </button>
       </div>
     );
   }

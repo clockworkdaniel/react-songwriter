@@ -50,7 +50,7 @@ export default class UIControls extends React.Component {
               <p>
                 Order:
               </p>
-              <div className="select-container">
+              <div className="select-container book-controls__select-container">
                 <select
                   value={songPriority ? 'song' : 'artist'}
                   onChange={this.handleAuthSongPrefChange}

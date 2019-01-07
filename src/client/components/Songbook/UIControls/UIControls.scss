@@ -1,39 +1,26 @@
 .book-controls {
-  position: fixed;
-  z-index: 1;
-  top: 1rem;
-  right: 1rem;
   display: flex;
   flex-direction: row;
-  align-items: flex-start;
+  align-items: center;
 
   &__auth-song-priority {
     p {
+      color: $primary;
       font-size: 0.9rem;
       display: inline-block;
       margin: 0 0.75rem 0 0;
       font-weight: bold;
-    }
-    .select-container {
-      display: inline-block;
-      color: #D8D8B5;
-      background: none;
-      border: 1px solid #D8D8B5;
-      cursor: pointer;
-      border-radius: 3px;
-      padding-right: 0.25rem;
-      margin: 0 0.25rem;
-      opacity: 0.95;
-      select {
-        font-size: 0.9rem;
-        opacity: 0.95;
-      }
     }
   }
 
   &__ordering-logic {
     display: flex;
     flex-direction: row;
+  }
+
+  &__select-container {
+    margin: 0 0.25rem;
+    height: rem(29px);
   }
 
   &__ordering-btn {
@@ -47,8 +34,8 @@
     &::after {
       content: '';
       position: absolute;
-      right: 0.3125rem;
-      top: 0.3125rem;
+      right: rem(5px);
+      top: rem(8.5px);
       font-size: 0.5rem;
       .ascending & {
         transform: rotate(180deg);

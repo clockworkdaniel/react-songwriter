@@ -53,7 +53,7 @@
 
 .song {
 	box-sizing: border-box;
-	border: 1px solid rgba(249, 248, 200, 0.3);
+	border: 1px solid rgba($off-bg, 0.4);
 	padding: 0.75rem 0.75rem 0.625rem;
 	opacity: 0.9;
 	display: flex;
@@ -61,7 +61,7 @@
 	cursor: pointer;
 	&:hover {
 		opacity: 1;
-		background-color: rgba(46, 113, 140, 0.2);
+		background-color: rgba($off-bg, 0.4);
 	}
 
 	.controls {
@@ -72,15 +72,24 @@
 
 
 	&__title {
-		width: calc(100% - 48px);
+		color: $primary;
+		position: relative;
 		font-size: 1.25rem;
 		margin: 0;
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
+		width: 100%;
+		transition: 0ms 250ms width;
+		.song:hover & {
+			width: calc(100% - 48px);
+			transition: none;
+		}
 	}
 
 	&__artist-name {
+		color: $secondary;
+		font-weight: 300;
 		display: inline-block;
 		font-family: 'muli';
 		font-size: 0.9375rem;
@@ -91,11 +100,12 @@
 	}
 
 	&__date {
+		color: $secondary;
 		font-size: 0.75rem;
     font-style: italic;
     font-weight: bold;
     letter-spacing: 0.01em;
     opacity: 0.5;
-    margin-bottom: 0;
+		margin-bottom: 0;
 	}
 }
