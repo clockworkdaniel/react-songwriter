@@ -9,13 +9,17 @@ import {
   showSignIn,
   showSignUp,
   hideSignInSignUp,
-  updateSignInInputValue,
+  updateInputValue,
   attemptSignIn,
-  updateSignUpInputValue,
   createUser,
   signOut,
-  setSignedInState
+  setSignedInState,
+  setError,
+  setSignUpStage,
+  checkForUserDuplication
 } from '../../actions/Layout/sign-in-actions';
+
+import { newSongModal } from '../../actions/Songbook/songbook-actions';
 
 import Layout from './Layout';
 
@@ -44,8 +48,8 @@ const mapDispatchToProps = dispatch => ({
   hideSignInSignUp: () => {
     dispatch(hideSignInSignUp());
   },
-  updateSignInInputValue: (name, value) => {
-    dispatch(updateSignInInputValue(name, value));
+  updateInputValue: (form, name, value) => {
+    dispatch(updateInputValue(form, name, value));
   },
   setSignedInState: (signedIn) => {
     dispatch(setSignedInState(signedIn));
@@ -53,14 +57,23 @@ const mapDispatchToProps = dispatch => ({
   attemptSignIn: (usernameOrEmail, password) => {
     dispatch(attemptSignIn(usernameOrEmail, password));
   },
-  updateSignUpInputValue: (name, value) => {
-    dispatch(updateSignUpInputValue(name, value));
-  },
   createUser: (username, email, password) => {
     dispatch(createUser(username, email, password));
   },
   signOut: () => {
     dispatch(signOut());
+  },
+  newSongModal: () => {
+    dispatch(newSongModal());
+  },
+  setError: (formKey, errorObj) => {
+    dispatch(setError(formKey, errorObj));
+  },
+  setSignUpStage: (stage) => {
+    dispatch(setSignUpStage(stage));
+  },
+  checkForUserDuplication: (username, email) => {
+    dispatch(checkForUserDuplication(username, email));
   }
 });
 

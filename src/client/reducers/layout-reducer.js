@@ -8,18 +8,26 @@ const initialState = {
   },
   signIn: {
     signedIn: false,
-    showSignIn: false,
-    showSignUp: false,
+    signInShown: false,
+    signUpShown: false,
     signUpForm: {
       stage: 1,
       username: '',
       email: '',
       password: '',
-      passwordConfirmation: ''
+      passwordConfirmation: '',
+      error: {
+        field: null,
+        message: ''
+      }
     },
     signInForm: {
       usernameOrEmail: '',
-      password: ''
+      password: '',
+      error: {
+        field: null,
+        message: ''
+      }
     }
   }
 };
@@ -38,7 +46,6 @@ const editModalReducer = (state = initialState, action) => {
           actionToTriggerOnCommit: action.actionToTriggerOnCommit,
           shouldCloseModal: action.shouldCloseModal
         }
-
       };
     }
 
@@ -77,8 +84,8 @@ const editModalReducer = (state = initialState, action) => {
         ...state,
         signIn: {
           ...state.signIn,
-          showSignIn: true,
-          showSignUp: false
+          signInShown: true,
+          signUpShown: false
         }
       };
     }
@@ -88,8 +95,8 @@ const editModalReducer = (state = initialState, action) => {
         ...state,
         signIn: {
           ...state.signIn,
-          showSignUp: true,
-          showSignIn: false
+          signUpShown: true,
+          signInShown: false
         }
       };
     }
@@ -99,33 +106,46 @@ const editModalReducer = (state = initialState, action) => {
         ...state,
         signIn: {
           ...state.signIn,
-          showSignIn: false,
-          showSignUp: false
+          signInShown: false,
+          signUpShown: false
         }
       };
     }
 
-    case 'UPDATE_SIGNUP_INPUT_VALUE': {
+    case 'UPDATE_INPUT_VALUE': {
       return {
         ...state,
         signIn: {
           ...state.signIn,
-          signUpForm: {
-            ...state.signIn.signUpForm,
+          [action.formKey]: {
+            ...state.signIn[action.formKey],
             [action.name]: action.value
           }
         }
       };
     }
 
-    case 'UPDATE_SIGNIN_INPUT_VALUE': {
+    case 'SET_ERROR': {
       return {
         ...state,
         signIn: {
           ...state.signIn,
-          signInForm: {
-            ...state.signIn.signInForm,
-            [action.name]: action.value
+          [action.formKey]: {
+            ...state.signIn[action.formKey],
+            error: action.errorObj
+          }
+        }
+      };
+    }
+
+    case 'SET_SIGN_UP_STAGE': {
+      return {
+        ...state,
+        signIn: {
+          ...state.signIn,
+          signUpForm: {
+            ...state.signIn.signUpForm,
+            stage: action.stage
           }
         }
       };

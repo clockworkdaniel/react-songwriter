@@ -18,17 +18,10 @@ export function hideSignInSignUp() {
   };
 }
 
-export function updateSignUpInputValue(name, value) {
+export function updateInputValue(formKey, name, value) {
   return {
-    type: 'UPDATE_SIGNUP_INPUT_VALUE',
-    name,
-    value
-  };
-}
-
-export function updateSignInInputValue(name, value) {
-  return {
-    type: 'UPDATE_SIGNIN_INPUT_VALUE',
+    type: 'UPDATE_INPUT_VALUE',
+    formKey,
     name,
     value
   };
@@ -41,33 +34,58 @@ export function setSignedInState(signedIn) {
   };
 }
 
+export function setError(formKey, errorObj) {
+  return {
+    type: 'SET_ERROR',
+    formKey,
+    errorObj
+  };
+}
+
 export function attemptSignIn(usernameOrEmail, password) {
   return dispatch => callApi('user/sign-in', 'post', {
     usernameOrEmail, password
-  }).then((res) => {
+  }).then(() => {
     dispatch(setSignedInState(true));
     dispatch(hideSignInSignUp());
   }, (error) => {
-    dispatch();
+    dispatch(setError('signInForm', error));
   });
 }
 
 export function createUser(username, email, password) {
   return dispatch => callApi('user/create', 'post', {
     username, email, password
-  }).then((res) => {
+  }).then(() => {
     dispatch(setSignedInState(true));
     dispatch(hideSignInSignUp());
   }, (error) => {
-    dispatch();
+    dispatch(setError('signUpForm', error));
   });
 }
 
 export function signOut() {
   return dispatch => callApi('user/sign-out', 'post')
-    .then((res) => {
+    .then(() => {
       dispatch(setSignedInState(false));
     }, (error) => {
-      dispatch();
+      console.error(error.message);
     });
+}
+
+export function setSignUpStage(stage) {
+  return {
+    type: 'SET_SIGN_UP_STAGE',
+    stage
+  };
+}
+
+export function checkForUserDuplication(username, email) {
+  return dispatch => callApi('user/check', 'post', {
+    username, email
+  }).then(() => {
+    dispatch(setSignUpStage(2));
+  }, (error) => {
+    dispatch(setError('signUpForm', error));
+  });
 }

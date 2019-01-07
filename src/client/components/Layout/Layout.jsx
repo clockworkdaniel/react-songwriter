@@ -15,11 +15,21 @@ import SongsheetContainer from '../Songsheet/SongsheetContainer';
 import SignIn from '../SignIn/SignIn';
 
 export default class Layout extends React.Component {
+  constructor(props) {
+    super();
+    this.props = props;
+    this.handleNewSongModal = this.handleNewSongModal.bind(this);
+  }
 
   componentDidMount() {
     const { setSignedInState } = this.props;
     const sessionCookie = getCookie('connect.sid');
     setSignedInState(!!sessionCookie);
+  }
+
+  handleNewSongModal() {
+    const { newSongModal } = this.props;
+    newSongModal();
   }
 
   render() {
@@ -31,17 +41,18 @@ export default class Layout extends React.Component {
       showSignIn,
       showSignUp,
       hideSignInSignUp,
-      updateSignInInputValue,
       attemptSignIn,
-      updateSignUpInputValue,
+      updateInputValue,
       createUser,
-      signOut
+      signOut,
+      setError,
+      setSignUpStage,
+      checkForUserDuplication
     } = this.props;
 
     return (
       <Router history={history}>
         <div className="layout">
-
           <EditModal
             editModalState={editModalState}
             updateEditableText={updateEditableText}
@@ -49,14 +60,19 @@ export default class Layout extends React.Component {
           />
 
           <SignIn
-            signInState={signInState}
+            signInShown={signInState.signInShown}
+            signUpShown={signInState.signUpShown}
+            signInForm={signInState.signInForm}
+            signUpForm={signInState.signUpForm}
             showSignIn={showSignIn}
             showSignUp={showSignUp}
             hideSignInSignUp={hideSignInSignUp}
-            updateSignInInputValue={updateSignInInputValue}
+            updateInputValue={updateInputValue}
             attemptSignIn={attemptSignIn}
-            updateSignUpInputValue={updateSignUpInputValue}
             createUser={createUser}
+            setError={setError}
+            setSignUpStage={setSignUpStage}
+            checkForUserDuplication={checkForUserDuplication}
           />
 
           <header className="layout__header">
@@ -67,25 +83,57 @@ export default class Layout extends React.Component {
                     <h1 className="header__title">Songbird</h1>
                   </Link>
                 </li>
+                {signInState.signedIn && (
+                  <li className="header__li">
+                    <button
+                      className="songbook__new-song"
+                      type="button"
+                      onClick={this.handleNewSongModal}
+                    >
+                      New Song
+                    </button>
+                  </li>
+                )}
                 <li className="header__li">
-                  {signInState.signedIn ? (
+                  <button
+                    className="header__link"
+                    type="button"
+                  >
+                    Search
+                  </button>
+                </li>
+                {signInState.signedIn && (
+                  <li className="header__li">
+                    <button
+                      className="header__link"
+                      type="button"
+                    >
+                      Settings
+                    </button>
+                  </li>
+                )}
+                {signInState.signedIn && (
+                  <li className="header__li">
                     <button
                       className="header__link"
                       type="button"
                       onClick={signOut}
                     >
-                        Sign out
+                      Sign out
                     </button>
-                  ) : (
+                  </li>
+                )}
+                {!signInState.signedIn && (
+                  <li className="header__li">
                     <button
                       className="header__link"
                       type="button"
                       onClick={showSignIn}
                     >
-                        Sign in
+                      Sign in
                     </button>
-                  )}
-                </li>
+                  </li>
+                )}
               </ul>
             </nav>
           </header>
@@ -94,8 +142,7 @@ export default class Layout extends React.Component {
             <Route exact path="/" component={SongbookContainer} />
             <Route path="/artist/:id" component={SongbookContainer} />
             <Route path="/song/:id" component={SongsheetContainer} />
-            {/* <Route exact path="/help" component={Help} />
-            <Route exact path="/settings" component={Settings} /> */}
+            {/* <Route exact path="/settings" component={Settings} /> */}
           </section>
 
         </div>
