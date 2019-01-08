@@ -2,22 +2,20 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 export default class LineInput extends React.Component {
-  constructor({ caret, lineHandlers }) {
+  constructor() {
     super();
+    this.textInput = React.createRef();
+  }
 
-    this.getCaretAndFocus = caret.getCaretAndFocus;
-    this.dictateCaret = caret.dictateCaret;
-    this.resetCaretMonitoring = caret.resetCaretMonitoring;
-
-    this.changeLine = lineHandlers.changeLine;
-    this.newLine = lineHandlers.newLine;
-    this.splitLine = lineHandlers.splitLine;
-    this.joinLines = lineHandlers.joinLines;
-    this.deleteLine = lineHandlers.deleteLine;
+  componentDidMount() {
+    this.setFocusAndCaret();
   }
 
   componentDidUpdate() {
+    this.setFocusAndCaret();
+  }
 
+  setFocusAndCaret() {
     const {
       uiState: {
         caretIsBeingSet,
@@ -26,69 +24,81 @@ export default class LineInput extends React.Component {
         sectionFocused
       },
       lineKey,
-      sectionKey
+      sectionKey,
+      caret: {
+        resetCaretMonitoring
+      }
     } = this.props;
 
     if (caretIsBeingSet === true) {
       if (sectionFocused === sectionKey) {
         if (lineFocused === lineKey) {
-
-          this.textInput.focus();
-          this.textInput.selectionStart = caretPosition;
-          this.textInput.selectionEnd = caretPosition;
-          this.resetCaretMonitoring();
+          this.textInput.current.focus();
+          this.textInput.current.selectionStart = caretPosition;
+          this.textInput.current.selectionEnd = caretPosition;
+          resetCaretMonitoring();
         }
       }
     }
   }
+  
+  getCaretPosition = (event) => {
 
-  // called on click and keyup
-  getCaretAndPosition = (event, caretIsBeingSet, lineKey, sectionKey) => {
-    if (caretIsBeingSet === false) {
-      this.getCaretAndFocus(
-        event.target.selectionStart,
-        lineKey,
-        sectionKey
-      );
-    }
+    const {
+      caret: { getCaretPosition }, lineKey, sectionKey
+    } = this.props;
+
+    getCaretPosition(event.target.selectionStart, lineKey, sectionKey);
   }
 
-  handleChangeLine = (event, lineKey, sectionKey) => {
-    this.changeLine(event.target.value, lineKey, sectionKey);
+  handleChangeLine = (event) => {
+
+    const {
+      lineHandlers: {
+        changeLine
+      },
+      lineKey,
+      sectionKey
+    } = this.props;
+    changeLine(event.target.value, lineKey, sectionKey);
   }
 
-  handleKeyDown = (event, fullLine, caretPosition, lineKey, sectionKey) => {
+  handleKeyDown = (event) => {
+  
+    const {
+      fullLine,
+      lineKey,
+      sectionKey,
+      lineHandlers: {
+        newLine,
+        splitLine,
+        joinLines,
+        deleteLine
+      },
+      uiState: { caretPosition },
+    } = this.props;
+
     const lineLength = fullLine.length;
 
-    console.log(caretPosition)
     // enter
     if (event.keyCode === 13) {
-      // pushline to next line, leaving empty line behind
-      if (caretPosition === 0 && lineLength > 0) {
-        console.log('line pushed');
-        this.newLine(lineKey, sectionKey);
-      } else if (caretPosition === lineLength) {
-        console.log('new empty line');
-        this.newLine(lineKey + 1, sectionKey);
-      } else if (caretPosition > 0) {
-        console.log('split line');
-        this.splitLine(lineKey, sectionKey, caretPosition);
+      // push line to next line, leaving empty line behind
+      if ((caretPosition > 0) && (caretPosition < lineLength)) {
+        splitLine(lineKey, sectionKey);
+      } else {
+        newLine(lineKey, sectionKey);
       }
-      this.dictateCaret(true, (lineKey + 1), sectionKey);
     }
     // backspace
     else if (event.keyCode === 8) {
       if (caretPosition === 0) {
-        this.dictateCaret(false, (lineKey - 1), sectionKey);
         if (lineLength > 0) {
-          console.log('join line');
           event.preventDefault();
-          this.joinLines(lineKey, sectionKey);
+          joinLines(lineKey, sectionKey);
         } else {
-          // move caret to end of lineBefore
-          console.log('delete line');
+          // move caret to end of prev line
           event.preventDefault();
-          this.deleteLine(lineKey, sectionKey);
+          deleteLine(lineKey, sectionKey);
         }
       }
     }
@@ -96,15 +106,7 @@ export default class LineInput extends React.Component {
 
   render() {
 
-    const {
-      fullLine,
-      lineKey,
-      sectionKey,
-      uiState: {
-        caretIsBeingSet,
-        caretPosition,
-      }
-    } = this.props;
+    const { fullLine } = this.props;
 
     return (
       <div className="line">
@@ -112,11 +114,11 @@ export default class LineInput extends React.Component {
           className="line__lyrics-input"
           type="text"
           value={fullLine}
-          onChange={e => this.handleChangeLine(e, lineKey, sectionKey)}
-          onKeyDown={e => this.handleKeyDown(e, fullLine, caretPosition, lineKey, sectionKey)}
-          onClick={e => this.getCaretAndPosition(e, caretIsBeingSet, lineKey, sectionKey)}
-          onKeyUp={e => this.getCaretAndPosition(e, caretIsBeingSet, lineKey, sectionKey)}
-          ref={(input) => { this.textInput = input; }} // NOTE: interesting – check here https://reactjs.org/docs/uncontrolled-components.html
+          onClick={this.getCaretPosition}
+          onKeyUp={this.getCaretPosition}
+          onKeyDown={this.handleKeyDown}
+          onChange={this.handleChangeLine}
+          ref={this.textInput}
         />
       </div>
     );
@@ -125,8 +127,7 @@ export default class LineInput extends React.Component {
 
 LineInput.propTypes = {
   caret: PropTypes.shape({
-    getCaretAndFocus: PropTypes.func.isRequired,
-    dictateCaret: PropTypes.func.isRequired,
+    getCaretPosition: PropTypes.func.isRequired,
     resetCaretMonitoring: PropTypes.func.isRequired
   }).isRequired,
   lineHandlers: PropTypes.shape({

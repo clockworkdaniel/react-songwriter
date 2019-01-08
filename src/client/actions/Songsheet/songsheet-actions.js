@@ -75,7 +75,6 @@ export {
   updateChordToPaint,
   switchMode,
   updatePaintSpecificity,
-  getCaretAndFocus,
-  dictateCaret,
+  getCaretPosition,
   resetCaretMonitoring
 } from './ui-actions';

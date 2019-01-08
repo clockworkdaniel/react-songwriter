@@ -12,17 +12,10 @@ export const updatePaintSpecificity = newSpecificity => ({
   newSpecificity
 });
 
-export const getCaretAndFocus = (caretPosition, lineKey, sectionKey) => ({
-  type: 'GET_CARET_AND_FOCUS',
+export const getCaretPosition = (caretPosition, lineKey, sectionKey) => ({
+  type: 'GET_CARET_POSITION',
   caretPosition,
   lineKey,
-  sectionKey
-});
-
-export const dictateCaret = (frontOfLine, newLineToFocus, sectionKey) => ({
-  type: 'DICTATE_CARET',
-  frontOfLine,
-  newLineToFocus,
   sectionKey
 });
 

@@ -40,10 +40,18 @@ const songsheetReducer = (state = initialState, action) => {
     }
 
     case 'CHANGE_LINE': {
-      return update(state,
-        { song: { structure: { [action.sectionKey]: { lines: { [action.lineKey]: { fullLine: { $set: action.text } } } } } } });
+      return update(state, {
+        song: {
+          structure: {
+            [action.sectionKey]: {
+              lines: {
+                [action.lineKey]: { fullLine: { $set: action.text } }
+              }
+            }
+          }
+        }
+      });
     }
-
     case 'UPDATE_CHORD': {
 
       const lineCopy = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey].lines[action.lineKey]));
@@ -74,22 +82,6 @@ const songsheetReducer = (state = initialState, action) => {
       }
 
       return update(state, { song: { structure: { [action.sectionKey]: { lines: { [action.lineKey]: { $set: lineCopy } } } } } });
-    }
-
-    case 'DICTATE_CARET': {
-
-      const uiStateCopy = JSON.parse(JSON.stringify(state.uiState));
-
-      const lengthOfFocusedLine = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey].lines[action.newLineToFocus].fullLine.length));
-
-      const caretPosition = action.frontOfLine ? 0 : lengthOfFocusedLine;
-
-      uiStateCopy.caretIsBeingSet = true;
-      uiStateCopy.caretPosition = caretPosition;
-      uiStateCopy.lineFocused = action.newLineToFocus;
-      uiStateCopy.sectionFocused = action.sectionKey;
-
-      return update(state, { uiState: { $set: uiStateCopy } });
     }
 
     case 'RESET_CARET_MONITORING': {
@@ -131,17 +123,14 @@ const songsheetReducer = (state = initialState, action) => {
       return update(state, { uiState: { paintSpecificity: { $set: action.newSpecificity } } });
     }
 
-    case 'GET_CARET_AND_FOCUS': {
-
-      const { caretPosition, lineKey, sectionKey } = action;
-
+    case 'GET_CARET_POSITION': {
       return {
         ...state,
         uiState: {
           ...state.uiState,
-          caretPosition,
-          lineFocused: lineKey,
-          sectionFocused: sectionKey
+          caretPosition: action.caretPosition,
+          lineFocused: action.lineKey,
+          sectionFocused: action.sectionKey
         }
       };
     }
@@ -180,7 +169,7 @@ const songsheetReducer = (state = initialState, action) => {
       return update(state, { song: { structure: { $set: copiedStructure } } });
     }
 
-    // new/join/delete line
+    // new/split/join/delete line
 
     case 'NEW_LINE': {
 
@@ -189,36 +178,41 @@ const songsheetReducer = (state = initialState, action) => {
         characters: []
       };
 
+      const blankLineBehind = (state.uiState.caretPosition === 0);
+      const startPosition = blankLineBehind ? action.lineKey : action.lineKey + 1;
+
       return update(state, {
         song: {
           structure: {
             [action.sectionKey]: {
-              lines: { $splice: [[action.lineKey, 0, blankLine]] }
+              lines: { $splice: [[startPosition, 0, blankLine]] }
             }
           }
+        },
+        uiState: {
+          caretIsBeingSet: { $set: true },
+          caretPosition: { $set: 0 },
+          lineFocused: { $set: action.lineKey + 1 }
         }
       });
 
     }
 
-    case 'DELETE_LINE': {
-      return update(state, { song: { structure: { [action.sectionKey]: { lines: { $splice: [[action.lineKey, 1]] } } } } });
-    }
-
     case 'SPLIT_LINE': {
 
-      const sectionCopy = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey]));
+      const { caretPosition } = state.uiState;
 
-      const { lines } = sectionCopy;
+      const { lines } = state.song.structure[action.sectionKey];
+      const lineLength = lines[action.lineKey].fullLine.length;
 
-      const lineLength = sectionCopy.lines[action.lineKey].fullLine.length;
+      // check for leading/trailing spaces
+      const leadingSpace = (lines[action.lineKey].fullLine.charAt(caretPosition) === ' ');
+      const trailingSpace = (lines[action.lineKey].fullLine.charAt(caretPosition - 1) === ' ');
 
-      // check for trailing/leading spaces
-      const trailingSpace = lines[action.lineKey].characters[action.caretPosition - 1].character === ' ';
-      const leadingSpace = lines[action.lineKey].characters[action.caretPosition].character === ' ';
-      // adjust split positions based on trailing/leading spaces
-      const beforeSplitPos = trailingSpace ? action.caretPosition - 1 : action.caretPosition;
-      const afterSplitPos = leadingSpace ? action.caretPosition + 1 : action.caretPosition;
+      // adjust split positions based on leading/trailing spaces
+      const afterSplitPos = leadingSpace ? caretPosition + 1 : caretPosition;
+      const beforeSplitPos = trailingSpace ? caretPosition - 1 : caretPosition;
+
 
       const beforeSplit = {
         fullLine: lines[action.lineKey].fullLine.substr(0, beforeSplitPos),
@@ -231,38 +225,81 @@ const songsheetReducer = (state = initialState, action) => {
       };
 
       afterSplit.fullLine = afterSplit.fullLine.slice(0, 1).toUpperCase() + afterSplit.fullLine.slice(1);
+      afterSplit.characters = (leadingSpace || trailingSpace) ? afterSplit.characters.splice(1) : afterSplit.characters;
 
-      if (leadingSpace || trailingSpace) {
-        afterSplit.characters = afterSplit.characters.splice(1);
-      }
+      return update(state, {
+        song: {
+          structure: {
+            [action.sectionKey]: {
+              lines: { $splice: [[action.lineKey, 1, beforeSplit], [action.lineKey + 1, 0, afterSplit]] }
+            }
+          }
+        },
+        uiState: {
+          caretIsBeingSet: { $set: true },
+          caretPosition: { $set: 0 },
+          lineFocused: { $set: action.lineKey + 1 }
+        }
+      });
+    }
 
-      lines.splice(action.lineKey, 1, beforeSplit);
-      lines.splice(action.lineKey + 1, 0, afterSplit);
+    case 'DELETE_LINE': {
 
-      return update(state, { song: { structure: { [action.sectionKey]: { $set: sectionCopy } } } });
+      if (action.lineKey === 0) return state;
+
+      const section = state.song.structure[action.sectionKey];
+      const newCaretPosition = section.lines[(action.lineKey - 1)].fullLine.length;
+
+      return update(state, {
+        song: {
+          structure: {
+            [action.sectionKey]: {
+              lines: { $splice: [[action.lineKey, 1]] }
+            }
+          }
+        },
+        uiState: {
+          caretIsBeingSet: { $set: true },
+          caretPosition: { $set: newCaretPosition },
+          lineFocused: { $set: action.lineKey - 1 }
+        }
+      });
     }
 
     case 'JOIN_LINES': {
 
-      const sectionCopy = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey]));
+      if (action.lineKey === 0) return state;
 
-      const { lines } = sectionCopy;
+      const { lines } = state.song.structure[action.sectionKey];
+      const thisLine = lines[action.lineKey];
+      const prevLine = lines[action.lineKey - 1];
 
-      const prevLineIsEmpty = (lines[action.lineKey - 1].fullLine.length === 0);
+      const prevLineIsEmpty = (prevLine.fullLine.length === 0);
 
-      lines[action.lineKey].fullLine = prevLineIsEmpty
-        ? lines[action.lineKey].fullLine.slice(0, 1).toUpperCase() + lines[action.lineKey].fullLine.slice(1)
-        : lines[action.lineKey].fullLine.slice(0, 1).toLowerCase() + lines[action.lineKey].fullLine.slice(1);
+      const thisLinePrepared = prevLineIsEmpty
+        ? thisLine.fullLine.slice(0, 1).toUpperCase() + thisLine.fullLine.slice(1)
+        : thisLine.fullLine.slice(0, 1).toLowerCase() + thisLine.fullLine.slice(1);
 
-      // join line on to end of old one
-      lines[action.lineKey - 1] = {
-        fullLine: lines[action.lineKey - 1].fullLine + (prevLineIsEmpty ? '' : ' ') + lines[action.lineKey].fullLine,
-        characters: lines[action.lineKey - 1].characters.concat({ character: ' ', chord: lastChord(lines[action.lineKey - 1]) }, lines[action.lineKey].characters)
+      // join line on to end of previous one
+      const joinedLine = {
+        fullLine: prevLine.fullLine + (prevLineIsEmpty ? '' : ' ') + thisLinePrepared,
+        characters: prevLine.characters.concat({ character: ' ', chord: lastChord(prevLine) }, thisLine.characters)
       };
 
-      lines.splice(action.lineKey, 1);
-
-      return update(state, { song: { structure: { [action.sectionKey]: { $set: sectionCopy } } } });
+      return update(state, {
+        song: {
+          structure: {
+            [action.sectionKey]: {
+              lines: { $splice: [[action.lineKey - 1, 2, joinedLine]] }
+            }
+          }
+        },
+        uiState: {
+          caretIsBeingSet: { $set: true },
+          caretPosition: { $set: prevLine.fullLine.length + 1 },
+          lineFocused: { $set: action.lineKey - 1 }
+        }
+      });
     }
 
     // edit modal
