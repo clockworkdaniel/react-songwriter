@@ -1,12 +1,8 @@
 import React from 'react';
 
 export default class InputGroup extends React.Component {
-  constructor() {
-    super();
-    this.handleFieldChange = this.handleFieldChange.bind(this);
-  }
 
-  handleFieldChange(event) {
+  handleFieldChange = (event) => {
     const {
       field,
       updateInputValue,

@@ -16,9 +16,6 @@ function validatePasswords(password, passwordConfirm) {
 export default class SignUp extends React.Component {
   constructor() {
     super();
-    this.handleSubmit = this.handleSubmit.bind(this);
-    this.validateFirstStage = this.validateFirstStage.bind(this);
-    this.switchToSignIn = this.switchToSignIn.bind(this);
     this.form = React.createRef();
   }
 
@@ -26,7 +23,7 @@ export default class SignUp extends React.Component {
     this.form.current.focus();
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     const {
       createUser,
       setError,
@@ -41,7 +38,7 @@ export default class SignUp extends React.Component {
     createUser(username, email, password);
   }
 
-  validateFirstStage() {
+  validateFirstStage = () => {
     const {
       signUpForm: { username, email },
       setError,
@@ -66,7 +63,7 @@ export default class SignUp extends React.Component {
     checkForUserDuplication(username, email);
   }
 
-  switchToSignIn() {
+  switchToSignIn = () => {
     const { showSignIn, setSignUpStage, setError } = this.props;
     setSignUpStage(1);
     setError('signUpForm', { field: null, message: '' });

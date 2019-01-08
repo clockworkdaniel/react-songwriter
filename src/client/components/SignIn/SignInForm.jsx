@@ -4,7 +4,6 @@ import InputGroup from './InputGroup';
 export default class SignUp extends React.Component {
   constructor() {
     super();
-    this.handleSubmit = this.handleSubmit.bind(this);
     this.form = React.createRef();
   }
 
@@ -12,7 +11,7 @@ export default class SignUp extends React.Component {
     this.form.current.focus();
   }
 
-  handleSubmit(event) {
+  handleSubmit = (event) => {
     const { signInForm, attemptSignIn } = this.props;
     event.preventDefault();
     attemptSignIn(

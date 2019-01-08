@@ -1,13 +1,8 @@
 import React from 'react';
 
 export default class UIControls extends React.Component {
-  constructor() {
-    super();
-    this.handleAuthSongPrefChange = this.handleAuthSongPrefChange.bind(this);
-    this.handleOrderLogicChange = this.handleOrderLogicChange.bind(this);
-  }
 
-  handleAuthSongPrefChange(event) {
+  handleAuthSongPrefChange = (event) => {
     const { setSongPriority, orderLogic, setOrderLogic } = this.props;
     if (event.target.value === 'artist') {
       setSongPriority(false);
@@ -19,7 +14,7 @@ export default class UIControls extends React.Component {
     }
   }
 
-  handleOrderLogicChange(event) {
+  handleOrderLogicChange = (event) => {
     const {
       orderLogic, isAscending, setAscending, setOrderLogic
     } = this.props;

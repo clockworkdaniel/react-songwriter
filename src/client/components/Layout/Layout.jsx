@@ -15,11 +15,6 @@ import SongsheetContainer from '../Songsheet/SongsheetContainer';
 import SignIn from '../SignIn/SignIn';
 
 export default class Layout extends React.Component {
-  constructor(props) {
-    super();
-    this.props = props;
-    this.handleNewSongModal = this.handleNewSongModal.bind(this);
-  }
 
   componentDidMount() {
     const { setSignedInState } = this.props;
@@ -27,7 +22,7 @@ export default class Layout extends React.Component {
     setSignedInState(!!sessionCookie);
   }
 
-  handleNewSongModal() {
+  handleNewSongModal = () => {
     const { newSongModal } = this.props;
     newSongModal();
   }
