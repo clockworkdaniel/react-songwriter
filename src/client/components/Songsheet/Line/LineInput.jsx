@@ -14,10 +14,6 @@ export default class LineInput extends React.Component {
     this.splitLine = lineHandlers.splitLine;
     this.joinLines = lineHandlers.joinLines;
     this.deleteLine = lineHandlers.deleteLine;
-
-    this.handleChangeLine = this.handleChangeLine.bind(this);
-    this.handleKeyDown = this.handleKeyDown.bind(this);
-    this.getCaretAndPosition = this.getCaretAndPosition.bind(this);
   }
 
   componentDidUpdate() {
@@ -47,7 +43,7 @@ export default class LineInput extends React.Component {
   }
 
   // called on click and keyup
-  getCaretAndPosition(event, caretIsBeingSet, lineKey, sectionKey) {
+  getCaretAndPosition = (event, caretIsBeingSet, lineKey, sectionKey) => {
     if (caretIsBeingSet === false) {
       this.getCaretAndFocus(
         event.target.selectionStart,
@@ -57,22 +53,25 @@ export default class LineInput extends React.Component {
     }
   }
 
-  handleChangeLine(event, lineKey, sectionKey) {
-
+  handleChangeLine = (event, lineKey, sectionKey) => {
     this.changeLine(event.target.value, lineKey, sectionKey);
   }
 
-  handleKeyDown(event, fullLine, caretPosition, lineKey, sectionKey) {
+  handleKeyDown = (event, fullLine, caretPosition, lineKey, sectionKey) => {
     const lineLength = fullLine.length;
 
+    console.log(caretPosition)
     // enter
     if (event.keyCode === 13) {
       // pushline to next line, leaving empty line behind
       if (caretPosition === 0 && lineLength > 0) {
+        console.log('line pushed');
         this.newLine(lineKey, sectionKey);
       } else if (caretPosition === lineLength) {
+        console.log('new empty line');
         this.newLine(lineKey + 1, sectionKey);
       } else if (caretPosition > 0) {
+        console.log('split line');
         this.splitLine(lineKey, sectionKey, caretPosition);
       }
       this.dictateCaret(true, (lineKey + 1), sectionKey);
@@ -80,13 +79,14 @@ export default class LineInput extends React.Component {
     // backspace
     else if (event.keyCode === 8) {
       if (caretPosition === 0) {
+        this.dictateCaret(false, (lineKey - 1), sectionKey);
         if (lineLength > 0) {
-          this.dictateCaret(false, (lineKey - 1), sectionKey);
+          console.log('join line');
           event.preventDefault();
           this.joinLines(lineKey, sectionKey);
         } else {
           // move caret to end of lineBefore
-          this.dictateCaret(false, (lineKey - 1), sectionKey);
+          console.log('delete line');
           event.preventDefault();
           this.deleteLine(lineKey, sectionKey);
         }

@@ -1,13 +1,6 @@
 import React from 'react';
 
 export default class UIControls extends React.Component {
-  constructor(props) {
-    super();
-    this.props = props;
-    this.handleChordChange = this.handleChordChange.bind(this);
-    this.handleSpecificityChange = this.handleSpecificityChange.bind(this);
-    this.handleSave = this.handleSave.bind(this);
-  }
 
   componentDidMount() {
     const { resetSongSaved } = this.props;
@@ -17,17 +10,17 @@ export default class UIControls extends React.Component {
     });
   }
 
-  handleChordChange(event) {
+  handleChordChange = (event) => {
     const { updateChordToPaint } = this.props;
     updateChordToPaint(event.target.value);
   }
 
-  handleSpecificityChange(event) {
+  handleSpecificityChange = (event) => {
     const { updatePaintSpecificity } = this.props;
     updatePaintSpecificity(event.target.value);
   }
 
-  handleSave() {
+  handleSave = () => {
     const { song, saveSong, songSaved } = this.props;
     if (!songSaved) {
       saveSong(song._id, song);
