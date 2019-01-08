@@ -80,6 +80,7 @@ export default class LineInput extends React.Component {
 
     const lineLength = fullLine.length;
 
+    console.log(caretPosition)
     // enter
     if (event.keyCode === 13) {
       // push line to next line, leaving empty line behind
@@ -92,6 +93,7 @@ export default class LineInput extends React.Component {
     // backspace
     else if (event.keyCode === 8) {
       if (caretPosition === 0) {
+        this.dictateCaret(false, (lineKey - 1), sectionKey);
         if (lineLength > 0) {
           event.preventDefault();
           joinLines(lineKey, sectionKey);
