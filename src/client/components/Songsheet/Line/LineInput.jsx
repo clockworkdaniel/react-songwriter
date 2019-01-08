@@ -92,7 +92,6 @@ export default class LineInput extends React.Component {
     // backspace
     else if (event.keyCode === 8) {
       if (caretPosition === 0) {
-        this.dictateCaret(false, (lineKey - 1), sectionKey);
         if (lineLength > 0) {
           event.preventDefault();
           joinLines(lineKey, sectionKey);
