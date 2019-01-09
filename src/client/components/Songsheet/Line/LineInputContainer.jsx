@@ -6,8 +6,7 @@ import {
   splitLine,
   deleteLine,
   joinLines,
-  getCaretAndFocus,
-  dictateCaret,
+  getCaretPosition,
   resetCaretMonitoring
 } from '../../../actions/Songsheet/songsheet-actions';
 
@@ -19,15 +18,12 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = dispatch => ({
   caret: {
-    getCaretAndFocus: (caretPosition, lineKey, sectionKey) => {
-      dispatch(getCaretAndFocus(caretPosition, lineKey, sectionKey));
+    getCaretPosition: (caretPosition, lineKey, sectionKey) => {
+      dispatch(getCaretPosition(caretPosition, lineKey, sectionKey));
     },
     resetCaretMonitoring: () => {
       dispatch(resetCaretMonitoring());
     },
-    dictateCaret: (frontOfLine, newLineToFocus, sectionKey) => {
-      dispatch(dictateCaret(frontOfLine, newLineToFocus, sectionKey));
-    }
   },
   lineHandlers: {
     changeLine: (value, linekey, sectionKey) => {

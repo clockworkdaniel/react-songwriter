@@ -1,0 +1,189 @@
+@import "./icons.scss";
+@import "./fonts.scss";
+@import "./functions.scss";
+@import "./colour-scheme.scss";
+
+html {
+  color: $secondary;
+}
+
+body {
+  background-color: $bg;
+  margin: 0 8px 0 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  color: $primary;
+  font-family: "Ovo";
+}
+
+h1 {
+  font-size: 3rem;
+  margin: rem(10px) 0;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+input,
+button,
+select {
+  background: none;
+  appearance: none;
+  border: none;
+  outline-offset: 0;
+  outline: none;
+  display: inline;
+}
+
+ul {
+  padding-left: 0;
+}
+
+li {
+  list-style: none;
+}
+
+p,
+input,
+button,
+label,
+select,
+a {
+  font-family: "Muli";
+  color: $secondary;
+  font-size: 1rem;
+  font-weight: 300;
+  font-kerning: none;
+}
+
+select {
+  border: 0;
+}
+
+a,
+a:visited,
+a:active {
+  text-decoration: none;
+}
+
+.select-container {
+  box-sizing: border-box;
+  display: inline-block;
+  background: none;
+  border: 1px solid $off-bg;
+  cursor: pointer;
+  border-radius: 3px;
+  padding: rem(3px) rem(2px) 0.25rem 0;
+  margin: 0.75rem 0.25rem;
+  opacity: 0.9;
+  select {
+    font-size: rem(15px);
+    color: $primary;
+  }
+}
+
+button {
+  font-size: rem(15px);
+  color: $primary;
+  background: none;
+  border: 1px solid $off-bg;
+  cursor: pointer;
+  border-radius: 3px;
+  padding: 0.25rem 0.5rem;
+  margin: 0.75rem 0;
+  opacity: 0.7;
+}
+
+button:hover {
+  opacity: 1;
+}
+
+.input-group {
+  min-height: 5.7rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__label {
+    position: relative;
+    display: inline-block;
+    font-family: "Ovo";
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+    opacity: 0.6;
+    cursor: pointer;
+  }
+
+  &__text-input {
+    display: block;
+    width: 16rem;
+    text-align: center;
+    height: rem(25px);
+    padding-bottom: 0.25rem;
+    border: 1px solid rgba($off-bg, 0.5);
+    .errored & {
+      background: rgba(red, 0.05);
+      caret-color: red;
+    }
+  }
+
+  &__error-msg {
+    margin: 0.3rem 0 0;
+    display: none;
+    line-height: 1.1em;
+    font-size: rem(14px);
+    color: $primary;
+    .errored & {
+      display: block;
+    }
+  }
+}
+
+.switch {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+
+  
+  &__label {
+    font-size: 0.9rem;
+    opacity: 0.75;
+    cursor: pointer;
+    .switch:hover & {
+      opacity: 0.9;
+    }
+  }
+
+  &__button {
+    margin-top: 0.25rem;
+    height: 0.75rem;
+    width: 1.75rem;
+    padding: 0;
+    position: relative;
+    background-color: $off-bg;
+    box-sizing: content-box;
+    opacity: 1;
+    transition: 300ms;
+    &:after {
+      content: '';
+      width: 0.65rem;
+      height: 0.65rem;
+      left: 0.05rem;
+      position: absolute;
+      border-radius: 3px;
+      top: 0.05rem;
+      background-color: $primary;
+      transition: 300ms;
+      .switch--on & {
+        left: calc(100% - 0.7rem);
+      }
+    }
+  }
+}

@@ -1,81 +1,51 @@
 import React from 'react';
-import SignUp from './SignUp';
+import SignUpForm from './SignUpForm';
+import SignInForm from './SignInForm';
 
 export default function SignIn({
-  signInState,
+  signInShown,
+  signUpShown,
+  signInForm,
+  signUpForm,
   showSignIn,
   showSignUp,
   hideSignInSignUp,
-  updateSignInInputValue,
+  updateInputValue,
   attemptSignIn,
-  updateSignUpInputValue,
-  createUser
+  createUser,
+  setError,
+  setSignUpStage,
+  checkForUserDuplication
 }) {
 
-  function handleFieldChange(event) {
-    const { target } = event;
-    const { value } = target;
-    const { name } = target;
-    updateSignInInputValue(name, value);
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    attemptSignIn(
-      signInState.signInForm.usernameOrEmail,
-      signInState.signInForm.password
-    );
-  }
-
   return (
-    <div className={`sign-in ${(signInState.showSignIn || signInState.showSignUp) && 'sign-in--modal-active'}`}>
-      {signInState.showSignIn
+    <div
+      className={`sign-in${(signInShown || signUpShown) ? ' sign-in--modal-active' : ''}`}
+      tabIndex="0" // eslint-disable-line
+      onClick={(e) => { if (e.target.classList.contains('sign-in--modal-active')) hideSignInSignUp(); }}
+      onKeyDown={(e) => { if (e.keyCode === 27) { hideSignInSignUp(); } }}
+      role="dialog"
+    >
+      {signInShown
         && (
-        <form className="sign-in__form" onSubmit={handleSubmit}>
-          <h2 className="sign-in__heading">Sign In</h2>
-          <div className="sign-in__input-group">
-            <label className="sign-in__label" htmlFor="usernameOrEmail">
-              Username or email
-            </label>
-            <input
-              className="sign-in__text-input"
-              type="text"
-              name="usernameOrEmail"
-              id="usernameOrEmail"
-              onChange={handleFieldChange}
-            />
-          </div>
-          <div className="sign-in__input-group">
-            <label className="sign-in__label" htmlFor="password">
-              Password
-            </label>
-            <input
-              className="sign-in__text-input"
-              type="password"
-              name="password"
-              id="password"
-              onChange={handleFieldChange}
-            />
-          </div>
-          <button type="submit" value="Submit">
-            Proceed
-          </button>
-          <p>Don't have an account yet?</p>
-          <button 
-            type="submit"
-            onClick={showSignUp}
-          >
-            Sign Up
-          </button>
-        </form>
+          <SignInForm
+            signInForm={signInForm}
+            updateInputValue={updateInputValue}
+            setError={setError}
+            showSignUp={showSignUp}
+            attemptSignIn={attemptSignIn}
+          />
         )
       }
-      {signInState.showSignUp && (
-        <SignUp
+      {signUpShown && (
+        <SignUpForm
           showSignIn={showSignIn}
-          signUpForm={signInState.signUpForm}
-          updateSignUpInputValue={updateSignUpInputValue}
+          signUpForm={signUpForm}
+          updateInputValue={updateInputValue}
           createUser={createUser}
+          setSignUpStage={setSignUpStage}
+          checkForUserDuplication={checkForUserDuplication}
+          setError={setError}
         />
       )}
     </div>

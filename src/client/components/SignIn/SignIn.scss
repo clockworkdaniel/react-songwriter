@@ -1,20 +1,19 @@
-$border-color: #D8D8B5;
-
-.sign-in {
-
+.sign-in,
+.sign-up {
+    display: none;
   &--modal-active {
+    display: block;
     position: fixed;
     top: 0;
     height: 100vh;
     width: 100vw;
     left: 0;
-    background: rgba(0,0,0, 0.8);
+    background: rgba($black, 0.6);
     z-index: 2;
   }
 
-  
   &__form {
-    background: black;
+    background: $bg;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -23,29 +22,23 @@ $border-color: #D8D8B5;
     position: relative;
     top: 50%;
     transform: translateY(-50%);
-    border: solid 1px $border-color;
+    border: solid 1px $off-bg;
     padding: 1rem;
     box-sizing: border-box;
     border-radius: 3px;
     text-align: center;
+    outline: none;
   }
 
   &__heading {
     margin-top: 0;
   }
-
-  &__label {
-    font-family: 'Ovo';
-    font-size: 1.25rem;
-    margin-bottom: 0.25rem;
-    opacity: 0.6;
+  
+  &__alternate-prompt {
+    margin-bottom: 0.5rem;
   }
 
-  &__text-input {
-    display: block;
-    width: 16rem;
-    text-align: center;
-    margin-bottom: 1rem;
+  &__alternate-btn {
+    margin-top: 0;
   }
-
 }

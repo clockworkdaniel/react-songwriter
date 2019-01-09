@@ -1,0 +1,83 @@
+@font-face {
+  font-family: "icomoon";
+  src: url("./fonts/icomoon.ttf?uqw53b") format("truetype"),
+    url("./fonts/icomoon.woff?uqw53b") format("woff"),
+    url("./fonts/icomoon.svg?uqw53b#icomoon") format("svg");
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"],
+[class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: "icomoon";
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+}
+
+.icon-pencil:before {
+  content: "\e905";
+}
+.icon-pencil2:before {
+  content: "\e906";
+}
+.icon-paint-format:before {
+  content: "\e90c";
+}
+.icon-headphones:before {
+  content: "\e910";
+}
+.icon-mic:before {
+  content: "\e91e";
+}
+.icon-file-music:before {
+  content: "\e928";
+}
+.icon-copy:before {
+  content: "\e92c";
+}
+.icon-stopwatch:before {
+  content: "\e952";
+}
+.icon-floppy-disk:before {
+  content: "\e962";
+}
+.icon-spinner:before {
+  content: "\e97a";
+}
+.icon-lock:before {
+  content: "\e98f";
+}
+.icon-unlocked:before {
+  content: "\e990";
+}
+.icon-equalizer:before {
+  content: "\e992";
+}
+.icon-cog:before {
+  content: "\e994";
+}
+.icon-attachment:before {
+  content: "\e9cd";
+}
+.icon-cross:before {
+  content: "\ea0f";
+}
+.icon-play3:before {
+  content: "\ea1c";
+}
+.icon-pause2:before {
+  content: "\ea1d";
+}
+.icon-stop2:before {
+  content: "\ea1e";
+}
+.icon-move-up:before {
+  content: "\ea46";
+}
+.icon-move-down:before {
+  content: "\ea47";
+}

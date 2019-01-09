@@ -12,5 +12,6 @@ router.route('/song/create').post(SongController.postSong);
 router.route('/song/:id').get(SongController.getSong);
 router.route('/song/:id').put(SongController.putSong);
 router.route('/song/:id').delete(SongController.deleteSong);
+router.route('/song/:id/togglePrivacy').put(SongController.togglePrivacy);
 
 module.exports = router;

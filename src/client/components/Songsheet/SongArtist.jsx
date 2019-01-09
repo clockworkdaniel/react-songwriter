@@ -11,15 +11,18 @@ export default function SongArtist({ artist, rename, _id }) {
   }
 
   return (
-    <Link to={`/artist/${_id}`}>
-      <h3 className="songsheet__artist controls__container">
-        {artist}
-        <span className="controls">
-          <button className="controls__edit" onClick={handleArtistRename} type="button">
-            <span className="icon-pencil" />
-          </button>
-        </span>
-      </h3>
-    </Link>
+    <div>
+      <span className="songsheet__by">by</span>
+      <Link to={`/artist/${_id}`}>
+        <h3 className="songsheet__artist controls__container">
+          {artist}
+          <span className="controls">
+            <button className="controls__edit" onClick={handleArtistRename} type="button">
+              <span className="icon-pencil" />
+            </button>
+          </span>
+        </h3>
+      </Link>
+    </div>
   );
 }

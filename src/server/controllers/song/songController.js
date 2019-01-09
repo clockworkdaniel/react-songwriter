@@ -7,8 +7,8 @@ exports.getSongs = function getSongs(req, res) {
   const { userId } = req.session;
 
   const allOrByArtist = req.params.id
-    ? { artist: req.params.id, $or: [{ public: true }, { user: userId }] }
-    : { $or: [{ public: true }, { user: userId }] };
+    ? { artist: req.params.id, $or: [{ isPublic: true }, { user: userId }] }
+    : { $or: [{ isPublic: true }, { user: userId }] };
 
   Song.find(allOrByArtist, null, { sort: { title: 1 } })
     .select('-structure')
@@ -31,7 +31,7 @@ exports.getSong = function getSong(req, res) {
       if (err) {
         return res.status(500).json({ message: err.message });
       }
-      if (!song.public && (userId !== song.user.toString())) {
+      if (!song.isPublic && (userId !== song.user.toString())) {
         return res.status(401).json({ message: 'Private song, please sign in' });
       }
       if (userId !== song.user.toString()) {
@@ -176,6 +176,7 @@ function updateSongArtist(song, newArtist, res) {
 }
 
 exports.putSong = function putSong(req, res) {
+  const { userId } = req.session;
   const { id } = req.params;
   const song = req.body;
 
@@ -188,16 +189,23 @@ exports.putSong = function putSong(req, res) {
       if (err) {
         return res.status(500).json({ message: err.message });
       }
+      if (userId !== songAsItExisted.user.toString()) {
+        return res.status(401).json({ message: 'Unauthorised' });
+      }
       updateSongArtist(songAsItExisted, song.artist, res);
     });
 };
 
 exports.deleteSong = function deleteSong(req, res) {
+  const { userId } = req.session;
   const { id } = req.params;
 
   Song.findByIdAndDelete(id).exec((err, song) => {
     if (err) {
       return res.status(500).json({ err: err.message });
+    }
+    if (userId !== song.user.toString()) {
+      return res.status(401).json({ message: 'Unauthorised' });
     }
     Artist.findById(song.artist._id).exec((err, foundArtist) => {
       const pullArtistPromise = new Promise((resolve, reject) => {
@@ -206,8 +214,29 @@ exports.deleteSong = function deleteSong(req, res) {
       });
       pullArtistPromise.then((artist) => {
         deleteArtistIfSongsEmpty(artist);
-        res.status(200).json({ message: 'Song Deleted' });
+        res.status(200).json({ message: 'Song deleted' });
       });
     });
+  });
+};
+
+exports.togglePrivacy = function togglePrivacy(req, res) {
+  const { userId } = req.session;
+  const { id } = req.params;
+
+  Song.findById(id).exec((err, song) => {
+    if (err) {
+      return res.status(500).json({ message: err.message });
+    }
+    if (!song) {
+      return res.status(404).json({ message: 'Song not found' });
+    }
+    if (userId !== song.user.toString()) {
+      return res.status(401).json({ message: 'Unauthorised' });
+    }
+    song.isPublic = !song.isPublic;
+    song.save();
+
+    res.status(200).json({ isPublic: song.isPublic, message: 'Song updated' });
   });
 };
