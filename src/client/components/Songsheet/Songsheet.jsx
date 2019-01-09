@@ -20,7 +20,8 @@ export default class Songsheet extends React.Component {
       uiHandlers,
       chord,
       sectionHandlers,
-      rename
+      rename,
+      switchPrivacy
     } = this.props;
 
     return (
@@ -36,6 +37,8 @@ export default class Songsheet extends React.Component {
           saveSong={uiHandlers.saveSong}
           songSaved={uiState.songSaved}
           resetSongSaved={uiHandlers.resetSongSaved}
+          switchPrivacy={switchPrivacy}
+          editable={uiState.editable}
         />
         <SongTitle
           title={song.title}

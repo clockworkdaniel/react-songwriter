@@ -27,15 +27,16 @@ export function rename(editableText, userPrompt, path) {
   };
 }
 
-export function renderSong(song) {
+export function renderSong(song, editable) {
   return {
     type: 'RENDER_SONG',
-    song
+    song,
+    editable
   };
 }
 
 export function fetchSong(songId) {
-  return dispatch => callApi(`song/${songId}`).then(res => dispatch(renderSong(res.song)));
+  return dispatch => callApi(`song/${songId}`).then(res => dispatch(renderSong(res.song, res.editable)));
 }
 
 export function songSaved() {
@@ -48,10 +49,22 @@ export function saveSong(songId, song) {
   return dispatch => callApi(`song/${songId}`, 'put', song).then(() => dispatch(songSaved()));
 }
 
+// for animation
 export function resetSongSaved() {
   return {
     type: 'RESET_SONG_SAVED'
   };
+}
+
+export function privacySwitched(isPublic) {
+  return {
+    type: 'PRIVACY_SWITCHED',
+    isPublic
+  };
+}
+
+export function switchPrivacy(songId) {
+  return dispatch => callApi(`song/${songId}/togglePrivacy`, 'put').then(res => dispatch(privacySwitched(res.isPublic)));
 }
 
 export {

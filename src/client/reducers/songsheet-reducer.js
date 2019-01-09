@@ -13,13 +13,15 @@ const initialState = {
     lineFocused: 0,
     sectionFocused: 0,
     caretIsBeingSet: false,
-    songSaved: false
+    songSaved: false,
+    editable: false
   },
   textBeingEditedPathArray: [],
   song: {
     title: '',
     artist: {},
-    structure: []
+    structure: [],
+    isPublic: false
   }
 };
 
@@ -28,7 +30,10 @@ const songsheetReducer = (state = initialState, action) => {
   switch (action.type) {
 
     case 'RENDER_SONG': {
-      return update(state, { song: { $set: action.song } });
+      return update(state, {
+        song: { $set: action.song },
+        uiState: { editable: { $set: action.editable } }
+      });
     }
 
     case 'SONG_SAVED': {
@@ -121,6 +126,10 @@ const songsheetReducer = (state = initialState, action) => {
 
     case 'UPDATE_PAINT_SPECIFICITY': {
       return update(state, { uiState: { paintSpecificity: { $set: action.newSpecificity } } });
+    }
+
+    case 'PRIVACY_SWITCHED': {
+      return update(state, { song: { isPublic: { $set: action.isPublic } } });
     }
 
     case 'GET_CARET_POSITION': {

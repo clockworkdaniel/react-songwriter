@@ -11,7 +11,8 @@ import {
   rename,
   fetchSong,
   saveSong,
-  resetSongSaved
+  resetSongSaved,
+  switchPrivacy
 } from '../../actions/Songsheet/songsheet-actions';
 
 import Songsheet from './Songsheet';
@@ -60,6 +61,9 @@ const mapDispatchToProps = dispatch => ({
   },
   fetchSong: (songId) => {
     dispatch(fetchSong(songId));
+  },
+  switchPrivacy: (songId) => {
+    dispatch(switchPrivacy(songId));
   }
 });
 

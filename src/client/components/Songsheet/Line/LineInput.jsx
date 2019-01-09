@@ -80,7 +80,6 @@ export default class LineInput extends React.Component {
 
     const lineLength = fullLine.length;
 
-    console.log(caretPosition)
     // enter
     if (event.keyCode === 13) {
       // push line to next line, leaving empty line behind
