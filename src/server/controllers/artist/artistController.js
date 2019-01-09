@@ -7,7 +7,7 @@ exports.getArtists = function getArtists(req, res) {
   Artist.find({}, null, { sort: { name: 1 } })
     .populate({
       path: 'songs',
-      match: { $or: [{ public: true }, { user: userId }] },
+      match: { $or: [{ isPublic: true }, { user: userId }] },
       select: 'title created modified',
       options: {
         sort: { modified: -1 },
@@ -29,7 +29,7 @@ exports.getArtist = function getArtist(req, res) {
   Artist.findOne({ _id: req.params.id })
     .populate({
       path: 'songs',
-      match: { $or: [{ public: true }, { user: userId }] },
+      match: { $or: [{ isPublic: true }, { user: userId }] },
       select: 'title created modified',
       options: {
         sort: { modified: -1 },

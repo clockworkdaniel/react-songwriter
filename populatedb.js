@@ -73,7 +73,7 @@ function createSong(songTitle, artistName, username, public) {
     const artist = artistAndUser[0];
     const user = artistAndUser[1];
     Song.create({ 
-      title: songTitle, artist: artist._id, user: user._id, public 
+      title: songTitle, artist: artist._id, user: user._id, isPublic: public 
     }, (err, song) => {
       if (err) {
         reject(err);

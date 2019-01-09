@@ -9,7 +9,7 @@ const songSchema = new Schema({
   user: { type: Schema.Types.ObjectId, ref: 'User', required: true },
   created: { type: Date, required: true, default: Date.now },
   modified: { type: Date, required: true, default: Date.now },
-  public: { type: Boolean, default: false }
+  isPublic: { type: Boolean, default: false }
 });
 
 songSchema.post('save', (song, next) => {
