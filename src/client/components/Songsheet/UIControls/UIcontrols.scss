@@ -1,11 +1,24 @@
 .sheet-controls {
+
+	&__container {
+		position: sticky;
+    top: 5rem;
+	}
+
 	position: absolute;
-	top: 3rem;
-	right: 3rem;
+	top: 0;
+	right: 1.25rem;
 	z-index: 1;
 	display: flex;
 	flex-direction: column;
 	align-items: flex-end;
+
+	&--lower {
+		position: fixed;
+    top: auto;
+    bottom: 0.5rem;
+    right: 1.75rem;
+	}
 
 	&__switch-button,
 	&__chord-input,
@@ -16,11 +29,6 @@
 		border-radius: 3px;
 		border-width: 1px;
 		margin: 0 0 1em;
-	}
-
-	&__switch-button {
-		margin: 0 0 2em;
-		opacity:1;
 	}
 
 	&__chord-input {
@@ -53,6 +61,7 @@
 	}
 
 	&__save-button {
+		margin-top: 0.25rem;
 		&--saved {
 			opacity: 1;
 			animation: SONG-SAVED 200ms 100ms;
