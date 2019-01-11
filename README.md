@@ -5,14 +5,15 @@ I have built this project with the dual purpose of getting practice at various J
 
 ## Where am I with the project
 On the front-end, the app currently consists of the following main React components:
-* Layout
-** This is where the navigation and React Router stuff lives
 
-* SignIn/SignUp
-** Does what it says on the tin, working front-end and back-end validation
-** Creates a session on the backend which impacts which API routes are authorised
+* __Layout_
+ * This is where the navigation and React Router stuff lives
 
-* Songbook (where users browse their/other's songs)
+* __SignIn/SignUp__
+ * Does what it says on the tin, working front-end and back-end validation
+ * Creates a session on the backend which impacts which API routes are authorised
+
+* __Songbook__ (where users browse their/other's songs)
   * This is loosely modelled on browsing in Netflix
   * The user is presented with appropriate songs.
     * I.e. A generic user can is presented public songs, a signed-in user can see their private songs as well.
@@ -22,7 +23,7 @@ On the front-end, the app currently consists of the following main React compone
     * and each of these can be ordered in the reverse
     * Clicking on an artist shows all the songs by that artist
 
-* Songsheet (for viewing/writing/editing songs)
+* __Songsheet__ (for viewing/writing/editing songs)
   * Users can use 'lyrics mode' or 'chord mode'
   * In chord mode the user can write a chord via text input
   * click on lyrics to assign that chord by:
@@ -36,7 +37,7 @@ On the front-end, the app currently consists of the following main React compone
   * Users can duplicate sections
     * This is very useful as all lyrics and chords are duplicated, so you could duplicate the first verse where all the chords are correct and then just alter the lyrics
 
-* Edit Modal (this is intended for generic use accross the app)
+* __Edit Modal__ (this is intended for generic use accross the app)
   * Used for initially giving a song a name and artist
   * Also used when renaming the song, artist, or section names within the Songsheet
 
