@@ -57,7 +57,7 @@ From my reading, redux-loops would be my preferred option – mostly because I w
 
 ## What's next?
 
-Now that I feel that my Controllers and Routes are fairly robust and fully-fleshed, I intend to improve interactions on the Songsheet, so that writing chords can be fluid. Within this I want to explore the idea that a User could create a custom chord 'palette', or perhaps use predefined palettes based on the key/circle of fifths.
+Now that I feel that my Controllers and Routes are fairly robust, I intend to improve interactions on the Songsheet, so that writing chords can be fluid. Within this I want to explore the idea that a user could create a custom chord 'palette', or perhaps use predefined palettes based on the key/circle of fifths.
 
 Users should be able easily work with sections of the song that don't contain lyrics.
 
