@@ -13,32 +13,32 @@ On the front-end, the app currently consists of the following main React compone
 ** Creates a session on the backend which impacts which API routes are authorised
 
 * Songbook (where users browse their/other's songs)
-** This is loosely modelled on browsing in Netflix
-** The user is presented with appropriate songs.
-*** I.e. A generic user can is presented public songs, a signed-in user can see their private songs as well.
-** Songs can be grouped by artist (default) or ungrouped
-** Artists/Songs can be ordered according to:
-*** Date Modified (default), Date Created, Alphabetically
-*** and each of these can be ordered in the reverse
-*** Clicking on an artist shows all the songs by that artist
+  * This is loosely modelled on browsing in Netflix
+  * The user is presented with appropriate songs.
+    * I.e. A generic user can is presented public songs, a signed-in user can see their private songs as well.
+  * Songs can be grouped by artist (default) or ungrouped
+  * Artists/Songs can be ordered according to:
+    * Date Modified (default), Date Created, Alphabetically
+    * and each of these can be ordered in the reverse
+    * Clicking on an artist shows all the songs by that artist
 
 * Songsheet (for viewing/writing/editing songs)
-** Users can use 'lyrics mode' or 'chord mode'
-** In chord mode the user can write a chord via text input
-** click on lyrics to assign that chord by:
-*** Line, word, or character (depending on which is selected)
-*** __Note This placeholder interaction is cumbersome compared to what I have in mind__
-** Users can update song name or artist
-** Users can save
-** Users can toggle the song between being private and public
-** Users can rename song sections (I.e. a section could be 'Chorus' or 'Verse' or 'Awesome bit')
-** Users can move sections around within the song
-** Users can duplicate sections
-*** This is very useful as all lyrics and chords are duplicated, so you could duplicate the first verse where all the chords are correct and then just alter the lyrics
+  * Users can use 'lyrics mode' or 'chord mode'
+  * In chord mode the user can write a chord via text input
+  * click on lyrics to assign that chord by:
+    * Line, word, or character (depending on which is selected)
+    * __Note:__ This placeholder interaction is cumbersome compared to what I have in mind
+  * Users can update song name or artist
+  * Users can save
+  * Users can toggle the song between being private and public
+  * Users can rename song sections (I.e. a section could be 'Chorus' or 'Verse' or 'Awesome bit')
+  * Users can move sections around within the song
+  * Users can duplicate sections
+    * This is very useful as all lyrics and chords are duplicated, so you could duplicate the first verse where all the chords are correct and then just alter the lyrics
 
 * Edit Modal (this is intended for generic use accross the app)
-** Used for initially giving a song a name and artist
-** Also used when renaming the song, artist, or section names within the Songsheet
+  * Used for initially giving a song a name and artist
+  * Also used when renaming the song, artist, or section names within the Songsheet
 
 On the back-end I have developed an API which the front-end makes requests to.
 Essentially I have 3 Models: Artist, Song and User.
