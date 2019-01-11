@@ -6,12 +6,12 @@ I have built this project with the dual purpose of getting practice at various J
 ## Where am I with the project
 On the front-end, the app currently consists of the following main React components:
 
-* __Layout_
- * This is where the navigation and React Router stuff lives
+* __Layout__
+  * This is where the navigation and React Router stuff lives
 
 * __SignIn/SignUp__
- * Does what it says on the tin, working front-end and back-end validation
- * Creates a session on the backend which impacts which API routes are authorised
+  * Does what it says on the tin, working front-end and back-end validation
+  * Creates a session on the backend which impacts which API routes are authorised
 
 * __Songbook__ (where users browse their/other's songs)
   * This is loosely modelled on browsing in Netflix
