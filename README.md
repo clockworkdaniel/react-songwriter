@@ -20,9 +20,9 @@ On the front-end, the app currently consists of the following main React compone
   * The user is presented with appropriate songs
     * I.e. A generic user can is presented public songs, a signed-in user can see their private songs as well.
   * Songs can be grouped by artist (default) or ungrouped
-  * Artists/Songs can be ordered according to:
-    * Date Modified (default), Date Created, Alphabetically
-    * and each of these can be ordered in the reverse
+  * Artists/Songs can be ordered by:
+    * Date Modified (default), date Created, or alphabetically
+    * Each of these can be reversed
     * Clicking on an artist shows all the songs by that artist
 
 * __Songsheet__ (for viewing/writing/editing songs)
