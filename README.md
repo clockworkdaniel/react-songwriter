@@ -1,6 +1,6 @@
 # React Songwriter
 Songwriting wep app built with the MERN stack.
-I.e. MongoDB, Mongoose, Express, React, Redux, React Router, Node
+I.e. MongoDB, Mongoose, Express, React, Redux, React Router and Node.
 
 I have built this project with the dual purpose of getting practice at various JS frameworks and producing the sort of app I myself would find useful! The app is meant primarily to serve songwriters, with the crux being that they are able to create new songs, write lyrics and 'paint' chords over the top of those lyrics.
 
