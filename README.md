@@ -17,7 +17,7 @@ On the front-end, the app currently consists of the following main React compone
 
 * __Songbook__ (where users browse their/other's songs)
   * This is loosely modelled on browsing in Netflix
-  * The user is presented with appropriate songs.
+  * The user is presented with appropriate songs
     * I.e. A generic user can is presented public songs, a signed-in user can see their private songs as well.
   * Songs can be grouped by artist (default) or ungrouped
   * Artists/Songs can be ordered according to:
