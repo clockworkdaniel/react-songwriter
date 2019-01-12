@@ -1,5 +1,5 @@
 # React Songwriter
-Songwriting wep app built with the MERN stack.
+Songwriting web app built with the MERN stack.
 I.e. MongoDB, Mongoose, Express, React, Redux, React Router and Node.
 
 I have built this project with the dual purpose of getting practice at various JS frameworks and producing the sort of app I myself would find useful! The app is meant primarily to serve songwriters, with the crux being that they are able to create new songs, write lyrics and 'paint' chords over the top of those lyrics.
@@ -14,12 +14,12 @@ On the front-end, the app currently consists of the following main React compone
 
 * __SignIn/SignUp__
   * Does what it says on the tin, working front-end and back-end validation
-  * Creates a session on the backend which impacts which API routes are authorised
+  * Creates a session on the backend authorises API respuests
 
 * __Songbook__ (where users browse their/other's songs)
   * This is loosely modelled on browsing in Netflix
   * The user is presented with appropriate songs
-    * I.e. A generic user can is presented public songs, a signed-in user can see their private songs as well.
+    * I.e. A generic user is presented with public songs, a signed-in user can see their private songs as well.
   * Songs can be grouped by artist (default) or ungrouped
   * Artists/Songs can be ordered by:
     * Date Modified (default), date created, or alphabetically
@@ -54,7 +54,7 @@ For non-trivial async, I have been using ES6 promises.
 
 During this project, I have realised (and then read prolifically) about the point of contention which is side-effects in Redux. I.e. when should they be allowed, where they should be situated in the Redux life-cycle, and which solution handles them best.
 
-From my reading, redux-loops would be my preferred option – mostly because I would prefer my actions to be clean descriptors of what is going on my app. That said, you will no doubt notice that I am saldy using thunks, I will change this in due course, however so far I didn't want to get bogged down in rewriting my reducers and actions when I wanted to get going on the server-side stuff!
+From my reading, redux-loops would be my preferred option – mostly because I would prefer my actions to be clean descriptors of what is going on in my app. That said, you will no doubt notice that I am currently using thunks, I will change this in due course, but for the moment I didn't want to get bogged down in rewriting my reducers and actions when I wanted to get going on the server-side stuff!
 
 ## What's next?
 
