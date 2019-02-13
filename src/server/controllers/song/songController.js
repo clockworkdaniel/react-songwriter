@@ -27,14 +27,15 @@ exports.getSong = function getSong(req, res) {
 
   Song.findById(req.params.id)
     .populate('artist', 'name')
+    .populate('user', 'username')
     .exec((err, song) => {
       if (err) {
         return res.status(500).json({ message: err.message });
       }
-      if (!song.isPublic && (userId !== song.user.toString())) {
+      if (!song.isPublic && (userId !== song.user._id.toString())) {
         return res.status(401).json({ message: 'Private song, please sign in' });
       }
-      if (userId !== song.user.toString()) {
+      if (userId !== song.user._id.toString()) {
         return res.status(200).json({ song, editable: false });
       }
       res.status(200).json({ song, editable: true });

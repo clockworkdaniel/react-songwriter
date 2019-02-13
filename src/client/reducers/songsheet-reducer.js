@@ -20,6 +20,7 @@ const initialState = {
   song: {
     title: '',
     artist: {},
+    user: {},
     structure: [],
     isPublic: false
   }
