@@ -5,6 +5,7 @@ import SongTitle from './SongTitle';
 import SongArtist from './SongArtist';
 import Section from './Section/Section';
 import NewSectionButton from './Section/NewSectionButton';
+import SongUser from './SongUser';
 
 export default class Songsheet extends React.Component {
 
@@ -48,6 +49,10 @@ export default class Songsheet extends React.Component {
           artist={song.artist.name}
           rename={rename}
           _id={song.artist._id}
+        />
+        <SongUser
+          user={song.user.username}
+          _id={song.user._id}
         />
         <div className="songsheet__structure">
           {song.structure.map((section, index) => (
