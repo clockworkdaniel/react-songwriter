@@ -10,8 +10,8 @@ export default function SongTitle({ title, rename }) {
 
   return (
 
-    <div>
-      <h1 className="songsheet__title controls__container">
+    <div className="songsheet__title ss-title">
+      <h1 className="ss-title__heading controls__container">
         {title}
         <span className="controls">
           <button

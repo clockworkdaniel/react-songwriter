@@ -5,34 +5,67 @@
 .songsheet {
     
 	&__title {
-		display: inline-block;
-		font-size: 2rem;
-		margin-top: 0;
-	}
-
-	&__by {
-		color: $primary;
-		font-family: 'muli';
-		margin-right: 0.5rem;
-		opacity: 0.7;
+		margin-bottom: 0.25rem;
 	}
 
 	&__artist {
-		color: $primary;
-		display: inline-block;
-		font-family: 'Ovo';
-		font-size: 1.25rem;
-		margin-top: 0;
-		margin-bottom: 2rem;
-		opacity: 0.7;
-		&:hover {
-			opacity: 0.9;
-		}
+		margin-bottom: 0.125rem;
+	}
 
+	&__user {
+    margin-bottom: 2rem;
 	}
 
 	&__section {
 		display: flex;
 		margin-bottom: 1rem;
   }
+}
+
+.ss-title {
+	&__heading {
+		margin: 0;
+		display: inline-block;
+		font-size: 2rem;
+	}
+}
+
+.ss-artist {
+	&__by {
+		color: $primary;
+		font-family: 'muli';
+		margin-right: 0.5em;
+		opacity: 0.6;
+	}
+	&__heading {
+		margin: 0;
+		color: $primary;
+		display: inline-block;
+		font-family: 'Ovo';
+		font-size: 1.25rem;
+		opacity: 0.8;
+		&:hover {
+			opacity: 1;
+		}
+	}
+}
+
+.ss-user {
+	&__by {
+		color: $primary;
+		font-size: 0.8rem;
+		opacity: 0.6;
+		margin-right: 0.5em;
+	}
+	&__heading {
+		margin: 0;
+		color: $primary;
+    display: inline-block;
+    font-size: 0.8rem;
+		opacity: 0.7;
+		font-weight: bold;
+		&:hover {
+			opacity: 0.9;
+		}
+	}
 }
