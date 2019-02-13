@@ -45,8 +45,6 @@ export default class UIControls extends React.Component {
       editable
     } = this.props;
 
-    console.log(editable);
-
     const songSavedModifier = songSaved ? 'sheet-controls__save-button--saved' : '';
 
     return (
