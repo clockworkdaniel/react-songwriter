@@ -6,10 +6,13 @@ export default function Character({
   chordChange,
   lineKey,
   sectionKey,
-  updateChord
+  updateChord,
+  editable
 }) {
   function handleChordChange() {
-    updateChord(characterKey, lineKey, sectionKey);
+    if (editable) {
+      updateChord(characterKey, lineKey, sectionKey);
+    }
   }
   return (
     <span className="line__character" onClick={handleChordChange}>

@@ -81,10 +81,11 @@ export default class Songsheet extends React.Component {
               duplicateSection={sectionHandlers.duplicateSection}
               moveSection={sectionHandlers.moveSection}
               rename={rename}
+              editable={uiState.editable}
             />
           ))}
         </div>
-        <NewSectionButton />
+        {uiState.editable && <NewSectionButton />}
       </div>
     );
 

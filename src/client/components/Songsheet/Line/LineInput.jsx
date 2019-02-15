@@ -106,7 +106,7 @@ export default class LineInput extends React.Component {
 
   render() {
 
-    const { fullLine } = this.props;
+    const { fullLine, editable } = this.props;
 
     return (
       <div className="line">
@@ -119,6 +119,7 @@ export default class LineInput extends React.Component {
           onKeyDown={this.handleKeyDown}
           onChange={this.handleChangeLine}
           ref={this.textInput}
+          readOnly={!editable && 'readOnly'}
         />
       </div>
     );
