@@ -10,6 +10,19 @@ export default class Songbook extends React.Component {
   }
 
   componentDidMount() {
+    const { match } = this.props;
+    this.matchesArtistUrl = !!match.url.includes('/artist/');
+    this.dictateFetchType();
+  }
+
+  componentDidUpdate(prevProps) {
+    const { signInState: { signedIn } } = this.props;
+    if (signedIn !== prevProps.signInState.signedIn) {
+      this.dictateFetchType();
+    }
+  }
+
+  dictateFetchType() {
     const {
       fetchSongs,
       fetchSongsBySingleArtist,
@@ -20,7 +33,7 @@ export default class Songbook extends React.Component {
         orderLogic
       }
     } = this.props;
-    this.matchesArtistUrl = !!match.url.includes('/artist/');
+
     if (this.matchesArtistUrl) {
       setSongPriority(true); // defaults to artist priority
       fetchSongsBySingleArtist(match.params.id);

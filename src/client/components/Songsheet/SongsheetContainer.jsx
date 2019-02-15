@@ -19,7 +19,8 @@ import Songsheet from './Songsheet';
 
 const mapStateToProps = state => ({
   uiState: state.songsheetState.uiState,
-  song: state.songsheetState.song
+  song: state.songsheetState.song,
+  signInState: state.layoutState.signIn
 });
 
 const mapDispatchToProps = dispatch => ({
