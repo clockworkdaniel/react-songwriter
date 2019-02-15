@@ -8,7 +8,8 @@ export default function Line({
   line,
   lineKey,
   sectionKey,
-  updateChord
+  updateChord,
+  editable
 }) {
 
   if (chordMode) {
@@ -18,6 +19,7 @@ export default function Line({
         lineKey={lineKey}
         sectionKey={sectionKey}
         updateChord={updateChord}
+        editable={editable}
       />
     );
   }
@@ -27,6 +29,7 @@ export default function Line({
       fullLine={line.fullLine}
       lineKey={lineKey}
       sectionKey={sectionKey}
+      editable={editable}
     />
   );
 }

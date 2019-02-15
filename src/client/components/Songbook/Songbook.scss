@@ -79,12 +79,6 @@
 		white-space: nowrap;
 		overflow: hidden;
 		text-overflow: ellipsis;
-		width: 100%;
-		transition: 0ms 250ms width;
-		.song:hover & {
-			width: calc(100% - 48px);
-			transition: none;
-		}
 	}
 
 	&__artist-name {

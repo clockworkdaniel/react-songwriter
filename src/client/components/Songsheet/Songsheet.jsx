@@ -14,6 +14,21 @@ export default class Songsheet extends React.Component {
     fetchSong(match.params.id);
   }
 
+  componentDidUpdate(prevProps) {
+
+    const {
+      signInState: {
+        signedIn
+      },
+      fetchSong,
+      match
+    } = this.props;
+
+    if (signedIn !== prevProps.signInState.signedIn) {
+      fetchSong(match.params.id);
+    }
+  }
+
   render() {
     const {
       uiState,
@@ -66,10 +81,11 @@ export default class Songsheet extends React.Component {
               duplicateSection={sectionHandlers.duplicateSection}
               moveSection={sectionHandlers.moveSection}
               rename={rename}
+              editable={uiState.editable}
             />
           ))}
         </div>
-        <NewSectionButton />
+        {uiState.editable && <NewSectionButton />}
       </div>
     );
 

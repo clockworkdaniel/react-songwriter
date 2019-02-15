@@ -4,13 +4,8 @@ import niceDate from '../../functions/niceDate';
 
 
 export default function Song({
-  song, deleteSongRequest, artistName, orderLogic, songPriority
+  song, artistName, orderLogic, songPriority
 }) {
-
-  function handleDeleteSong(event) {
-    event.preventDefault();
-    deleteSongRequest(song._id);
-  }
 
   return (
     <Link to={`/song/${song._id}`} title={`${song.title} by ${artistName}`}>
@@ -18,21 +13,6 @@ export default function Song({
         <h3 className="song__title ">
           {song.title}
         </h3>
-        <div className="controls">
-          <button
-            className="controls__edit"
-            type="button"
-          >
-            <span className="icon-pencil" />
-          </button>
-          <button
-            className="controls__delete"
-            onClick={handleDeleteSong}
-            type="button"
-          >
-            <span className="icon-cross" />
-          </button>
-        </div>
         {songPriority && (
           <h4 className="song__artist-name">
             {artistName}
