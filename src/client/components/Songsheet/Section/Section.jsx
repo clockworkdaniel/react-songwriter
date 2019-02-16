@@ -11,7 +11,8 @@ export default function Section({
   rename,
   section,
   sectionKey,
-  mouseDown
+  mouseDown,
+  editable
 }) {
 
   function handleDelete() {
@@ -39,27 +40,31 @@ export default function Section({
   return (
     <div className="songsheet__section">
       <div className="section__ui">
-        <div className="section__controls">
-          <button className="section__edit" onClick={handleRename} type="button">
-            <span className="icon-pencil" />
-          </button>
-          <button className="section__duplicate" onClick={handleDuplicate} type="button">
-            <span className="icon-copy" />
-          </button>
-          <button className="section__delete" onClick={handleDelete} type="button">
-            <span className="icon-cross" />
-          </button>
-        </div>
+        {editable && (
+          <div className="section__controls">
+            <button className="section__edit" onClick={handleRename} type="button">
+              <span className="icon-pencil" />
+            </button>
+            <button className="section__duplicate" onClick={handleDuplicate} type="button">
+              <span className="icon-copy" />
+            </button>
+            <button className="section__delete" onClick={handleDelete} type="button">
+              <span className="icon-cross" />
+            </button>
+          </div>
+        )}
         <h4 className="section__name">
           {section.sectionName}
-          <span className="section__move-labels">
-            <button className="section__move-up" onClick={handleMoveUp} type="button">
-              <span className="icon-move-up" />
-            </button>
-            <button className="section__move-down" onClick={handleMoveDown} type="button">
-              <span className="icon-move-down" />
-            </button>
-          </span>
+          {editable && (
+            <span className="section__move-labels">
+              <button className="section__move-up" onClick={handleMoveUp} type="button">
+                <span className="icon-move-up" />
+              </button>
+              <button className="section__move-down" onClick={handleMoveDown} type="button">
+                <span className="icon-move-down" />
+              </button>
+            </span>
+          )}
         </h4>
       </div>
       <div className="section__lines">
@@ -72,6 +77,7 @@ export default function Section({
             chordMode={chordMode}
             updateChord={updateChord}
             mouseDown={mouseDown}
+            editable={editable}
           />
         ))}
       </div>

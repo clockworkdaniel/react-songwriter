@@ -19,6 +19,20 @@ export default class Songsheet extends React.Component {
     const { match, fetchSong } = this.props;
     fetchSong(match.params.id);
   }
+  
+  componentDidUpdate(prevProps) {
+    const {
+      signInState: {
+        signedIn
+      },
+      fetchSong,
+      match
+    } = this.props;
+
+    if (signedIn !== prevProps.signInState.signedIn) {
+      fetchSong(match.params.id);
+    }
+  }
 
   handleMouseDown = () => {
     this.setState({
@@ -84,11 +98,12 @@ export default class Songsheet extends React.Component {
               duplicateSection={sectionHandlers.duplicateSection}
               moveSection={sectionHandlers.moveSection}
               rename={rename}
+              editable={uiState.editable}
               mouseDown={this.state.mouseDown}
             />
           ))}
         </div>
-        <NewSectionButton />
+        {uiState.editable && <NewSectionButton />}
       </div>
     );
 

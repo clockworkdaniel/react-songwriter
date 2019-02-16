@@ -7,7 +7,8 @@ export default function SplitCharacters({
   lineKey,
   sectionKey,
   updateChord,
-  mouseDown
+  mouseDown,
+  editable
 }) {
 
   const splitCharacters = [];
@@ -30,6 +31,7 @@ export default function SplitCharacters({
         sectionKey={sectionKey}
         updateChord={updateChord}
         mouseDown={mouseDown}
+        editable={editable}
       />
     );
   });

@@ -61,7 +61,7 @@ export default class UIControls extends React.Component {
               onClick={switchMode}
             />
           </div>
-          {chordMode && (
+          {editable && chordMode && (
             <div className="sheet-controls__chord-input">
               <p>Chord:</p>
               <input
@@ -71,7 +71,7 @@ export default class UIControls extends React.Component {
               />
             </div>
           )}
-          {chordMode && (
+          {editable && chordMode && (
             <div className="sheet-controls__specificity-select">
               <p>Assign chord by:</p>
               <select
