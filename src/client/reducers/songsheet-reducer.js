@@ -1,5 +1,5 @@
 import update from 'immutability-helper';
-
+import { loop, Cmd } from 'redux-loop';
 
 import breakDownLine from '../functions/breakDownLine';
 import lastChord from '../functions/lastChord';
@@ -87,7 +87,10 @@ const songsheetReducer = (state = initialState, action) => {
         });
       }
 
-      return update(state, { song: { structure: { [action.sectionKey]: { lines: { [action.lineKey]: { $set: lineCopy } } } } } });
+      return loop(
+        update(state, { song: { structure: { [action.sectionKey]: { lines: { [action.lineKey]: { $set: lineCopy } } } } } }),
+        Cmd.action({ type: 'TEST' })
+      );
     }
 
     case 'RESET_CARET_MONITORING': {

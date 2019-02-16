@@ -1,4 +1,4 @@
-import { combineReducers } from 'redux';
+import { combineReducers } from 'redux-loop';
 import layoutReducer from './layout-reducer';
 import songbookReducer from './songbook-reducer';
 import songsheetReducer from './songsheet-reducer';
