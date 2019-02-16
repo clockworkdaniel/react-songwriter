@@ -8,10 +8,28 @@ import NewSectionButton from './Section/NewSectionButton';
 import SongUser from './SongUser';
 
 export default class Songsheet extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      mouseDown: false
+    };
+  }
 
   componentDidMount() {
     const { match, fetchSong } = this.props;
     fetchSong(match.params.id);
+  }
+
+  handleMouseDown = () => {
+    this.setState({
+      mouseDown: true
+    });
+  }
+
+  handleMouseUp = () => {
+    this.setState({
+      mouseDown: false
+    });
   }
 
   render() {
@@ -26,7 +44,7 @@ export default class Songsheet extends React.Component {
     } = this.props;
 
     return (
-      <div className="songsheet">
+      <div className="songsheet" onMouseDown={this.handleMouseDown} onMouseUp={this.handleMouseUp}>
         <UIControls
           chordMode={uiState.chordMode}
           switchMode={uiHandlers.switchMode}
@@ -66,6 +84,7 @@ export default class Songsheet extends React.Component {
               duplicateSection={sectionHandlers.duplicateSection}
               moveSection={sectionHandlers.moveSection}
               rename={rename}
+              mouseDown={this.state.mouseDown}
             />
           ))}
         </div>

@@ -11,6 +11,7 @@ export default function Section({
   rename,
   section,
   sectionKey,
+  mouseDown
 }) {
 
   function handleDelete() {
@@ -70,6 +71,7 @@ export default function Section({
             sectionKey={sectionKey}
             chordMode={chordMode}
             updateChord={updateChord}
+            mouseDown={mouseDown}
           />
         ))}
       </div>

@@ -8,7 +8,8 @@ export default function Line({
   line,
   lineKey,
   sectionKey,
-  updateChord
+  updateChord,
+  mouseDown
 }) {
 
   if (chordMode) {
@@ -18,6 +19,7 @@ export default function Line({
         lineKey={lineKey}
         sectionKey={sectionKey}
         updateChord={updateChord}
+        mouseDown={mouseDown}
       />
     );
   }
