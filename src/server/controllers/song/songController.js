@@ -215,7 +215,7 @@ exports.deleteSong = function deleteSong(req, res) {
       });
       pullArtistPromise.then((artist) => {
         deleteArtistIfSongsEmpty(artist);
-        res.status(200).json({ message: 'Song deleted' });
+        res.status(200).json({ message: 'Song deleted', songId: id });
       });
     });
   });

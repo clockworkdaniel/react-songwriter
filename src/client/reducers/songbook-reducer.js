@@ -1,4 +1,10 @@
-import { sortAlphabetically, sortByDate, toSongPriority } from '../functions/arrayStuff'; 
+import { loop, Cmd } from 'redux-loop';
+
+import { sortAlphabetically, sortByDate, toSongPriority } from '../functions/arrayStuff';
+import callApi from '../util/callApi';
+import history from '../history';
+
+import { newSongSuccess, fetchSongsSuccess, removeSong } from '../actions/Songbook/songbook-actions';
 
 const intialState = {
   artistSongList: [],
@@ -7,7 +13,8 @@ const intialState = {
   uiState: {
     orderLogic: 'modified',
     songPriority: false,
-    isAscending: false
+    isAscending: false,
+    currentlyFetching: false
   }
 };
 
@@ -43,12 +50,6 @@ const songbookReducer = (state = intialState, action) => {
 
   switch (action.type) {
     // need to change state re loading
-    case 'ADD_SONGS':
-      return {
-        ...state,
-        artistSongList: action.artistSongs,
-        orderedArtistSongList: orderArtistSongList({ artistSongList: action.artistSongs })
-      };
     case 'SET_ORDER_LOGIC':
       return {
         ...state,
@@ -78,7 +79,7 @@ const songbookReducer = (state = intialState, action) => {
       };
     case 'REMOVE_SONG':
       songListWithSongRemoved = state.artistSongList.map((artist) => {
-        artist.songs = artist.songs.filter(song => song._id !== action.songId);
+        artist.songs = artist.songs.filter(song => song._id !== action.res.songId);
         return artist;
       });
       return {
@@ -92,6 +93,57 @@ const songbookReducer = (state = intialState, action) => {
         ...state,
         songTitle: action.songTitle
       };
+
+    case 'NEW_SONG_REQUEST':
+      return loop(
+        state,
+        Cmd.run(callApi, {
+          args: ['song/create', 'post', { title: action.song.title, artist: action.song.artist }],
+          successActionCreator: newSongSuccess
+        })
+      );
+
+    case 'NEW_SONG_SUCCESS':
+      return loop(
+        state,
+        Cmd.run(history.push, { args: [`/song/${action.res.song._id}`] })
+      );
+
+    case 'FETCH_SONGS': {
+      return loop(
+        { ...state, uiState: { ...state.uiState, currentlyFetching: true } },
+        Cmd.run(callApi, {
+          args: ['artists'],
+          successActionCreator: fetchSongsSuccess
+        })
+      );
+    }
+
+    case 'FETCH_SONGS_BY_SINGLE_ARTIST':
+      return loop(
+        state,
+        Cmd.run(callApi, {
+          args: [`artist/${action.artistId}`],
+          successActionCreator: fetchSongsSuccess
+        })
+      );
+
+    case 'FETCH_SONGS_SUCCESS':
+      return {
+        ...state,
+        artistSongList: action.res.artists,
+        orderedArtistSongList: orderArtistSongList(action.res.artists)
+      };
+
+    case 'DELETE_SONG_REQUEST': {
+      return loop(
+        state,
+        Cmd.run(callApi, {
+          args: [`song/${action.songId}`, 'delete'],
+          successActionCreator: removeSong
+        })
+      );
+    }
 
     default:
       return state;
