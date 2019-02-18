@@ -6,6 +6,7 @@ import '@babel/polyfill';
 import { Provider } from 'react-redux';
 import { createStore, compose, applyMiddleware } from 'redux';
 import { install } from 'redux-loop';
+import logger from 'redux-logger';
 import thunk from 'redux-thunk';
 
 import rootReducer from './reducers/root-reducer';
@@ -15,7 +16,7 @@ import LayoutContainer from './components/Layout/LayoutContainer';
 import './main.scss';
 
 const enhancer = compose(
-  applyMiddleware(thunk),
+  applyMiddleware(thunk, logger),
   install()
 );
 
