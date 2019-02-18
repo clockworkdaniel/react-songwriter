@@ -1,5 +1,3 @@
-import callApi from '../../util/callApi';
-
 export function showSignIn() {
   return {
     type: 'SHOW_SIGN_IN'
@@ -34,43 +32,53 @@ export function setSignedInState(signedIn) {
   };
 }
 
-export function setError(formKey, errorObj) {
+export function setError(errorObj) {
   return {
     type: 'SET_ERROR',
-    formKey,
     errorObj
   };
 }
 
 export function attemptSignIn(usernameOrEmail, password) {
-  return dispatch => callApi('user/sign-in', 'post', {
-    usernameOrEmail, password
-  }).then(() => {
-    dispatch(setSignedInState(true));
-    dispatch(hideSignInSignUp());
-  }, (error) => {
-    dispatch(setError('signInForm', error));
-  });
+  return {
+    type: 'ATTEMPT_SIGN_IN',
+    usernameOrEmail,
+    password
+  };
+}
+
+export function signInSuccess() {
+  return {
+    type: 'SIGN_IN_SUCCESS'
+  };
 }
 
 export function createUser(username, email, password) {
-  return dispatch => callApi('user/create', 'post', {
-    username, email, password
-  }).then(() => {
-    dispatch(setSignedInState(true));
-    dispatch(hideSignInSignUp());
-  }, (error) => {
-    dispatch(setError('signUpForm', error));
-  });
+  return {
+    type: 'CREATE_USER',
+    username,
+    email,
+    password
+  };
 }
 
 export function signOut() {
-  return dispatch => callApi('user/sign-out', 'post')
-    .then(() => {
-      dispatch(setSignedInState(false));
-    }, (error) => {
-      console.error(error.message);
-    });
+  return {
+    type: 'SIGN_OUT'
+  };
+}
+
+export function signOutSuccess() {
+  return {
+    type: 'SIGN_OUT_SUCCESS'
+  };
+}
+
+export function signOutFailure(error) {
+  return {
+    type: 'SIGN_OUT_FAILURE',
+    error
+  };
 }
 
 export function setSignUpStage(stage) {
@@ -80,12 +88,16 @@ export function setSignUpStage(stage) {
   };
 }
 
+export function signUpProceed() {
+  return {
+    type: 'SIGN_UP_PROCEED'
+  };
+}
+
 export function checkForUserDuplication(username, email) {
-  return dispatch => callApi('user/check', 'post', {
-    username, email
-  }).then(() => {
-    dispatch(setSignUpStage(2));
-  }, (error) => {
-    dispatch(setError('signUpForm', error));
-  });
+  return {
+    type: 'CHECK_FOR_USER_DUPLICATION',
+    username,
+    email
+  };
 }

@@ -16,7 +16,7 @@ export default class InputGroup extends React.Component {
     updateInputValue(formKey, field, event.target.value);
 
     if (error.field === field) {
-      setError(formKey, { field: null, message: '' });
+      setError({ field: null, message: '' });
     }
   }
 

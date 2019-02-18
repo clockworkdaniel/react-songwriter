@@ -66,8 +66,8 @@ const mapDispatchToProps = dispatch => ({
   newSongModal: () => {
     dispatch(newSongModal());
   },
-  setError: (formKey, errorObj) => {
-    dispatch(setError(formKey, errorObj));
+  setError: (errorObj) => {
+    dispatch(setError(errorObj));
   },
   setSignUpStage: (stage) => {
     dispatch(setSignUpStage(stage));
