@@ -16,8 +16,8 @@ import LayoutContainer from './components/Layout/LayoutContainer';
 import './main.scss';
 
 const enhancer = compose(
-  applyMiddleware(thunk, logger),
-  install()
+  install(),
+  applyMiddleware(thunk, logger)
 );
 
 const store = createStore(rootReducer, enhancer);
