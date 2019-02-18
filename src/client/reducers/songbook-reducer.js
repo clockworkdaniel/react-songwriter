@@ -132,7 +132,7 @@ const songbookReducer = (state = intialState, action) => {
       return {
         ...state,
         artistSongList: action.res.artists,
-        orderedArtistSongList: orderArtistSongList(action.res.artists)
+        orderedArtistSongList: orderArtistSongList({ artistSongList: action.res.artists })
       };
 
     case 'DELETE_SONG_REQUEST': {
