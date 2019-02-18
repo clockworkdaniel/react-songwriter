@@ -1,4 +1,3 @@
-import callApi from '../../util/callApi';
 import { editModalTrigger } from '../Layout/edit-modal-actions';
 
 export function updateTextBeingEditedPath(path) {
@@ -27,16 +26,18 @@ export function rename(editableText, userPrompt, path) {
   };
 }
 
-export function renderSong(song, editable) {
+export function renderSong(res) {
   return {
     type: 'RENDER_SONG',
-    song,
-    editable
+    res
   };
 }
 
 export function fetchSong(songId) {
-  return dispatch => callApi(`song/${songId}`).then(res => dispatch(renderSong(res.song, res.editable)));
+  return {
+    type: 'FETCH_SONG',
+    songId
+  };
 }
 
 export function songSaved() {
@@ -46,7 +47,11 @@ export function songSaved() {
 }
 
 export function saveSong(songId, song) {
-  return dispatch => callApi(`song/${songId}`, 'put', song).then(() => dispatch(songSaved()));
+  return {
+    type: 'SAVE_SONG',
+    songId,
+    song
+  };
 }
 
 // for animation
@@ -56,15 +61,18 @@ export function resetSongSaved() {
   };
 }
 
-export function privacySwitched(isPublic) {
+export function privacySwitched(res) {
   return {
     type: 'PRIVACY_SWITCHED',
-    isPublic
+    res
   };
 }
 
 export function switchPrivacy(songId) {
-  return dispatch => callApi(`song/${songId}/togglePrivacy`, 'put').then(res => dispatch(privacySwitched(res.isPublic)));
+  return {
+    type: 'SWITCH_PRIVACY',
+    songId
+  };
 }
 
 export {

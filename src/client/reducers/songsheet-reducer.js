@@ -3,6 +3,8 @@ import { loop, Cmd } from 'redux-loop';
 
 import breakDownLine from '../functions/breakDownLine';
 import lastChord from '../functions/lastChord';
+import callApi from '../util/callApi';
+import { renderSong, songSaved, privacySwitched } from '../actions/Songsheet/songsheet-actions';
 
 const initialState = {
   uiState: {
@@ -30,10 +32,20 @@ const songsheetReducer = (state = initialState, action) => {
 
   switch (action.type) {
 
+    case 'FETCH_SONG': {
+      return loop(
+        state,
+        Cmd.run(callApi, {
+          args: [`song/${action.songId}`],
+          successActionCreator: renderSong
+        })
+      );
+    }
+
     case 'RENDER_SONG': {
       return update(state, {
-        song: { $set: action.song },
-        uiState: { editable: { $set: action.editable } }
+        song: { $set: action.res.song },
+        uiState: { editable: { $set: action.res.editable } }
       });
     }
 
@@ -43,6 +55,26 @@ const songsheetReducer = (state = initialState, action) => {
 
     case 'RESET_SONG_SAVED': {
       return update(state, { uiState: { songSaved: { $set: false } } });
+    }
+
+    case 'SAVE_SONG': {
+      return loop(
+        state,
+        Cmd.run(callApi, {
+          args: [`song/${action.songId}`, 'put', action.song],
+          successActionCreator: songSaved
+        })
+      );
+    }
+
+    case 'SWITCH_PRIVACY': {
+      return loop(
+        state,
+        Cmd.run(callApi, {
+          args: [`song/${action.songId}/togglePrivacy`, 'put'],
+          successActionCreator: privacySwitched
+        })
+      );
     }
 
     case 'CHANGE_LINE': {
@@ -58,6 +90,7 @@ const songsheetReducer = (state = initialState, action) => {
         }
       });
     }
+
     case 'UPDATE_CHORD': {
 
       const lineCopy = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey].lines[action.lineKey]));
@@ -133,7 +166,7 @@ const songsheetReducer = (state = initialState, action) => {
     }
 
     case 'PRIVACY_SWITCHED': {
-      return update(state, { song: { isPublic: { $set: action.isPublic } } });
+      return update(state, { song: { isPublic: { $set: action.res.isPublic } } });
     }
 
     case 'GET_CARET_POSITION': {
