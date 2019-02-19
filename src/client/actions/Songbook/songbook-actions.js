@@ -21,9 +21,9 @@ export function setSongPriority(songPriority) {
   };
 }
 
-export function setAscending(isAscending) {
+export function setOrderDirection(isAscending) {
   return {
-    type: 'SET_ASCENDING',
+    type: 'SET_ORDER_DIRECTION',
     isAscending
   };
 }

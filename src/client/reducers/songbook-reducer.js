@@ -68,7 +68,7 @@ const songbookReducer = (state = intialState, action) => {
           songPriority: action.songPriority
         }
       };
-    case 'SET_ASCENDING':
+    case 'SET_ORDER_DIRECTION':
       return {
         ...state,
         orderedArtistSongList: orderArtistSongList({ isAscending: action.isAscending }),

@@ -6,7 +6,7 @@ import {
   deleteSongRequest,
   setOrderLogic,
   setSongPriority,
-  setAscending
+  setOrderDirection
 } from '../../actions/Songbook/songbook-actions';
 
 import Songbook from './Songbook';
@@ -35,8 +35,8 @@ const mapDispatchToProps = dispatch => ({
   setSongPriority: (songPriority) => {
     dispatch(setSongPriority(songPriority));
   },
-  setAscending: (ascending) => {
-    dispatch(setAscending(ascending));
+  setOrderDirection: (ascending) => {
+    dispatch(setOrderDirection(ascending));
   }
 });
 
