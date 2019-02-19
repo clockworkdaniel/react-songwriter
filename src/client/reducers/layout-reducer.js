@@ -76,31 +76,7 @@ const editModalReducer = (state = initialState, action) => {
       return { ...state, editModal: { ...state.editModal, showEditModal: false } };
     }
 
-    case 'ATTEMPT_SIGN_IN': {
-      return loop(
-        state,
-        Cmd.run(callApi, {
-          args: [
-            'user/sign-in',
-            'post', {
-              usernameOrEmail: action.usernameOrEmail,
-              password: action.password
-            }
-          ],
-          successActionCreator: signInSuccess,
-          failActionCreator: setError
-        })
-      );
-    }
-
-    case 'SIGN_IN_SUCCESS': {
-      return loop(
-        { ...state, signIn: { ...state.signIn, signedIn: true } },
-        Cmd.action({ type: 'HIDE_SIGN_IN_SIGN_UP' })
-      );
-    }
-
-    case 'SET_SIGNED_IN_STATE': {
+    case 'INIT_SIGNED_IN_STATE': {
       return { ...state, signIn: { ...state.signIn, signedIn: action.signedIn } };
     }
 
@@ -116,23 +92,12 @@ const editModalReducer = (state = initialState, action) => {
       };
     }
 
-    case 'SHOW_SIGN_UP': {
-      return {
-        ...state,
-        signIn: {
-          ...state.signIn,
-          signUpShown: true,
-          signInShown: false,
-          currentForm: 'signUpForm'
-        }
-      };
-    }
-
     case 'HIDE_SIGN_IN_SIGN_UP': {
       return {
         ...state,
         signIn: {
-          ...initialState.signIn
+          ...initialState.signIn,
+          signedIn: state.signIn.signedIn
         }
       };
     }
@@ -159,6 +124,62 @@ const editModalReducer = (state = initialState, action) => {
             ...state.signIn[state.signIn.currentForm],
             error: action.errorObj
           }
+        }
+      };
+    }
+
+    case 'SIGN_IN_REQUEST': {
+      return loop(
+        state,
+        Cmd.run(callApi, {
+          args: [
+            'user/sign-in',
+            'post', {
+              usernameOrEmail: action.usernameOrEmail,
+              password: action.password
+            }
+          ],
+          successActionCreator: signInSuccess,
+          failActionCreator: setError
+        })
+      );
+    }
+
+    case 'SIGN_IN_SUCCESS': {
+      return loop(
+        { ...state, signIn: { ...state.signIn, signedIn: true } },
+        Cmd.action({ type: 'HIDE_SIGN_IN_SIGN_UP' })
+      );
+    }
+
+    case 'SIGN_OUT_REQUEST': {
+      return loop(
+        state,
+        Cmd.run(callApi, {
+          args: ['user/sign-out', 'post'],
+          successActionCreator: signOutSuccess,
+          failActionCreator: signOutFailure
+        })
+      );
+    }
+
+    case 'SIGN_OUT_SUCCESS': {
+      return { ...state, signIn: { ...state.signIn, signedIn: false } };
+    }
+
+    case 'SIGN_OUT_FAILURE': {
+      console.log(action.error.message);
+      return state;
+    }
+
+    case 'SHOW_SIGN_UP': {
+      return {
+        ...state,
+        signIn: {
+          ...state.signIn,
+          signUpShown: true,
+          signInShown: false,
+          currentForm: 'signUpForm'
         }
       };
     }
@@ -192,26 +213,6 @@ const editModalReducer = (state = initialState, action) => {
 
     case 'SIGN_UP_PROCEED': {
       return loop(state, Cmd.action(setSignUpStage(2)));
-    }
-
-    case 'SIGN_OUT': {
-      return loop(
-        state,
-        Cmd.run(callApi, {
-          args: ['user/sign-out', 'post'],
-          successActionCreator: signOutSuccess,
-          failActionCreator: signOutFailure
-        })
-      );
-    }
-
-    case 'SIGN_OUT_SUCCESS': {
-      return { ...state, signIn: { ...state.signIn, signedIn: false } };
-    }
-
-    case 'SIGN_OUT_FAILURE': {
-      console.log(action.error.message);
-      return state;
     }
 
     case 'CREATE_USER': {

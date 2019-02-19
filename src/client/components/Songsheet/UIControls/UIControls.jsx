@@ -21,15 +21,15 @@ export default class UIControls extends React.Component {
   }
 
   handleSave = () => {
-    const { song, saveSong, songSaved } = this.props;
+    const { song, saveSongRequest, songSaved } = this.props;
     if (!songSaved) {
-      saveSong(song._id, song);
+      saveSongRequest(song._id, song);
     }
   }
 
   handlePrivacySwitch = () => {
-    const { song, switchPrivacy } = this.props;
-    switchPrivacy(song._id);
+    const { song, switchPrivacyRequest } = this.props;
+    switchPrivacyRequest(song._id);
   }
 
   render() {

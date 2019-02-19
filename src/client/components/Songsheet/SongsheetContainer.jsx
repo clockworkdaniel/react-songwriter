@@ -10,9 +10,9 @@ import {
   updatePaintSpecificity,
   rename,
   fetchSong,
-  saveSong,
+  saveSongRequest,
   resetSongSaved,
-  switchPrivacy
+  switchPrivacyRequest
 } from '../../actions/Songsheet/songsheet-actions';
 
 import Songsheet from './Songsheet';
@@ -34,8 +34,8 @@ const mapDispatchToProps = dispatch => ({
     updatePaintSpecificity: (newSpecificity) => {
       dispatch(updatePaintSpecificity(newSpecificity));
     },
-    saveSong: (songId, song) => {
-      dispatch(saveSong(songId, song));
+    saveSongRequest: (songId, song) => {
+      dispatch(saveSongRequest(songId, song));
     },
     resetSongSaved: () => {
       dispatch(resetSongSaved());
@@ -63,8 +63,8 @@ const mapDispatchToProps = dispatch => ({
   fetchSong: (songId) => {
     dispatch(fetchSong(songId));
   },
-  switchPrivacy: (songId) => {
-    dispatch(switchPrivacy(songId));
+  switchPrivacyRequest: (songId) => {
+    dispatch(switchPrivacyRequest(songId));
   }
 });
 

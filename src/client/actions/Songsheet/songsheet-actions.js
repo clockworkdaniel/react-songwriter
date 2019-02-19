@@ -26,9 +26,9 @@ export function rename(editableText, userPrompt, path) {
   };
 }
 
-export function renderSong(res) {
+export function fetchSongSuccess(res) {
   return {
-    type: 'RENDER_SONG',
+    type: 'FETCH_SONG_SUCCESS',
     res
   };
 }
@@ -42,13 +42,13 @@ export function fetchSong(songId) {
 
 export function songSaved() {
   return {
-    type: 'SONG_SAVED'
+    type: 'SAVE_SONG_SUCCESS'
   };
 }
 
-export function saveSong(songId, song) {
+export function saveSongRequest(songId, song) {
   return {
-    type: 'SAVE_SONG',
+    type: 'SAVE_SONG_REQUEST',
     songId,
     song
   };
@@ -61,22 +61,22 @@ export function resetSongSaved() {
   };
 }
 
-export function privacySwitched(res) {
+export function switchPrivacySuccess(res) {
   return {
-    type: 'PRIVACY_SWITCHED',
+    type: 'SWITCH_PRIVACY_SUCCESS',
     res
   };
 }
 
-export function switchPrivacy(songId) {
+export function switchPrivacyRequest(songId) {
   return {
-    type: 'SWITCH_PRIVACY',
+    type: 'SWITCH_PRIVACY_REQUEST',
     songId
   };
 }
 
 export {
-  changeLine,
+  updateLine,
   updateChord,
   newLine,
   deleteLine,

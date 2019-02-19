@@ -1,8 +1,21 @@
 import { editModalTrigger } from '../Layout/edit-modal-actions';
 
-export function removeSong(res) {
+export function fetchSongs() {
   return {
-    type: 'REMOVE_SONG',
+    type: 'FETCH_SONGS'
+  };
+}
+
+export function fetchSongsBySingleArtist(artistId) {
+  return {
+    type: 'FETCH_SONGS_BY_SINGLE_ARTIST',
+    artistId
+  };
+}
+
+export function fetchSongsSuccess(res) {
+  return {
+    type: 'FETCH_SONGS_SUCCESS',
     res
   };
 }
@@ -42,23 +55,24 @@ export function newSongSuccess(res) {
   };
 }
 
-export function fetchSongs() {
+export function deleteSongSuccess(res) {
   return {
-    type: 'FETCH_SONGS'
-  };
-}
-
-export function fetchSongsBySingleArtist(artistId) {
-  return {
-    type: 'FETCH_SONGS_BY_SINGLE_ARTIST',
-    artistId
-  };
-}
-
-export function fetchSongsSuccess(res) {
-  return {
-    type: 'FETCH_SONGS_SUCCESS',
+    type: 'DELETE_SONG_SUCCESS',
     res
+  };
+}
+
+export function deleteSongRequest(songId) {
+  return {
+    type: 'DELETE_SONG_REQUEST',
+    songId
+  };
+}
+
+export function setNewSongTitle(songTitle) {
+  return {
+    type: 'SET_NEW_SONG_TITLE',
+    songTitle
   };
 }
 
@@ -70,13 +84,6 @@ export function newSongModalSequenceComplete(songArtist) {
       artist: songArtist
     };
     dispatch(newSongRequest(song));
-  };
-}
-
-export function setNewSongTitle(songTitle) {
-  return {
-    type: 'SET_NEW_SONG_TITLE',
-    songTitle
   };
 }
 
@@ -98,12 +105,5 @@ export function newSongModal() {
       actionToTriggerOnCommit: assignSongArtistModal,
       shouldCloseModal: false
     }));
-  };
-}
-
-export function deleteSongRequest(songId) {
-  return {
-    type: 'DELETE_SONG_REQUEST',
-    songId
   };
 }

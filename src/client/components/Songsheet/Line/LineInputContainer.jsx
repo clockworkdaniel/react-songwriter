@@ -1,7 +1,7 @@
 import { connect } from 'react-redux';
 
 import {
-  changeLine,
+  updateLine,
   newLine,
   splitLine,
   deleteLine,
@@ -26,8 +26,8 @@ const mapDispatchToProps = dispatch => ({
     },
   },
   lineHandlers: {
-    changeLine: (value, linekey, sectionKey) => {
-      dispatch(changeLine(value, linekey, sectionKey));
+    updateLine: (value, linekey, sectionKey) => {
+      dispatch(updateLine(value, linekey, sectionKey));
     },
     newLine: (linekey, sectionKey) => {
       dispatch(newLine(linekey, sectionKey));

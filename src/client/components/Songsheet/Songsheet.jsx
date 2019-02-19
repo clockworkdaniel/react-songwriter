@@ -54,7 +54,7 @@ export default class Songsheet extends React.Component {
       chord,
       sectionHandlers,
       rename,
-      switchPrivacy
+      switchPrivacyRequest
     } = this.props;
 
     return (
@@ -67,10 +67,10 @@ export default class Songsheet extends React.Component {
           paintSpecificity={uiState.paintSpecificity}
           updatePaintSpecificity={uiHandlers.updatePaintSpecificity}
           song={song}
-          saveSong={uiHandlers.saveSong}
+          saveSongRequest={uiHandlers.saveSongRequest}
           songSaved={uiState.songSaved}
           resetSongSaved={uiHandlers.resetSongSaved}
-          switchPrivacy={switchPrivacy}
+          switchPrivacyRequest={switchPrivacyRequest}
           editable={uiState.editable}
         />
         <SongTitle

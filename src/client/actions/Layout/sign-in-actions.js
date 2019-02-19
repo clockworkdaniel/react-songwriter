@@ -1,12 +1,13 @@
-export function showSignIn() {
+export function initSignedInState(signedIn) {
   return {
-    type: 'SHOW_SIGN_IN'
+    type: 'INIT_SIGNED_IN_STATE',
+    signedIn
   };
 }
 
-export function showSignUp() {
+export function showSignIn() {
   return {
-    type: 'SHOW_SIGN_UP'
+    type: 'SHOW_SIGN_IN'
   };
 }
 
@@ -25,13 +26,6 @@ export function updateInputValue(formKey, name, value) {
   };
 }
 
-export function setSignedInState(signedIn) {
-  return {
-    type: 'SET_SIGNED_IN_STATE',
-    signedIn
-  };
-}
-
 export function setError(errorObj) {
   return {
     type: 'SET_ERROR',
@@ -39,9 +33,9 @@ export function setError(errorObj) {
   };
 }
 
-export function attemptSignIn(usernameOrEmail, password) {
+export function signInRequest(usernameOrEmail, password) {
   return {
-    type: 'ATTEMPT_SIGN_IN',
+    type: 'SIGN_IN_REQUEST',
     usernameOrEmail,
     password
   };
@@ -53,18 +47,9 @@ export function signInSuccess() {
   };
 }
 
-export function createUser(username, email, password) {
+export function signOutRequest() {
   return {
-    type: 'CREATE_USER',
-    username,
-    email,
-    password
-  };
-}
-
-export function signOut() {
-  return {
-    type: 'SIGN_OUT'
+    type: 'SIGN_OUT_REQUEST'
   };
 }
 
@@ -81,10 +66,24 @@ export function signOutFailure(error) {
   };
 }
 
+export function showSignUp() {
+  return {
+    type: 'SHOW_SIGN_UP'
+  };
+}
+
 export function setSignUpStage(stage) {
   return {
     type: 'SET_SIGN_UP_STAGE',
     stage
+  };
+}
+
+export function checkForUserDuplication(username, email) {
+  return {
+    type: 'CHECK_FOR_USER_DUPLICATION',
+    username,
+    email
   };
 }
 
@@ -94,10 +93,11 @@ export function signUpProceed() {
   };
 }
 
-export function checkForUserDuplication(username, email) {
+export function createUser(username, email, password) {
   return {
-    type: 'CHECK_FOR_USER_DUPLICATION',
+    type: 'CREATE_USER',
     username,
-    email
+    email,
+    password
   };
 }

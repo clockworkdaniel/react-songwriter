@@ -1,5 +1,5 @@
-export const changeLine = (text, lineKey, sectionKey) => ({
-  type: 'CHANGE_LINE',
+export const updateLine = (text, lineKey, sectionKey) => ({
+  type: 'UPDATE_LINE',
   text,
   lineKey,
   sectionKey

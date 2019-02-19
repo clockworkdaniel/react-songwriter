@@ -10,10 +10,10 @@ import {
   showSignUp,
   hideSignInSignUp,
   updateInputValue,
-  attemptSignIn,
+  signInRequest,
   createUser,
-  signOut,
-  setSignedInState,
+  signOutRequest,
+  initSignedInState,
   setError,
   setSignUpStage,
   checkForUserDuplication
@@ -51,17 +51,17 @@ const mapDispatchToProps = dispatch => ({
   updateInputValue: (form, name, value) => {
     dispatch(updateInputValue(form, name, value));
   },
-  setSignedInState: (signedIn) => {
-    dispatch(setSignedInState(signedIn));
+  initSignedInState: (signedIn) => {
+    dispatch(initSignedInState(signedIn));
   },
-  attemptSignIn: (usernameOrEmail, password) => {
-    dispatch(attemptSignIn(usernameOrEmail, password));
+  signInRequest: (usernameOrEmail, password) => {
+    dispatch(signInRequest(usernameOrEmail, password));
   },
   createUser: (username, email, password) => {
     dispatch(createUser(username, email, password));
   },
-  signOut: () => {
-    dispatch(signOut());
+  signOutRequest: () => {
+    dispatch(signOutRequest());
   },
   newSongModal: () => {
     dispatch(newSongModal());

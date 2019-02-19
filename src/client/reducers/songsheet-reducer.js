@@ -4,7 +4,7 @@ import { loop, Cmd } from 'redux-loop';
 import breakDownLine from '../functions/breakDownLine';
 import lastChord from '../functions/lastChord';
 import callApi from '../util/callApi';
-import { renderSong, songSaved, privacySwitched } from '../actions/Songsheet/songsheet-actions';
+import { fetchSongSuccess, songSaved, switchPrivacySuccess } from '../actions/Songsheet/songsheet-actions';
 
 const initialState = {
   uiState: {
@@ -37,27 +37,19 @@ const songsheetReducer = (state = initialState, action) => {
         state,
         Cmd.run(callApi, {
           args: [`song/${action.songId}`],
-          successActionCreator: renderSong
+          successActionCreator: fetchSongSuccess
         })
       );
     }
 
-    case 'RENDER_SONG': {
+    case 'FETCH_SONG_SUCCESS': {
       return update(state, {
         song: { $set: action.res.song },
         uiState: { editable: { $set: action.res.editable } }
       });
     }
 
-    case 'SONG_SAVED': {
-      return update(state, { uiState: { songSaved: { $set: true } } });
-    }
-
-    case 'RESET_SONG_SAVED': {
-      return update(state, { uiState: { songSaved: { $set: false } } });
-    }
-
-    case 'SAVE_SONG': {
+    case 'SAVE_SONG_REQUEST': {
       return loop(
         state,
         Cmd.run(callApi, {
@@ -67,17 +59,30 @@ const songsheetReducer = (state = initialState, action) => {
       );
     }
 
-    case 'SWITCH_PRIVACY': {
+    case 'SAVE_SONG_SUCCESS': {
+      return update(state, { uiState: { songSaved: { $set: true } } });
+    }
+
+    // concerns CSS save animation
+    case 'RESET_SONG_SAVED': {
+      return update(state, { uiState: { songSaved: { $set: false } } });
+    }
+
+    case 'SWITCH_PRIVACY_REQUEST': {
       return loop(
         state,
         Cmd.run(callApi, {
           args: [`song/${action.songId}/togglePrivacy`, 'put'],
-          successActionCreator: privacySwitched
+          successActionCreator: switchPrivacySuccess
         })
       );
     }
 
-    case 'CHANGE_LINE': {
+    case 'SWITCH_PRIVACY_SUCCESS': {
+      return update(state, { song: { isPublic: { $set: action.res.isPublic } } });
+    }
+
+    case 'UPDATE_LINE': {
       return update(state, {
         song: {
           structure: {
@@ -120,10 +125,8 @@ const songsheetReducer = (state = initialState, action) => {
         });
       }
 
-      return loop(
-        update(state, { song: { structure: { [action.sectionKey]: { lines: { [action.lineKey]: { $set: lineCopy } } } } } }),
-        Cmd.action({ type: 'TEST' })
-      );
+      
+      return update(state, { song: { structure: { [action.sectionKey]: { lines: { [action.lineKey]: { $set: lineCopy } } } } } })
     }
 
     case 'RESET_CARET_MONITORING': {
@@ -163,10 +166,6 @@ const songsheetReducer = (state = initialState, action) => {
 
     case 'UPDATE_PAINT_SPECIFICITY': {
       return update(state, { uiState: { paintSpecificity: { $set: action.newSpecificity } } });
-    }
-
-    case 'PRIVACY_SWITCHED': {
-      return update(state, { song: { isPublic: { $set: action.res.isPublic } } });
     }
 
     case 'GET_CARET_POSITION': {
