@@ -4,7 +4,11 @@ import { loop, Cmd } from 'redux-loop';
 import breakDownLine from '../functions/breakDownLine';
 import lastChord from '../functions/lastChord';
 import callApi from '../util/callApi';
-import { fetchSongSuccess, songSaved, switchPrivacySuccess } from '../actions/Songsheet/songsheet-actions';
+import {
+  fetchSongSuccess, songSaved, switchPrivacySuccess, updateEditedText
+} from '../actions/Songsheet/songsheet-actions';
+import { editModalTrigger } from '../actions/Layout/edit-modal-actions';
+
 
 const initialState = {
   uiState: {
@@ -125,8 +129,8 @@ const songsheetReducer = (state = initialState, action) => {
         });
       }
 
-      
-      return update(state, { song: { structure: { [action.sectionKey]: { lines: { [action.lineKey]: { $set: lineCopy } } } } } })
+
+      return update(state, { song: { structure: { [action.sectionKey]: { lines: { [action.lineKey]: { $set: lineCopy } } } } } });
     }
 
     case 'RESET_CARET_MONITORING': {
@@ -200,8 +204,8 @@ const songsheetReducer = (state = initialState, action) => {
     }
 
     case 'DUPLICATE_SECTION': {
-      const newSection = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey]));
-      return update(state, { song: { structure: { $splice: [[action.sectionKey, 0, newSection]] } } });
+      const sectionCopy = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey]));
+      return update(state, { song: { structure: { $splice: [[action.sectionKey, 0, sectionCopy]] } } });
     }
 
     case 'MOVE_SECTION': {
@@ -349,8 +353,18 @@ const songsheetReducer = (state = initialState, action) => {
 
     // edit modal
 
-    case 'UPDATE_TEXT_BEING_EDITED_PATH': {
-      return { ...state, textBeingEditedPathArray: action.path };
+    case 'RENAME': {
+      return loop(
+        { ...state, textBeingEditedPathArray: action.path },
+        Cmd.action(
+          editModalTrigger({
+            editableText: action.editableText,
+            userPrompt: action.userPrompt,
+            actionToTriggerOnCommit: updateEditedText,
+            shouldCloseModal: true
+          })
+        )
+      );
     }
 
     case 'UPDATE_EDITED_TEXT': {

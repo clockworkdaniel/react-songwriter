@@ -1,5 +1,3 @@
-import { editModalTrigger } from '../Layout/edit-modal-actions';
-
 export function fetchSongs() {
   return {
     type: 'FETCH_SONGS'
@@ -69,41 +67,22 @@ export function deleteSongRequest(songId) {
   };
 }
 
-export function setNewSongTitle(songTitle) {
+export function newSongModalSequenceComplete(songArtist) {
   return {
-    type: 'SET_NEW_SONG_TITLE',
+    type: 'NEW_SONG_MODAL_SEQUENCE_COMPLETE',
+    songArtist
+  };
+}
+
+export function newSongModalProceed(songTitle) {
+  return {
+    type: 'NEW_SONG_MODAL_PROCEED',
     songTitle
   };
 }
 
-export function newSongModalSequenceComplete(songArtist) {
-  return (dispatch, getState) => {
-    const { songTitle } = getState().songbookState;
-    const song = {
-      title: songTitle,
-      artist: songArtist
-    };
-    dispatch(newSongRequest(song));
-  };
-}
-
-export function assignSongArtistModal(songTitle) {
-  return (dispatch) => {
-    dispatch(setNewSongTitle(songTitle));
-    dispatch(editModalTrigger({
-      userPrompt: 'Song artist',
-      actionToTriggerOnCommit: newSongModalSequenceComplete,
-      shouldCloseModal: true
-    }));
-  };
-}
-
 export function newSongModal() {
-  return (dispatch) => {
-    dispatch(editModalTrigger({
-      userPrompt: 'Song title',
-      actionToTriggerOnCommit: assignSongArtistModal,
-      shouldCloseModal: false
-    }));
+  return {
+    type: 'NEW_SONG_MODAL'
   };
 }

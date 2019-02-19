@@ -1,11 +1,4 @@
-import { editModalTrigger } from '../Layout/edit-modal-actions';
 
-export function updateTextBeingEditedPath(path) {
-  return {
-    type: 'UPDATE_TEXT_BEING_EDITED_PATH',
-    path
-  };
-}
 
 export function updateEditedText(commitedTextObj) {
   return {
@@ -15,14 +8,11 @@ export function updateEditedText(commitedTextObj) {
 }
 
 export function rename(editableText, userPrompt, path) {
-  return (dispatch) => {
-    dispatch(updateTextBeingEditedPath(path));
-    dispatch(editModalTrigger({
-      editableText,
-      userPrompt,
-      actionToTriggerOnCommit: updateEditedText,
-      shouldCloseModal: true
-    }));
+  return {
+    type: 'RENAME',
+    editableText,
+    userPrompt,
+    path
   };
 }
 

@@ -4,11 +4,14 @@ import callApi from '../util/callApi';
 import {
   signInSuccess,
   setError,
+  hideSignInSignUp,
   signUpProceed,
   setSignUpStage,
   signOutSuccess,
   signOutFailure
 } from '../actions/Layout/sign-in-actions';
+
+import { closeModal } from '../actions/Layout/edit-modal-actions';
 
 const initialState = {
   editModal: {
@@ -70,6 +73,17 @@ const editModalReducer = (state = initialState, action) => {
           editableText: action.updatedText
         }
       };
+    }
+
+    case 'COMMIT_TEXT_CHANGE': {
+
+      const actionList = [Cmd.action(action.actionToTriggerOnCommit(action.commitedText))];
+      action.shouldCloseModal && actionList.push(Cmd.action(closeModal()));
+
+      return loop(
+        state,
+        Cmd.list(actionList)
+      );
     }
 
     case 'CLOSE_MODAL': {
@@ -148,7 +162,7 @@ const editModalReducer = (state = initialState, action) => {
     case 'SIGN_IN_SUCCESS': {
       return loop(
         { ...state, signIn: { ...state.signIn, signedIn: true } },
-        Cmd.action({ type: 'HIDE_SIGN_IN_SIGN_UP' })
+        Cmd.action(hideSignInSignUp())
       );
     }
 
@@ -229,7 +243,7 @@ const editModalReducer = (state = initialState, action) => {
         })
       );
     }
-
+ 
     default: {
       return state;
     }
