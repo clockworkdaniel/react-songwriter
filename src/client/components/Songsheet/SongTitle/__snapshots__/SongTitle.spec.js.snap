@@ -1,0 +1,26 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SongTitle renders as expected 1`] = `
+<div
+  className="songsheet__title ss-title"
+>
+  <h1
+    className="ss-title__heading controls__container"
+  >
+    Dear Prudence
+    <span
+      className="controls"
+    >
+      <button
+        className="controls__edit ss-title__rename-button"
+        onClick={[Function]}
+        type="button"
+      >
+        <span
+          className="icon-pencil"
+        />
+      </button>
+    </span>
+  </h1>
+</div>
+`;

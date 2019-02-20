@@ -1,7 +1,7 @@
 import React from 'react';
 
 import UIControls from './UIControls/UIControls';
-import SongTitle from './SongTitle';
+import SongTitle from './SongTitle/SongTitle';
 import SongArtist from './SongArtist';
 import Section from './Section/Section';
 import NewSectionButton from './Section/NewSectionButton';
@@ -19,7 +19,7 @@ export default class Songsheet extends React.Component {
     const { match, fetchSong } = this.props;
     fetchSong(match.params.id);
   }
-  
+
   componentDidUpdate(prevProps) {
     const {
       signInState: {
@@ -103,7 +103,11 @@ export default class Songsheet extends React.Component {
             />
           ))}
         </div>
-        {uiState.editable && <NewSectionButton />}
+        {uiState.editable && (
+          <NewSectionButton
+            newSection={sectionHandlers.newSection}
+          />
+        )}
       </div>
     );
 

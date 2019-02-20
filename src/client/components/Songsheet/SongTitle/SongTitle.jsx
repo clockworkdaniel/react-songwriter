@@ -15,7 +15,7 @@ export default function SongTitle({ title, rename }) {
         {title}
         <span className="controls">
           <button
-            className="controls__edit"
+            className="controls__edit ss-title__rename-button"
             onClick={handleTitleRename}
             type="button"
           >
