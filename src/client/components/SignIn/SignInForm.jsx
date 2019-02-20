@@ -12,9 +12,9 @@ export default class SignUp extends React.Component {
   }
 
   handleSubmit = (event) => {
-    const { signInForm, attemptSignIn } = this.props;
+    const { signInForm, signInRequest } = this.props;
     event.preventDefault();
-    attemptSignIn(
+    signInRequest(
       signInForm.usernameOrEmail,
       signInForm.password
     );

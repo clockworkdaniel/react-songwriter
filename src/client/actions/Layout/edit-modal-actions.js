@@ -1,5 +1,8 @@
 export function editModalTrigger({
-  editableText = '', userPrompt = '', actionToTriggerOnCommit, shouldCloseModal = true
+  editableText = '',
+  userPrompt = '',
+  actionToTriggerOnCommit,
+  shouldCloseModal = true
 } = {}) {
   return {
     type: 'EDIT_MODAL_TRIGGER',
@@ -26,10 +29,10 @@ export function closeModal() {
 export function commitTextChange({
   commitedText, actionToTriggerOnCommit, shouldCloseModal = true
 } = {}) {
-  return (dispatch) => {
-    dispatch(actionToTriggerOnCommit(commitedText));
-    if (shouldCloseModal) {
-      dispatch(closeModal());
-    }
+  return {
+    type: 'COMMIT_TEXT_CHANGE',
+    commitedText,
+    actionToTriggerOnCommit,
+    shouldCloseModal
   };
 }

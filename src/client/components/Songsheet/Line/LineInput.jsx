@@ -51,16 +51,16 @@ export default class LineInput extends React.Component {
     getCaretPosition(event.target.selectionStart, lineKey, sectionKey);
   }
 
-  handleChangeLine = (event) => {
+  handleUpdateLine = (event) => {
 
     const {
       lineHandlers: {
-        changeLine
+        updateLine
       },
       lineKey,
       sectionKey
     } = this.props;
-    changeLine(event.target.value, lineKey, sectionKey);
+    updateLine(event.target.value, lineKey, sectionKey);
   }
 
   handleKeyDown = (event) => {
@@ -117,7 +117,7 @@ export default class LineInput extends React.Component {
           onClick={this.getCaretPosition}
           onKeyUp={this.getCaretPosition}
           onKeyDown={this.handleKeyDown}
-          onChange={this.handleChangeLine}
+          onChange={this.handleUpdateLine}
           ref={this.textInput}
           readOnly={!editable && 'readOnly'}
         />
@@ -132,7 +132,7 @@ LineInput.propTypes = {
     resetCaretMonitoring: PropTypes.func.isRequired
   }).isRequired,
   lineHandlers: PropTypes.shape({
-    changeLine: PropTypes.func.isRequired,
+    updateLine: PropTypes.func.isRequired,
     newLine: PropTypes.func.isRequired,
     deleteLine: PropTypes.func.isRequired,
     splitLine: PropTypes.func.isRequired,

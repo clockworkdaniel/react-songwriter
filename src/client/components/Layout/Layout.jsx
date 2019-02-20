@@ -17,9 +17,9 @@ import SignIn from '../SignIn/SignIn';
 export default class Layout extends React.Component {
 
   componentDidMount() {
-    const { setSignedInState } = this.props;
+    const { initSignedInState } = this.props;
     const sessionCookie = getCookie('connect.sid');
-    setSignedInState(!!sessionCookie);
+    initSignedInState(!!sessionCookie);
   }
 
   handleNewSongModal = () => {
@@ -36,10 +36,10 @@ export default class Layout extends React.Component {
       showSignIn,
       showSignUp,
       hideSignInSignUp,
-      attemptSignIn,
+      signInRequest,
       updateInputValue,
       createUser,
-      signOut,
+      signOutRequest,
       setError,
       setSignUpStage,
       checkForUserDuplication
@@ -63,7 +63,7 @@ export default class Layout extends React.Component {
             showSignUp={showSignUp}
             hideSignInSignUp={hideSignInSignUp}
             updateInputValue={updateInputValue}
-            attemptSignIn={attemptSignIn}
+            signInRequest={signInRequest}
             createUser={createUser}
             setError={setError}
             setSignUpStage={setSignUpStage}
@@ -112,7 +112,7 @@ export default class Layout extends React.Component {
                     <button
                       className="header__link"
                       type="button"
-                      onClick={signOut}
+                      onClick={signOutRequest}
                     >
                       Sign out
                     </button>

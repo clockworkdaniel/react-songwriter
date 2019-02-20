@@ -33,7 +33,7 @@ export default class SignUp extends React.Component {
     } = this.props;
     event.preventDefault();
     if (!validatePasswords(password, passwordConfirm)) {
-      return setError('signUpForm', { field: 'password', message: 'Passwords do not match' });
+      return setError({ field: 'password', message: 'Passwords do not match' });
     }
     createUser(username, email, password);
   }
@@ -46,19 +46,19 @@ export default class SignUp extends React.Component {
     } = this.props;
 
     if (username === '') {
-      return setError('signUpForm', { field: 'username', message: 'Please enter username' });
+      return setError({ field: 'username', message: 'Please enter username' });
     }
     if (!validateUsername(username)) {
-      return setError('signUpForm', {
+      return setError({
         field: 'username',
         message: 'May consist of letters, numbers and underscores'
       });
     }
     if (email === '') {
-      return setError('signUpForm', { field: 'email', message: 'Please enter email address' });
+      return setError({ field: 'email', message: 'Please enter email address' });
     }
     if (!validateEmail(email)) {
-      return setError('signUpForm', { field: 'email', message: 'Check your email!' });
+      return setError({ field: 'email', message: 'Check your email!' });
     }
     checkForUserDuplication(username, email);
   }
@@ -66,7 +66,7 @@ export default class SignUp extends React.Component {
   switchToSignIn = () => {
     const { showSignIn, setSignUpStage, setError } = this.props;
     setSignUpStage(1);
-    setError('signUpForm', { field: null, message: '' });
+    setError({ field: null, message: '' });
     showSignIn();
   }
 

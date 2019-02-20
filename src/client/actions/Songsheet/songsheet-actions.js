@@ -1,12 +1,4 @@
-import callApi from '../../util/callApi';
-import { editModalTrigger } from '../Layout/edit-modal-actions';
 
-export function updateTextBeingEditedPath(path) {
-  return {
-    type: 'UPDATE_TEXT_BEING_EDITED_PATH',
-    path
-  };
-}
 
 export function updateEditedText(commitedTextObj) {
   return {
@@ -16,37 +8,40 @@ export function updateEditedText(commitedTextObj) {
 }
 
 export function rename(editableText, userPrompt, path) {
-  return (dispatch) => {
-    dispatch(updateTextBeingEditedPath(path));
-    dispatch(editModalTrigger({
-      editableText,
-      userPrompt,
-      actionToTriggerOnCommit: updateEditedText,
-      shouldCloseModal: true
-    }));
+  return {
+    type: 'RENAME',
+    editableText,
+    userPrompt,
+    path
   };
 }
 
-export function renderSong(song, editable) {
+export function fetchSongSuccess(res) {
   return {
-    type: 'RENDER_SONG',
-    song,
-    editable
+    type: 'FETCH_SONG_SUCCESS',
+    res
   };
 }
 
 export function fetchSong(songId) {
-  return dispatch => callApi(`song/${songId}`).then(res => dispatch(renderSong(res.song, res.editable)));
+  return {
+    type: 'FETCH_SONG',
+    songId
+  };
 }
 
 export function songSaved() {
   return {
-    type: 'SONG_SAVED'
+    type: 'SAVE_SONG_SUCCESS'
   };
 }
 
-export function saveSong(songId, song) {
-  return dispatch => callApi(`song/${songId}`, 'put', song).then(() => dispatch(songSaved()));
+export function saveSongRequest(songId, song) {
+  return {
+    type: 'SAVE_SONG_REQUEST',
+    songId,
+    song
+  };
 }
 
 // for animation
@@ -56,19 +51,22 @@ export function resetSongSaved() {
   };
 }
 
-export function privacySwitched(isPublic) {
+export function switchPrivacySuccess(res) {
   return {
-    type: 'PRIVACY_SWITCHED',
-    isPublic
+    type: 'SWITCH_PRIVACY_SUCCESS',
+    res
   };
 }
 
-export function switchPrivacy(songId) {
-  return dispatch => callApi(`song/${songId}/togglePrivacy`, 'put').then(res => dispatch(privacySwitched(res.isPublic)));
+export function switchPrivacyRequest(songId) {
+  return {
+    type: 'SWITCH_PRIVACY_REQUEST',
+    songId
+  };
 }
 
 export {
-  changeLine,
+  updateLine,
   updateChord,
   newLine,
   deleteLine,

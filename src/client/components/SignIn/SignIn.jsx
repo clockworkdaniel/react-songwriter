@@ -11,7 +11,7 @@ export default function SignIn({
   showSignUp,
   hideSignInSignUp,
   updateInputValue,
-  attemptSignIn,
+  signInRequest,
   createUser,
   setError,
   setSignUpStage,
@@ -33,7 +33,7 @@ export default function SignIn({
             updateInputValue={updateInputValue}
             setError={setError}
             showSignUp={showSignUp}
-            attemptSignIn={attemptSignIn}
+            signInRequest={signInRequest}
           />
         )
       }

@@ -1,8 +1,14 @@
 import update from 'immutability-helper';
-
+import { loop, Cmd } from 'redux-loop';
 
 import breakDownLine from '../functions/breakDownLine';
 import lastChord from '../functions/lastChord';
+import callApi from '../util/callApi';
+import {
+  fetchSongSuccess, songSaved, switchPrivacySuccess, updateEditedText
+} from '../actions/Songsheet/songsheet-actions';
+import { editModalTrigger } from '../actions/Layout/edit-modal-actions';
+
 
 const initialState = {
   uiState: {
@@ -30,22 +36,57 @@ const songsheetReducer = (state = initialState, action) => {
 
   switch (action.type) {
 
-    case 'RENDER_SONG': {
+    case 'FETCH_SONG': {
+      return loop(
+        state,
+        Cmd.run(callApi, {
+          args: [`song/${action.songId}`],
+          successActionCreator: fetchSongSuccess
+        })
+      );
+    }
+
+    case 'FETCH_SONG_SUCCESS': {
       return update(state, {
-        song: { $set: action.song },
-        uiState: { editable: { $set: action.editable } }
+        song: { $set: action.res.song },
+        uiState: { editable: { $set: action.res.editable } }
       });
     }
 
-    case 'SONG_SAVED': {
+    case 'SAVE_SONG_REQUEST': {
+      return loop(
+        state,
+        Cmd.run(callApi, {
+          args: [`song/${action.songId}`, 'put', action.song],
+          successActionCreator: songSaved
+        })
+      );
+    }
+
+    case 'SAVE_SONG_SUCCESS': {
       return update(state, { uiState: { songSaved: { $set: true } } });
     }
 
+    // concerns CSS save animation
     case 'RESET_SONG_SAVED': {
       return update(state, { uiState: { songSaved: { $set: false } } });
     }
 
-    case 'CHANGE_LINE': {
+    case 'SWITCH_PRIVACY_REQUEST': {
+      return loop(
+        state,
+        Cmd.run(callApi, {
+          args: [`song/${action.songId}/togglePrivacy`, 'put'],
+          successActionCreator: switchPrivacySuccess
+        })
+      );
+    }
+
+    case 'SWITCH_PRIVACY_SUCCESS': {
+      return update(state, { song: { isPublic: { $set: action.res.isPublic } } });
+    }
+
+    case 'UPDATE_LINE': {
       return update(state, {
         song: {
           structure: {
@@ -58,6 +99,7 @@ const songsheetReducer = (state = initialState, action) => {
         }
       });
     }
+
     case 'UPDATE_CHORD': {
 
       const lineCopy = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey].lines[action.lineKey]));
@@ -86,6 +128,7 @@ const songsheetReducer = (state = initialState, action) => {
           character.chord = state.uiState.chordToPaint;
         });
       }
+
 
       return update(state, { song: { structure: { [action.sectionKey]: { lines: { [action.lineKey]: { $set: lineCopy } } } } } });
     }
@@ -129,10 +172,6 @@ const songsheetReducer = (state = initialState, action) => {
       return update(state, { uiState: { paintSpecificity: { $set: action.newSpecificity } } });
     }
 
-    case 'PRIVACY_SWITCHED': {
-      return update(state, { song: { isPublic: { $set: action.isPublic } } });
-    }
-
     case 'GET_CARET_POSITION': {
       return {
         ...state,
@@ -165,8 +204,8 @@ const songsheetReducer = (state = initialState, action) => {
     }
 
     case 'DUPLICATE_SECTION': {
-      const newSection = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey]));
-      return update(state, { song: { structure: { $splice: [[action.sectionKey, 0, newSection]] } } });
+      const sectionCopy = JSON.parse(JSON.stringify(state.song.structure[action.sectionKey]));
+      return update(state, { song: { structure: { $splice: [[action.sectionKey, 0, sectionCopy]] } } });
     }
 
     case 'MOVE_SECTION': {
@@ -314,8 +353,18 @@ const songsheetReducer = (state = initialState, action) => {
 
     // edit modal
 
-    case 'UPDATE_TEXT_BEING_EDITED_PATH': {
-      return { ...state, textBeingEditedPathArray: action.path };
+    case 'RENAME': {
+      return loop(
+        { ...state, textBeingEditedPathArray: action.path },
+        Cmd.action(
+          editModalTrigger({
+            editableText: action.editableText,
+            userPrompt: action.userPrompt,
+            actionToTriggerOnCommit: updateEditedText,
+            shouldCloseModal: true
+          })
+        )
+      );
     }
 
     case 'UPDATE_EDITED_TEXT': {

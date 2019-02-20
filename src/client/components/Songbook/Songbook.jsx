@@ -56,7 +56,7 @@ export default class Songbook extends React.Component {
       },
       setOrderLogic,
       setSongPriority,
-      setAscending
+      setOrderDirection
     } = this.props;
 
     const artistListJsx = () => {
@@ -107,7 +107,7 @@ export default class Songbook extends React.Component {
           isAscending={isAscending}
           setOrderLogic={setOrderLogic}
           setSongPriority={setSongPriority}
-          setAscending={setAscending}
+          setOrderDirection={setOrderDirection}
         />
         {(artistSongList && orderedArtistSongList)
           && (!songPriority || this.matchesArtistUrl) ? (

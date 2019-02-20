@@ -1,18 +1,20 @@
-import callApi from '../../util/callApi';
-import history from '../../history';
-import { editModalTrigger } from '../Layout/edit-modal-actions';
-
-export function addSongs(artistSongs) {
+export function fetchSongs() {
   return {
-    type: 'ADD_SONGS',
-    artistSongs
+    type: 'FETCH_SONGS'
   };
 }
 
-export function removeSong(songId) {
+export function fetchSongsBySingleArtist(artistId) {
   return {
-    type: 'REMOVE_SONG',
-    songId
+    type: 'FETCH_SONGS_BY_SINGLE_ARTIST',
+    artistId
+  };
+}
+
+export function fetchSongsSuccess(res) {
+  return {
+    type: 'FETCH_SONGS_SUCCESS',
+    res
   };
 }
 
@@ -30,72 +32,57 @@ export function setSongPriority(songPriority) {
   };
 }
 
-export function setAscending(isAscending) {
+export function setOrderDirection(isAscending) {
   return {
-    type: 'SET_ASCENDING',
+    type: 'SET_ORDER_DIRECTION',
     isAscending
   };
 }
 
 export function newSongRequest(song) {
-  return dispatch => callApi('song/create', 'post', {
-    title: song.title,
-    artist: song.artist
-  }).then((res) => {
-    history.push(`/song/${res.song._id}`);
-    dispatch(setSongPriority('modified'));
-  });
-}
-
-export function newSongModalSequenceComplete(songArtist) {
-  return (dispatch, getState) => {
-    const { songTitle } = getState().songbookState;
-    const song = {
-      title: songTitle,
-      artist: songArtist
-    };
-    dispatch(newSongRequest(song));
+  return {
+    type: 'NEW_SONG_REQUEST',
+    song
   };
 }
 
-export function setNewSongTitle(songTitle) {
+export function newSongSuccess(res) {
   return {
-    type: 'SET_NEW_SONG_TITLE',
+    type: 'NEW_SONG_SUCCESS',
+    res
+  };
+}
+
+export function deleteSongSuccess(res) {
+  return {
+    type: 'DELETE_SONG_SUCCESS',
+    res
+  };
+}
+
+export function deleteSongRequest(songId) {
+  return {
+    type: 'DELETE_SONG_REQUEST',
+    songId
+  };
+}
+
+export function newSongModalSequenceComplete(songArtist) {
+  return {
+    type: 'NEW_SONG_MODAL_SEQUENCE_COMPLETE',
+    songArtist
+  };
+}
+
+export function newSongModalProceed(songTitle) {
+  return {
+    type: 'NEW_SONG_MODAL_PROCEED',
     songTitle
   };
 }
 
-export function assignSongArtistModal(songTitle) {
-  return (dispatch) => {
-    dispatch(setNewSongTitle(songTitle));
-    dispatch(editModalTrigger({
-      userPrompt: 'Song artist',
-      actionToTriggerOnCommit: newSongModalSequenceComplete,
-      shouldCloseModal: true
-    }));
-  };
-}
-
 export function newSongModal() {
-  return (dispatch) => {
-    dispatch(editModalTrigger({
-      userPrompt: 'Song title',
-      actionToTriggerOnCommit: assignSongArtistModal,
-      shouldCloseModal: false
-    }));
+  return {
+    type: 'NEW_SONG_MODAL'
   };
-}
-
-export function fetchSongs() {
-  return dispatch => callApi('artists').then((res) => {
-    dispatch(addSongs(res.artists));
-  });
-}
-
-export function fetchSongsBySingleArtist(artistId) {
-  return dispatch => callApi(`artist/${artistId}`).then(res => dispatch(addSongs(res.artists)));
-}
-
-export function deleteSongRequest(songId) {
-  return dispatch => callApi(`song/${songId}`, 'delete').then(() => dispatch(removeSong(songId)));
 }

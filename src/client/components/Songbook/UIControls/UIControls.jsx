@@ -16,13 +16,13 @@ export default class UIControls extends React.Component {
 
   handleOrderLogicChange = (event) => {
     const {
-      orderLogic, isAscending, setAscending, setOrderLogic
+      orderLogic, isAscending, setOrderDirection, setOrderLogic
     } = this.props;
     if (event.target.value === orderLogic) {
-      setAscending(!isAscending);
+      setOrderDirection(!isAscending);
     } else {
       setOrderLogic(event.target.value);
-      setAscending(false);
+      setOrderDirection(false);
     }
   }
 
