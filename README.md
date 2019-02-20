@@ -54,7 +54,7 @@ For non-trivial async, I have been using ES6 promises.
 
 During this project, I have realised (and then read prolifically) about the point of contention which is side-effects in Redux. I.e. when should they be allowed, where they should be situated in the Redux life-cycle, and which solution handles them best.
 
-From my reading, redux-loops would be my preferred option – mostly because I would prefer my actions to be clean descriptors of what is going on in my app. That said, you will no doubt notice that I am currently using thunks, I will change this in due course, but for the moment I didn't want to get bogged down in rewriting my reducers and actions when I wanted to get going on the server-side stuff!
+From my reading, redux-loops would be my preferred option – mostly because I would prefer my actions to be clean descriptors of what is going on in my app. ~~That said, you will no doubt notice that I am currently using thunks, I will change this in due course, but for the moment I didn't want to get bogged down in rewriting my reducers and actions when I wanted to get going on the server-side stuff!~~ I've actioned this now, yay!
 
 ## What's next?
 
