@@ -12,7 +12,8 @@ import {
   fetchSong,
   saveSongRequest,
   resetSongSaved,
-  switchPrivacyRequest
+  switchPrivacyRequest,
+  newSection
 } from '../../actions/Songsheet/songsheet-actions';
 
 import Songsheet from './Songsheet';
@@ -55,6 +56,9 @@ const mapDispatchToProps = dispatch => ({
     },
     moveSection: (sectionKey, newPosition) => {
       dispatch(moveSection(sectionKey, newPosition));
+    },
+    newSection: () => {
+      dispatch(newSection());
     }
   },
   rename: (value, userPrompt, pathArray) => {
