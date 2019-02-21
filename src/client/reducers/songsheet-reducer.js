@@ -10,7 +10,7 @@ import {
 import { editModalTrigger } from '../actions/Layout/edit-modal-actions';
 
 
-const initialState = {
+export const initialState = {
   uiState: {
     chordMode: false,
     chordToPaint: 'E',
@@ -24,6 +24,7 @@ const initialState = {
   },
   textBeingEditedPathArray: [],
   song: {
+    _id: null,
     title: '',
     artist: {},
     user: {},

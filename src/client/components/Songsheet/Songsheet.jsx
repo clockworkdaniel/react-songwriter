@@ -2,10 +2,10 @@ import React from 'react';
 
 import UIControls from './UIControls/UIControls';
 import SongTitle from './SongTitle/SongTitle';
-import SongArtist from './SongArtist';
+import SongArtist from './SongArtist/SongArtist';
 import Section from './Section/Section';
 import NewSectionButton from './Section/NewSectionButton';
-import SongUser from './SongUser';
+import SongUser from './SongUser/SongUser';
 
 export default class Songsheet extends React.Component {
   constructor(props) {
