@@ -1,4 +1,4 @@
-import fetch from 'cross-fetch';
+import 'cross-fetch';
 
 // export const API_URL = (typeof window === 'undefined' || process.env.NODE_ENV === 'test') ?
 //   process.env.BASE_URL || (`http://localhost:${process.env.PORT || 3000}/api`) :
