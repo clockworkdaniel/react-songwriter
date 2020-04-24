@@ -6,7 +6,7 @@
     "build": "webpack --mode production",
     "start": "npm run build && node src/server/index.js",
     "client": "webpack-dev-server --mode development --devtool inline-source-map --hot",
-    "server": "nodemon src/server/index.js",
+    "server": "nodemon",
     "dev": "concurrently 'npm run server' 'npm run client'",
     "test": "jest"
   },
@@ -14,9 +14,8 @@
   "author": "Daniel Mears <clockworkdaniel@gmail.com>",
   "license": "MIT",
   "dependencies": {
-    "@babel/polyfill": "^7.0.0",
     "async": "^2.6.1",
-    "bcrypt": "^3.0.2",
+    "bcrypt": "^4.0.1",
     "body-parser": "^1.18.3",
     "connect-mongo": "^2.0.3",
     "cross-fetch": "^2.2.3",
@@ -37,13 +36,12 @@
     "redux-thunk": "^2.3.0"
   },
   "devDependencies": {
-    "@babel/core": "^7.3.3",
-    "@babel/plugin-proposal-class-properties": "^7.2.3",
-    "@babel/preset-env": "^7.3.1",
-    "@babel/preset-react": "^7.0.0",
-    "babel-eslint": "^10.0.1",
-    "babel-jest": "^24.1.0",
-    "babel-loader": "^8.0.4",
+    "@types/body-parser": "^1.19.0",
+    "@types/express": "^4.17.6",
+    "@types/express-session": "^1.17.0",
+    "@types/mongoose": "^5.7.12",
+    "@types/react": "^16.9.34",
+    "@types/react-dom": "^16.9.6",
     "clean-webpack-plugin": "^0.1.19",
     "concurrently": "^4.0.1",
     "css-loader": "^1.0.0",
@@ -67,8 +65,11 @@
     "react-mock-router": "^1.0.15",
     "sass-loader": "^7.1.0",
     "style-loader": "^0.23.1",
+    "ts-node": "^8.9.0",
+    "typescript": "^3.8.3",
     "webpack": "^4.20.2",
     "webpack-cli": "^3.1.2",
-    "webpack-dev-server": "^3.1.9"
+    "webpack-dev-server": "^3.1.9",
+    "yarn": "^1.22.4"
   }
 }

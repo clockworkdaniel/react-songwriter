@@ -1,14 +1,14 @@
-const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const devMode = process.env.NODE_ENV !== 'production'
+const path = require("path");
+const HtmlWebpackPlugin = require("html-webpack-plugin");
+const MiniCssExtractPlugin = require("mini-css-extract-plugin");
+const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
-  entry: './src/client/index.js',
+  entry: "./src/client/index.ts",
   output: {
-    path: path.join(__dirname, 'dist'),
-    filename: 'bundle.js',
-    publicPath: '/'
+    path: path.join(__dirname, "dist"),
+    filename: "bundle.js",
+    publicPath: "/"
   },
   module: {
     rules: [
@@ -16,47 +16,53 @@ module.exports = {
         test: /\.js|.jsx?$/,
         exclude: /node_modules/,
         use: {
-          loader: 'babel-loader',
+          loader: "ts-loader"
         },
         resolve: {
-          extensions: ['.js', '.jsx'],
-        },
+          extensions: [".ts", ".tsx", ".js", ".jsx"]
+        }
+      },
+      {
+        enforce: "pre",
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "source-map-loader"
       },
       {
         test: /\.(woff2?|ttf|otf|eot|svg)$/,
         exclude: /node_modules/,
-        loader: 'file-loader',
+        loader: "file-loader",
         options: {
-          name: '[path][name].[ext]',
-        },
+          name: "[path][name].[ext]"
+        }
       },
       {
         test: /\.scss$/,
         use: [
-          devMode ? 'style-loader' : MiniCssExtractPlugin.loader,
-          'css-loader',
-          'sass-loader',
-        ],
+          devMode ? "style-loader" : MiniCssExtractPlugin.loader,
+          "css-loader",
+          "sass-loader"
+        ]
       },
       {
         test: /\.json$/,
-        use: ['json-loader'],
-      },
-    ],
+        use: ["json-loader"]
+      }
+    ]
   },
-
+  devtool: "source-map",
   devServer: {
     port: 3000,
     open: true,
-    historyApiFallback: true,
+    historyApiFallback: true
   },
   plugins: [
     new HtmlWebpackPlugin({
-      template: './public/index.html',
+      template: "./public/index.html"
     }),
     new MiniCssExtractPlugin({
       // filename: 'style.[contenthash].css',
-      filename: '[name].css',
-    }),
-  ],
+      filename: "[name].css"
+    })
+  ]
 };
