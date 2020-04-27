@@ -4,29 +4,16 @@ const MiniCssExtractPlugin = require("mini-css-extract-plugin");
 const devMode = process.env.NODE_ENV !== "production";
 
 module.exports = {
-  entry: "./src/client/index.ts",
-  output: {
-    path: path.join(__dirname, "dist"),
-    filename: "bundle.js",
-    publicPath: "/"
-  },
+  entry: "./src/client/index.tsx",
   module: {
     rules: [
       {
-        test: /\.js|.jsx?$/,
+        test: /\.(t|j)sx?$/,
+        use: "ts-loader",
         exclude: /node_modules/,
-        use: {
-          loader: "ts-loader"
-        },
         resolve: {
           extensions: [".ts", ".tsx", ".js", ".jsx"]
         }
-      },
-      {
-        enforce: "pre",
-        test: /\.js$/,
-        exclude: /node_modules/,
-        loader: "source-map-loader"
       },
       {
         test: /\.(woff2?|ttf|otf|eot|svg)$/,
@@ -50,7 +37,7 @@ module.exports = {
       }
     ]
   },
-  devtool: "source-map",
+  devtool: "inline-source-map",
   devServer: {
     port: 3000,
     open: true,
@@ -64,5 +51,10 @@ module.exports = {
       // filename: 'style.[contenthash].css',
       filename: "[name].css"
     })
-  ]
+  ],
+  output: {
+    path: path.join(__dirname, "dist"),
+    filename: "bundle.js",
+    publicPath: "/"
+  }
 };
