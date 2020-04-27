@@ -1,11 +1,10 @@
 import * as express from "express";
 import * as bodyParser from "body-parser";
-// var path = require('path');
 import * as mongoose from "mongoose";
 import * as session from "express-session";
+import * as connectMongo from "connect-mongo";
 
-const MongoStore = require("connect-mongo")(session);
-
+const MongoStore = connectMongo(session);
 const mongoDB = "mongodb://127.0.0.1:27017";
 const db = mongoose.connection;
 
@@ -18,9 +17,9 @@ db.on("error", console.error.bind(console, "MongoDB connection error"));
 
 const app = express();
 
-const songsRouter = require("./routes/song");
-const artistsRouter = require("./routes/artist");
-const usersRouter = require("./routes/user");
+import songsRouter from "./routes/song";
+import artistsRouter from "./routes/artist";
+import usersRouter from "./routes/user";
 
 const PORT = 8000;
 

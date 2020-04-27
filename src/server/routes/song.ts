@@ -1,17 +1,24 @@
-const express = require('express');
+import * as express from "express";
 
-const SongController = require('../controllers/song/songController');
+import {
+  getSong,
+  postSong,
+  putSong,
+  deleteSong,
+  getSongs,
+  togglePrivacy
+} from "../controllers/song/songController";
 
 const router = express.Router();
 
-router.route('/songs').get(SongController.getSongs);
-router.route('/songs/:id').get(SongController.getSongs);
+router.route("/songs").get(getSongs);
+router.route("/songs/:id").get(getSongs);
 
-router.route('/song/create').post(SongController.postSong);
+router.route("/song/create").post(postSong);
 
-router.route('/song/:id').get(SongController.getSong);
-router.route('/song/:id').put(SongController.putSong);
-router.route('/song/:id').delete(SongController.deleteSong);
-router.route('/song/:id/togglePrivacy').put(SongController.togglePrivacy);
+router.route("/song/:id").get(getSong);
+router.route("/song/:id").put(putSong);
+router.route("/song/:id").delete(deleteSong);
+router.route("/song/:id/togglePrivacy").put(togglePrivacy);
 
-module.exports = router;
+export default router;

@@ -1,16 +1,15 @@
-const Artist = require('../../models/artist');
+import Artist from "../../models/artist";
 
-exports.getArtists = function getArtists(req, res) {
-
+export function getArtists(req, res) {
   const { userId } = req.session;
 
   Artist.find({}, null, { sort: { name: 1 } })
     .populate({
-      path: 'songs',
+      path: "songs",
       match: { $or: [{ isPublic: true }, { user: userId }] },
-      select: 'title created modified',
+      select: "title created modified",
       options: {
-        sort: { modified: -1 },
+        sort: { modified: -1 }
         // limit: 5
       }
     })
@@ -20,19 +19,18 @@ exports.getArtists = function getArtists(req, res) {
       }
       res.json({ artists });
     });
-};
+}
 
-exports.getArtist = function getArtist(req, res) {
-
+export function getArtist(req, res) {
   const { userId } = req.session;
 
   Artist.findOne({ _id: req.params.id })
     .populate({
-      path: 'songs',
+      path: "songs",
       match: { $or: [{ isPublic: true }, { user: userId }] },
-      select: 'title created modified',
+      select: "title created modified",
       options: {
-        sort: { modified: -1 },
+        sort: { modified: -1 }
       }
     })
     .exec((err, artist) => {
@@ -41,4 +39,4 @@ exports.getArtist = function getArtist(req, res) {
       }
       res.json({ artists: [artist] });
     });
-};
+}

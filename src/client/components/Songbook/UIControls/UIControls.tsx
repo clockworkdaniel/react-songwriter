@@ -1,22 +1,34 @@
-import React from 'react';
+import * as React from "react";
 
-export default class UIControls extends React.Component {
+interface Props {
+  matchesArtistUrl: boolean;
+  orderLogic: string;
+  songPriority: boolean;
+  setSongPriority: Function;
+  setOrderLogic: Function;
+  setOrderDirection: Function;
+  isAscending: boolean;
+}
 
-  handleAuthSongPrefChange = (event) => {
+export default class UIControls extends React.Component<Props> {
+  handleAuthSongPrefChange = event => {
     const { setSongPriority, orderLogic, setOrderLogic } = this.props;
-    if (event.target.value === 'artist') {
+    if (event.target.value === "artist") {
       setSongPriority(false);
-      if (orderLogic === 'created') {
-        setOrderLogic('modified');
+      if (orderLogic === "created") {
+        setOrderLogic("modified");
       }
     } else {
       setSongPriority(true);
     }
-  }
+  };
 
-  handleOrderLogicChange = (event) => {
+  handleOrderLogicChange = event => {
     const {
-      orderLogic, isAscending, setOrderDirection, setOrderLogic
+      orderLogic,
+      isAscending,
+      setOrderDirection,
+      setOrderLogic
     } = this.props;
     if (event.target.value === orderLogic) {
       setOrderDirection(!isAscending);
@@ -24,7 +36,7 @@ export default class UIControls extends React.Component {
       setOrderLogic(event.target.value);
       setOrderDirection(false);
     }
-  }
+  };
 
   render() {
     const {
@@ -36,18 +48,15 @@ export default class UIControls extends React.Component {
 
     return (
       <div className="book-controls">
-
         <div className="book-controls__auth-song-priority">
           {matchesArtistUrl ? (
             <p>Order songs:</p>
           ) : (
             <div>
-              <p>
-                Order:
-              </p>
+              <p>Order:</p>
               <div className="select-container book-controls__select-container">
                 <select
-                  value={songPriority ? 'song' : 'artist'}
+                  value={songPriority ? "song" : "artist"}
                   onChange={this.handleAuthSongPrefChange}
                 >
                   <option value="artist">Artists</option>
@@ -57,8 +66,10 @@ export default class UIControls extends React.Component {
             </div>
           )}
         </div>
-        <div className={
-          `book-controls__ordering-logic ${(isAscending ? 'ascending' : 'descending ')} ${orderLogic}`}
+        <div
+          className={`book-controls__ordering-logic ${
+            isAscending ? "ascending" : "descending "
+          } ${orderLogic}`}
         >
           <button
             className="book-controls__ordering-btn"
@@ -76,7 +87,7 @@ export default class UIControls extends React.Component {
           >
             Modified
           </button>
-          {(songPriority) && (
+          {songPriority && (
             <button
               className="book-controls__ordering-btn"
               type="button"

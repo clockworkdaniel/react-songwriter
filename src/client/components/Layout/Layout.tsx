@@ -1,31 +1,62 @@
-import React from 'react';
+import * as React from "react";
 
-import {
-  Router,
-  Route,
-  Link
-} from 'react-router-dom';
+import { Router, Route, Link } from "react-router-dom";
 
-import { getCookie } from '../../functions/cookie';
+import { getCookie } from "../../functions/cookie";
 
-import history from '../../history';
-import EditModal from '../EditModal/EditModal';
-import SongbookContainer from '../Songbook/SongbookContainer';
-import SongsheetContainer from '../Songsheet/SongsheetContainer';
-import SignIn from '../SignIn/SignIn';
+import history from "../../history";
+import EditModal, { EditModalUiState } from "../EditModal/EditModal";
+import SongbookContainer from "../Songbook/SongbookContainer";
+import SongsheetContainer from "../Songsheet/SongsheetContainer";
+import SignIn from "../SignIn/SignIn";
+import SignInState from "../../types/signInState";
+import { ActionCreator } from "redux";
 
-export default class Layout extends React.Component {
+// refactor
+interface StateProps {
+  editModalState: EditModalUiState;
+  signInState: SignInState;
+}
 
+interface DispatchProps {
+  updateEditableText(udatedText: string): void;
+  commitTextChange(object: {
+    committedText: string;
+    actionToTriggerOnCommit?: ActionCreator<any>;
+    shouldCloseModal?: boolean;
+  });
+  showSignIn(): void;
+  showSignUp(): void;
+  hideSignInSignUp(): void;
+  updateInputValue(form: string, name: string, value: string): void;
+  // is signed in?
+  initSignedInState(isSignedIn: any): void;
+  signInRequest(usernameOrEmail: string, password: string): void;
+  createUser(username: string, email: string, password: string): void;
+  signOutRequest(): void;
+  newSongModal(): void;
+  // need info
+  setError(errorObj: any): void;
+  // guess
+  setSignUpStage(stage: number): void;
+  // this should probably be happening serverside?!
+  checkForUserDuplication(username: string, email: string): void;
+}
+
+export default class Layout extends React.Component<
+  StateProps & DispatchProps,
+  {}
+> {
   componentDidMount() {
     const { initSignedInState } = this.props;
-    const sessionCookie = getCookie('connect.sid');
+    const sessionCookie = getCookie("connect.sid");
     initSignedInState(!!sessionCookie);
   }
 
   handleNewSongModal = () => {
     const { newSongModal } = this.props;
     newSongModal();
-  }
+  };
 
   render() {
     const {
@@ -57,8 +88,8 @@ export default class Layout extends React.Component {
           <SignIn
             signInShown={signInState.signInShown}
             signUpShown={signInState.signUpShown}
-            signInForm={signInState.signInForm}
-            signUpForm={signInState.signUpForm}
+            signInFormValues={signInState.signInFormValues}
+            signUpFormValues={signInState.signUpFormValues}
             showSignIn={showSignIn}
             showSignUp={showSignUp}
             hideSignInSignUp={hideSignInSignUp}
@@ -78,7 +109,7 @@ export default class Layout extends React.Component {
                     <h1 className="header__title">Songbird</h1>
                   </Link>
                 </li>
-                {signInState.signedIn && (
+                {signInState.isSignedIn && (
                   <li className="header__li">
                     <button
                       className="songbook__new-song"
@@ -90,24 +121,18 @@ export default class Layout extends React.Component {
                   </li>
                 )}
                 <li className="header__li">
-                  <button
-                    className="header__link"
-                    type="button"
-                  >
+                  <button className="header__link" type="button">
                     Search
                   </button>
                 </li>
-                {signInState.signedIn && (
+                {signInState.isSignedIn && (
                   <li className="header__li">
-                    <button
-                      className="header__link"
-                      type="button"
-                    >
+                    <button className="header__link" type="button">
                       Settings
                     </button>
                   </li>
                 )}
-                {signInState.signedIn && (
+                {signInState.isSignedIn && (
                   <li className="header__li">
                     <button
                       className="header__link"
@@ -118,7 +143,7 @@ export default class Layout extends React.Component {
                     </button>
                   </li>
                 )}
-                {!signInState.signedIn && (
+                {!signInState.isSignedIn && (
                   <li className="header__li">
                     <button
                       className="header__link"
@@ -139,10 +164,8 @@ export default class Layout extends React.Component {
             <Route path="/song/:id" component={SongsheetContainer} />
             {/* <Route exact path="/settings" component={Settings} /> */}
           </section>
-
         </div>
       </Router>
-
     );
   }
 }

@@ -5,6 +5,7 @@ import { IUser } from "./user";
 export interface ISong extends Document {
   title: string;
   artist?: IArtist;
+  // fix
   structure: Array<unknown>;
   user: IUser;
   created: number; // check

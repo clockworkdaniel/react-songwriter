@@ -1,9 +1,9 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 import {
   updateEditableText,
   commitTextChange
-} from '../../actions/Layout/edit-modal-actions';
+} from "../../actions/Layout/edit-modal-actions";
 
 import {
   showSignIn,
@@ -17,11 +17,11 @@ import {
   setError,
   setSignUpStage,
   checkForUserDuplication
-} from '../../actions/Layout/sign-in-actions';
+} from "../../actions/Layout/sign-in-actions";
 
-import { newSongModal } from '../../actions/Songbook/songbook-actions';
+import { newSongModal } from "../../actions/Songbook/songbook-actions";
 
-import Layout from './Layout';
+import Layout from "./Layout";
 
 const mapStateToProps = state => ({
   editModalState: state.layoutState.editModal,
@@ -29,15 +29,21 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  updateEditableText: (updatedText) => {
+  updateEditableText: updatedText => {
     dispatch(updateEditableText(updatedText));
   },
-  commitTextChange: ({ commitedText, actionToTriggerOnCommit, shouldCloseModal }) => {
-    dispatch(commitTextChange({
-      commitedText,
-      actionToTriggerOnCommit,
-      shouldCloseModal
-    }));
+  commitTextChange: ({
+    committedText,
+    actionToTriggerOnCommit,
+    shouldCloseModal
+  }) => {
+    dispatch(
+      commitTextChange({
+        committedText,
+        actionToTriggerOnCommit,
+        shouldCloseModal
+      })
+    );
   },
   showSignIn: () => {
     dispatch(showSignIn());
@@ -51,8 +57,8 @@ const mapDispatchToProps = dispatch => ({
   updateInputValue: (form, name, value) => {
     dispatch(updateInputValue(form, name, value));
   },
-  initSignedInState: (signedIn) => {
-    dispatch(initSignedInState(signedIn));
+  initSignedInState: isSignedIn => {
+    dispatch(initSignedInState(isSignedIn));
   },
   signInRequest: (usernameOrEmail, password) => {
     dispatch(signInRequest(usernameOrEmail, password));
@@ -66,10 +72,10 @@ const mapDispatchToProps = dispatch => ({
   newSongModal: () => {
     dispatch(newSongModal());
   },
-  setError: (errorObj) => {
+  setError: errorObj => {
     dispatch(setError(errorObj));
   },
-  setSignUpStage: (stage) => {
+  setSignUpStage: stage => {
     dispatch(setSignUpStage(stage));
   },
   checkForUserDuplication: (username, email) => {
@@ -77,9 +83,6 @@ const mapDispatchToProps = dispatch => ({
   }
 });
 
-const LayoutContainer = connect(
-  mapStateToProps,
-  mapDispatchToProps
-)(Layout);
+const LayoutContainer = connect(mapStateToProps, mapDispatchToProps)(Layout);
 
 export default LayoutContainer;

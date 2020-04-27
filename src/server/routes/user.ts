@@ -1,12 +1,17 @@
-const express = require('express');
+import * as express from "express";
 
-const UserController = require('../controllers/user/userController');
+import {
+  createUser,
+  userSignIn,
+  userSignOut,
+  checkUser
+} from "../controllers/user/userController";
 
 const router = express.Router();
 
-router.route('/user/create').post(UserController.createUser);
-router.route('/user/sign-in').post(UserController.userSignIn);
-router.route('/user/sign-out').post(UserController.userSignOut);
-router.route('/user/check').post(UserController.checkUser);
+router.route("/user/create").post(createUser);
+router.route("/user/sign-in").post(userSignIn);
+router.route("/user/sign-out").post(userSignOut);
+router.route("/user/check").post(checkUser);
 
-module.exports = router;
+export default router;

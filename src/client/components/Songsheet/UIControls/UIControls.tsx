@@ -1,36 +1,53 @@
-import React from 'react';
+import * as React from "react";
+import Song from "../../../types/song";
 
-export default class UIControls extends React.Component {
+interface Props {
+  chordMode: boolean;
+  switchMode(): void;
+  chordToPaint: string;
+  updateChordToPaint(chord: string): void;
+  // change to enum
+  paintSpecificity: string;
+  updatePaintSpecificity(specificity: string): void;
+  song: Song;
+  saveSongRequest(_id: string, song: Song): void;
+  songSaved: boolean;
+  resetSongSaved(): void;
+  switchPrivacyRequest(_id: string): void;
+  isEditable: boolean;
+}
 
+export default class UIControls extends React.Component<Props> {
   componentDidMount() {
     const { resetSongSaved } = this.props;
-    const saveButton = document.querySelector('.sheet-controls__save-button');
-    saveButton && saveButton.addEventListener('animationend', () => {
-      resetSongSaved();
-    });
+    const saveButton = document.querySelector(".sheet-controls__save-button");
+    saveButton &&
+      saveButton.addEventListener("animationend", () => {
+        resetSongSaved();
+      });
   }
 
-  handleChordChange = (event) => {
+  handleChordChange = event => {
     const { updateChordToPaint } = this.props;
     updateChordToPaint(event.target.value);
-  }
+  };
 
-  handleSpecificityChange = (event) => {
+  handleSpecificityChange = event => {
     const { updatePaintSpecificity } = this.props;
     updatePaintSpecificity(event.target.value);
-  }
+  };
 
   handleSave = () => {
     const { song, saveSongRequest, songSaved } = this.props;
     if (!songSaved) {
       saveSongRequest(song._id, song);
     }
-  }
+  };
 
   handlePrivacySwitch = () => {
     const { song, switchPrivacyRequest } = this.props;
     switchPrivacyRequest(song._id);
-  }
+  };
 
   render() {
     const {
@@ -39,20 +56,24 @@ export default class UIControls extends React.Component {
       paintSpecificity,
       switchMode,
       songSaved,
-      song: {
-        isPublic
-      },
-      editable
+      song: { isPublic },
+      isEditable
     } = this.props;
 
-    const songSavedModifier = songSaved ? 'sheet-controls__save-button--saved' : '';
+    const songSavedModifier = songSaved
+      ? "sheet-controls__save-button--saved"
+      : "";
 
     return (
       <div className="sheet-controls__container">
         <div className="sheet-controls">
-          <div className={`switch${chordMode ? ' switch--on' : ''}`}>
-            <label className="switch__label" htmlFor="mode-switch" onClick={switchMode}>
-              {chordMode ? 'Chord mode' : 'Lyrics mode'}
+          <div className={`switch${chordMode ? " switch--on" : ""}`}>
+            <label
+              className="switch__label"
+              htmlFor="mode-switch"
+              onClick={switchMode}
+            >
+              {chordMode ? "Chord mode" : "Lyrics mode"}
             </label>
             <button
               className="switch__button"
@@ -61,7 +82,7 @@ export default class UIControls extends React.Component {
               onClick={switchMode}
             />
           </div>
-          {editable && chordMode && (
+          {isEditable && chordMode && (
             <div className="sheet-controls__chord-input">
               <p>Chord:</p>
               <input
@@ -71,7 +92,7 @@ export default class UIControls extends React.Component {
               />
             </div>
           )}
-          {editable && chordMode && (
+          {isEditable && chordMode && (
             <div className="sheet-controls__specificity-select">
               <p>Assign chord by:</p>
               <select
@@ -85,11 +106,15 @@ export default class UIControls extends React.Component {
             </div>
           )}
         </div>
-        {editable && (
+        {isEditable && (
           <div className="sheet-controls sheet-controls--lower">
-            <div className={`switch${isPublic ? ' switch--on' : ''}`}>
-              <label className="switch__label" htmlFor="privacy-switch" onClick={this.handlePrivacySwitch}>
-                {isPublic ? 'Public' : 'Private' }
+            <div className={`switch${isPublic ? " switch--on" : ""}`}>
+              <label
+                className="switch__label"
+                htmlFor="privacy-switch"
+                onClick={this.handlePrivacySwitch}
+              >
+                {isPublic ? "Public" : "Private"}
               </label>
               <button
                 className="switch__button"
@@ -107,7 +132,6 @@ export default class UIControls extends React.Component {
             </button>
           </div>
         )}
-
       </div>
     );
   }

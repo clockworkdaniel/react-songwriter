@@ -1,11 +1,10 @@
-const express = require('express');
+import * as express from "express";
 
-const ArtistController = require('../controllers/artist/artistController');
+import { getArtists, getArtist } from "../controllers/artist/artistController";
 
 const router = express.Router();
 
-router.route('/artists').get(ArtistController.getArtists);
-router.route('/artist/:id').get(ArtistController.getArtist);
+router.route("/artists").get(getArtists);
+router.route("/artist/:id").get(getArtist);
 
-
-module.exports = router;
+export default router;

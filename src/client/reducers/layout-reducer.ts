@@ -1,6 +1,7 @@
-import { loop, Cmd } from 'redux-loop';
+import { loop, Cmd, LoopReducer } from "redux-loop";
+import { Reducer } from "react";
+import callApi from "../util/callApi";
 
-import callApi from '../util/callApi';
 import {
   signInSuccess,
   setError,
@@ -9,50 +10,58 @@ import {
   setSignUpStage,
   signOutSuccess,
   signOutFailure
-} from '../actions/Layout/sign-in-actions';
+} from "../actions/Layout/sign-in-actions";
 
-import { closeModal } from '../actions/Layout/edit-modal-actions';
+import { closeModal } from "../actions/Layout/edit-modal-actions";
+import { EditModalUiState } from "../components/EditModal/EditModal";
+import SignInState from "../types/signInState";
 
-const initialState = {
+interface LayoutState {
+  editModal: EditModalUiState;
+  signIn: SignInState;
+}
+
+const initialState: LayoutState = {
   editModal: {
     showEditModal: false,
-    editableText: '',
-    userPrompt: '',
-    commitedTextObj: {},
+    editableText: "",
+    userPrompt: "",
+    committedTextObj: {},
     actionToTriggerOnCommit: undefined
   },
   signIn: {
-    signedIn: false,
+    isSignedIn: false,
     signInShown: false,
     signUpShown: false,
-    currentForm: '',
-    signUpForm: {
+    currentForm: "",
+    signUpFormValues: {
       stage: 1,
-      username: '',
-      email: '',
-      password: '',
-      passwordConfirmation: '',
+      username: "",
+      email: "",
+      password: "",
+      passwordConfirm: "",
       error: {
         field: null,
-        message: ''
+        message: ""
       }
     },
-    signInForm: {
-      usernameOrEmail: '',
-      password: '',
+    signInFormValues: {
+      usernameOrEmail: "",
+      password: "",
       error: {
         field: null,
-        message: ''
+        message: ""
       }
     }
   }
 };
 
-const editModalReducer = (state = initialState, action) => {
-
+const editModalReducer: LoopReducer<LayoutState, any> = (
+  state = initialState,
+  action
+) => {
   switch (action.type) {
-
-    case 'EDIT_MODAL_TRIGGER': {
+    case "EDIT_MODAL_TRIGGER": {
       return {
         ...state,
         editModal: {
@@ -65,7 +74,7 @@ const editModalReducer = (state = initialState, action) => {
       };
     }
 
-    case 'UPDATE_TEXT_TO_EDIT': {
+    case "UPDATE_TEXT_TO_EDIT": {
       return {
         ...state,
         editModal: {
@@ -75,48 +84,52 @@ const editModalReducer = (state = initialState, action) => {
       };
     }
 
-    case 'COMMIT_TEXT_CHANGE': {
-
-      const actionList = [Cmd.action(action.actionToTriggerOnCommit(action.commitedText))];
+    case "COMMIT_TEXT_CHANGE": {
+      const actionList = [
+        Cmd.action(action.actionToTriggerOnCommit(action.committedText))
+      ];
       action.shouldCloseModal && actionList.push(Cmd.action(closeModal()));
 
-      return loop(
-        state,
-        Cmd.list(actionList)
-      );
+      return loop(state, Cmd.list(actionList));
     }
 
-    case 'CLOSE_MODAL': {
-      return { ...state, editModal: { ...state.editModal, showEditModal: false } };
+    case "CLOSE_MODAL": {
+      return {
+        ...state,
+        editModal: { ...state.editModal, showEditModal: false }
+      };
     }
 
-    case 'INIT_SIGNED_IN_STATE': {
-      return { ...state, signIn: { ...state.signIn, signedIn: action.signedIn } };
+    case "INIT_SIGNED_IN_STATE": {
+      return {
+        ...state,
+        signIn: { ...state.signIn, isSignedIn: action.isSignedIn }
+      };
     }
 
-    case 'SHOW_SIGN_IN': {
+    case "SHOW_SIGN_IN": {
       return {
         ...state,
         signIn: {
           ...state.signIn,
           signInShown: true,
           signUpShown: false,
-          currentForm: 'signInForm'
+          currentForm: "signInForm"
         }
       };
     }
 
-    case 'HIDE_SIGN_IN_SIGN_UP': {
+    case "HIDE_SIGN_IN_SIGN_UP": {
       return {
         ...state,
         signIn: {
           ...initialState.signIn,
-          signedIn: state.signIn.signedIn
+          isSignedIn: state.signIn.isSignedIn
         }
       };
     }
 
-    case 'UPDATE_INPUT_VALUE': {
+    case "UPDATE_INPUT_VALUE": {
       return {
         ...state,
         signIn: {
@@ -129,7 +142,7 @@ const editModalReducer = (state = initialState, action) => {
       };
     }
 
-    case 'SET_ERROR': {
+    case "SET_ERROR": {
       return {
         ...state,
         signIn: {
@@ -142,13 +155,14 @@ const editModalReducer = (state = initialState, action) => {
       };
     }
 
-    case 'SIGN_IN_REQUEST': {
+    case "SIGN_IN_REQUEST": {
       return loop(
         state,
         Cmd.run(callApi, {
           args: [
-            'user/sign-in',
-            'post', {
+            "user/sign-in",
+            "post",
+            {
               usernameOrEmail: action.usernameOrEmail,
               password: action.password
             }
@@ -159,95 +173,101 @@ const editModalReducer = (state = initialState, action) => {
       );
     }
 
-    case 'SIGN_IN_SUCCESS': {
+    case "SIGN_IN_SUCCESS": {
       return loop(
-        { ...state, signIn: { ...state.signIn, signedIn: true } },
+        { ...state, signIn: { ...state.signIn, isSignedIn: true } },
         Cmd.action(hideSignInSignUp())
       );
     }
 
-    case 'SIGN_OUT_REQUEST': {
+    case "SIGN_OUT_REQUEST": {
       return loop(
         state,
         Cmd.run(callApi, {
-          args: ['user/sign-out', 'post'],
+          args: ["user/sign-out", "post"],
           successActionCreator: signOutSuccess,
           failActionCreator: signOutFailure
         })
       );
     }
 
-    case 'SIGN_OUT_SUCCESS': {
-      return { ...state, signIn: { ...state.signIn, signedIn: false } };
+    case "SIGN_OUT_SUCCESS": {
+      return { ...state, signIn: { ...state.signIn, isSignedIn: false } };
     }
 
-    case 'SIGN_OUT_FAILURE': {
+    case "SIGN_OUT_FAILURE": {
       console.log(action.error.message);
       return state;
     }
 
-    case 'SHOW_SIGN_UP': {
+    case "SHOW_SIGN_UP": {
       return {
         ...state,
         signIn: {
           ...state.signIn,
           signUpShown: true,
           signInShown: false,
-          currentForm: 'signUpForm'
+          currentForm: "signUpForm"
         }
       };
     }
 
-    case 'SET_SIGN_UP_STAGE': {
+    case "SET_SIGN_UP_STAGE": {
       return {
         ...state,
         signIn: {
           ...state.signIn,
-          signUpForm: {
-            ...state.signIn.signUpForm,
+          signUpFormValues: {
+            ...state.signIn.signUpFormValues,
             stage: action.stage
           }
         }
       };
     }
 
-    case 'CHECK_FOR_USER_DUPLICATION': {
+    case "CHECK_FOR_USER_DUPLICATION": {
       return loop(
         state,
         Cmd.run(callApi, {
-          args: ['user/check', 'post', {
-            username: action.username,
-            email: action.email
-          }],
+          args: [
+            "user/check",
+            "post",
+            {
+              username: action.username,
+              email: action.email
+            }
+          ],
           successActionCreator: signUpProceed,
           failActionCreator: setError
         })
       );
     }
 
-    case 'SIGN_UP_PROCEED': {
+    case "SIGN_UP_PROCEED": {
       return loop(state, Cmd.action(setSignUpStage(2)));
     }
 
-    case 'CREATE_USER': {
+    case "CREATE_USER": {
       return loop(
         state,
         Cmd.run(callApi, {
-          args: ['user/create', 'post', {
-            username: action.username,
-            email: action.email,
-            password: action.password
-          }],
+          args: [
+            "user/create",
+            "post",
+            {
+              username: action.username,
+              email: action.email,
+              password: action.password
+            }
+          ],
           successActionCreator: signInSuccess,
           failActionCreator: setError
         })
       );
     }
- 
     default: {
       return state;
     }
-
   }
 };
 

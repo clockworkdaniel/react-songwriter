@@ -1,12 +1,12 @@
-import { createStore, compose } from 'redux';
-import { install } from 'redux-loop';
+// import { createStore, compose } from 'redux';
+// import { install } from 'redux-loop';
 
-import rootReducer from './reducers/root-reducer';
+// import rootReducer from './reducers/root-reducer';
 
-const enhancer = compose(
-  install()
-);
+// const enhancer = compose(
+//   install()
+// );
 
-export default function setupStore(initialState) {
-  return createStore(rootReducer, { ...initialState }, enhancer);
-}
+// export default function setupStore(initialState) {
+//   return createStore(rootReducer, { ...initialState }, enhancer);
+// }

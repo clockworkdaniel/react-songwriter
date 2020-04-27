@@ -1,1 +1,76 @@
-[{"sectionName":"Verse", "lines":[{"fullLine":"Dear Prudence,", "characters":[]}, {"fullLine":"Won't you come out to play?", "characters":[]}, {"fullLine":"Dear Prudence,", "characters":[]}, {"fullLine":"Greet the brand new day.", "characters":[]}, {"fullLine":"The sun is up, the sky is blue,", "characters":[]}, {"fullLine":"It's beautiful and so are you,", "characters":[]}, {"fullLine":"Dear Prudence,", "characters":[]}, {"fullLine":"Won't you come out to play.", "characters":[]}]}, {"sectionName":"Link", "lines":[{"fullLine":"(play.)", "characters":[]}]}, {"sectionName":"Verse", "lines":[{"fullLine":"Dear Prudence,", "characters":[]}, {"fullLine":"Open up your eyes.", "characters":[]}, {"fullLine":"Dear Prudence,", "characters":[]}, {"fullLine":"See the sunny skies.", "characters":[]}, {"fullLine":"The wind is low, the birds will sing,", "characters":[]}, {"fullLine":"That you are part of everything,", "characters":[]}, {"fullLine":"Dear Prudence,", "characters":[]}, {"fullLine":"Won't you open up your (eyes?)", "characters":[]}]}, {"sectionName":"Link", "lines":[{"fullLine":"(eyes?)", "characters":[]}]}, {"sectionName":"Bridge", "lines":[{"fullLine":"Look around round, (round round round", "characters":[]}, {"fullLine":"Round round round, round round.)", "characters":[]}, {"fullLine":"Look around, round round (round round", "characters":[]}, {"fullLine":"Round round round, round round,)", "characters":[]}, {"fullLine":"Look around, ah", "characters":[]}]}, {"sectionName":"Verse", "lines":[{"fullLine":"Dear Prudence,", "characters":[]}, {"fullLine":"Let me see you smile.", "characters":[]}, {"fullLine":"Dear Prudence,", "characters":[]}, {"fullLine":"Like a little child.", "characters":[]}, {"fullLine":"The clouds will be a daisy chain", "characters":[]}, {"fullLine":"So let me see you smile again,", "characters":[]}, {"fullLine":"Dear Prudence,", "characters":[]}, {"fullLine":"Won't you let me see you smile?", "characters":[]}]}, {"sectionName":"Link", "lines":[{"fullLine":"(smile?)", "characters":[]}]}, {"sectionName":"Verse", "lines":[{"fullLine":"Dear Prudence,", "characters":[]}, {"fullLine":"Won't you come out to play?", "characters":[]}, {"fullLine":"Dear Prudence,", "characters":[]}, {"fullLine":"Greet the brand new day.", "characters":[]}, {"fullLine":"The sun is up, the sky is blue,", "characters":[]}, {"fullLine":"It's beautiful and so are you,", "characters":[]}, {"fullLine":"Dear Prudence,", "characters":[]}, {"fullLine":"Won't you come out to play.", "characters":[]}]}]
+[
+  {
+    "sectionName": "Verse",
+    "lines": [
+      { "fullLine": "Dear Prudence,", "characters": [] },
+      { "fullLine": "Won't you come out to play?", "characters": [] },
+      { "fullLine": "Dear Prudence,", "characters": [] },
+      { "fullLine": "Greet the brand new day.", "characters": [] },
+      { "fullLine": "The sun is up, the sky is blue,", "characters": [] },
+      { "fullLine": "It's beautiful and so are you,", "characters": [] },
+      { "fullLine": "Dear Prudence,", "characters": [] },
+      { "fullLine": "Won't you come out to play.", "characters": [] }
+    ]
+  },
+  {
+    "sectionName": "Link",
+    "lines": [{ "fullLine": "(play.)", "characters": [] }]
+  },
+  {
+    "sectionName": "Verse",
+    "lines": [
+      { "fullLine": "Dear Prudence,", "characters": [] },
+      { "fullLine": "Open up your eyes.", "characters": [] },
+      { "fullLine": "Dear Prudence,", "characters": [] },
+      { "fullLine": "See the sunny skies.", "characters": [] },
+      { "fullLine": "The wind is low, the birds will sing,", "characters": [] },
+      { "fullLine": "That you are part of everything,", "characters": [] },
+      { "fullLine": "Dear Prudence,", "characters": [] },
+      { "fullLine": "Won't you open up your (eyes?)", "characters": [] }
+    ]
+  },
+  {
+    "sectionName": "Link",
+    "lines": [{ "fullLine": "(eyes?)", "characters": [] }]
+  },
+  {
+    "sectionName": "Bridge",
+    "lines": [
+      { "fullLine": "Look around round, (round round round", "characters": [] },
+      { "fullLine": "Round round round, round round.)", "characters": [] },
+      { "fullLine": "Look around, round round (round round", "characters": [] },
+      { "fullLine": "Round round round, round round,)", "characters": [] },
+      { "fullLine": "Look around, ah", "characters": [] }
+    ]
+  },
+  {
+    "sectionName": "Verse",
+    "lines": [
+      { "fullLine": "Dear Prudence,", "characters": [] },
+      { "fullLine": "Let me see you smile.", "characters": [] },
+      { "fullLine": "Dear Prudence,", "characters": [] },
+      { "fullLine": "Like a little child.", "characters": [] },
+      { "fullLine": "The clouds will be a daisy chain", "characters": [] },
+      { "fullLine": "So let me see you smile again,", "characters": [] },
+      { "fullLine": "Dear Prudence,", "characters": [] },
+      { "fullLine": "Won't you let me see you smile?", "characters": [] }
+    ]
+  },
+  {
+    "sectionName": "Link",
+    "lines": [{ "fullLine": "(smile?)", "characters": [] }]
+  },
+  {
+    "sectionName": "Verse",
+    "lines": [
+      { "fullLine": "Dear Prudence,", "characters": [] },
+      { "fullLine": "Won't you come out to play?", "characters": [] },
+      { "fullLine": "Dear Prudence,", "characters": [] },
+      { "fullLine": "Greet the brand new day.", "characters": [] },
+      { "fullLine": "The sun is up, the sky is blue,", "characters": [] },
+      { "fullLine": "It's beautiful and so are you,", "characters": [] },
+      { "fullLine": "Dear Prudence,", "characters": [] },
+      { "fullLine": "Won't you come out to play.", "characters": [] }
+    ]
+  }
+]

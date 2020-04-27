@@ -1,20 +1,28 @@
-import React from 'react';
+import * as React from "react";
 
-import Character from './Character';
+import Character from "./Character";
+import { Character as CharacterInterface } from "../../../types/song";
+
+type Props = {
+  characters: CharacterInterface[];
+  lineKey: number;
+  sectionKey: number;
+  updateChord(characterKey: number, lineKey: number, sectionKey: number): void;
+  isMouseDown: boolean;
+  isEditable: boolean;
+};
 
 export default function SplitCharacters({
   characters,
   lineKey,
   sectionKey,
   updateChord,
-  mouseDown,
-  editable
-}) {
-
-  const splitCharacters = [];
+  isMouseDown,
+  isEditable
+}: Props) {
+  const splitCharacters: JSX.Element[] = [];
 
   characters.map((character, index) => {
-
     let chordChange = false;
 
     if (index === 0 || character.chord !== characters[index - 1].chord) {
@@ -30,17 +38,15 @@ export default function SplitCharacters({
         lineKey={lineKey}
         sectionKey={sectionKey}
         updateChord={updateChord}
-        mouseDown={mouseDown}
-        editable={editable}
+        isMouseDown={isMouseDown}
+        isEditable={isEditable}
       />
     );
   });
 
   return (
     <div className="line expanded">
-      <p className="line__chord-input">
-        {splitCharacters}
-      </p>
+      <p className="line__chord-input">{splitCharacters}</p>
     </div>
   );
 }

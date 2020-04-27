@@ -1,15 +1,19 @@
-import React from 'react';
+import * as React from "react";
 
-export default function SongTitle({ title, rename }) {
+type Props = {
+  title: string;
+  // what is this any?
+  rename(editableText: string, label: string, path: any): void;
+};
 
+export default function SongTitle({ title, rename }: Props) {
   function handleTitleRename() {
     const editableText = title;
-    const path = ['song', 'title'];
-    rename(editableText, 'Rename song', path);
+    const path = ["song", "title"];
+    rename(editableText, "Rename song", path);
   }
 
   return (
-
     <div className="songsheet__title ss-title">
       <h1 className="ss-title__heading controls__container">
         {title}
@@ -24,6 +28,5 @@ export default function SongTitle({ title, rename }) {
         </span>
       </h1>
     </div>
-
   );
 }

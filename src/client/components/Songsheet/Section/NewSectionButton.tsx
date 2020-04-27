@@ -1,6 +1,10 @@
-import React from 'react';
+import * as React from "react";
 
-export default function NewSectionButton({ newSection }) {
+type Props = {
+  newSection(): void;
+};
+
+export default function NewSectionButton({ newSection }: Props) {
   return (
     <button
       className="new-section-button"

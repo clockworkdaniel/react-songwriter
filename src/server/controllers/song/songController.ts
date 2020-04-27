@@ -37,9 +37,9 @@ export function getSong(req, res) {
           .json({ message: "Private song, please sign in" });
       }
       if (userId !== song.user._id.toString()) {
-        return res.status(200).json({ song, editable: false });
+        return res.status(200).json({ song, isEditable: false });
       }
-      res.status(200).json({ song, editable: true });
+      res.status(200).json({ song, isEditable: true });
     });
 }
 
