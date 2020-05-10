@@ -1,10 +1,10 @@
 import * as React from "react";
 
-import { SignInFormValues } from "../../types/signInState";
+import { signInForm } from "../../types/signInState";
 import InputGroup from "./InputGroup";
 
 interface Props {
-  signInFormValues: SignInFormValues;
+  signInForm: signInForm;
   updateInputValue(form: string, name: string, value: string): void;
   showSignUp(): void;
   signInRequest(usernameOrEmail: string, password: string): void;
@@ -13,10 +13,6 @@ interface Props {
 }
 
 export default class SignInForm extends React.Component<Props, {}> {
-  constructor(props) {
-    super(props);
-  }
-
   private form = React.createRef<HTMLFormElement>();
 
   componentDidMount() {
@@ -24,18 +20,13 @@ export default class SignInForm extends React.Component<Props, {}> {
   }
 
   handleSubmit = event => {
-    const { signInFormValues, signInRequest } = this.props;
+    const { signInForm, signInRequest } = this.props;
     event.preventDefault();
-    signInRequest(signInFormValues.usernameOrEmail, signInFormValues.password);
+    signInRequest(signInForm.usernameOrEmail, signInForm.password);
   };
 
   render() {
-    const {
-      signInFormValues,
-      showSignUp,
-      updateInputValue,
-      setError
-    } = this.props;
+    const { signInForm, showSignUp, updateInputValue, setError } = this.props;
 
     return (
       <form
@@ -51,7 +42,7 @@ export default class SignInForm extends React.Component<Props, {}> {
           type="text"
           updateInputValue={updateInputValue}
           setError={setError}
-          form={signInFormValues}
+          form={signInForm}
           formKey="signInForm"
         />
         <InputGroup
@@ -60,7 +51,7 @@ export default class SignInForm extends React.Component<Props, {}> {
           type="password"
           updateInputValue={updateInputValue}
           setError={setError}
-          form={signInFormValues}
+          form={signInForm}
           formKey="signInForm"
         />
         <button type="submit" value="Submit">

@@ -23,7 +23,7 @@ export default interface Song {
   artist?: Artist;
   structure: Structure;
   user?: User;
-  created?: Date;
-  modified?: Date;
+  created?: string;
+  modified?: string;
   isPublic: boolean;
 }

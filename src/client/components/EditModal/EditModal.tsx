@@ -23,7 +23,13 @@ interface Props {
 }
 
 export default function EditModal({
-  editModalState,
+  editModalState: {
+    actionToTriggerOnCommit,
+    editableText,
+    shouldCloseModal,
+    showEditModal,
+    userPrompt
+  },
   updateEditableText,
   commitTextChange
 }: Props) {
@@ -32,25 +38,25 @@ export default function EditModal({
   }
 
   function handleKeyDown(event) {
-    if (event.keyCode === 13 && editModalState.actionToTriggerOnCommit) {
+    if (event.keyCode === 13 && actionToTriggerOnCommit) {
       commitTextChange({
-        committedText: editModalState.editableText,
-        actionToTriggerOnCommit: editModalState.actionToTriggerOnCommit,
-        shouldCloseModal: editModalState.shouldCloseModal
+        committedText: editableText,
+        actionToTriggerOnCommit,
+        shouldCloseModal
       });
     }
   }
 
-  return editModalState.showEditModal ? (
+  return showEditModal ? (
     <div className="edit-modal">
       <div className="edit-modal__input-container">
         <label className="edit-modal__prompt" htmlFor="user-input-text">
-          {editModalState.userPrompt}
+          {userPrompt}
         </label>
         <input
           id="user-input-text"
           className="edit-modal__input"
-          value={editModalState.editableText}
+          value={editableText}
           onChange={handleChange}
           onKeyDown={handleKeyDown}
         />

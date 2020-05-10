@@ -19,19 +19,19 @@ interface Props extends Omit<SignInState, "isSignedIn" | "currentForm"> {
 }
 
 export default function SignIn({
-  signInShown,
-  signUpShown,
-  signInFormValues,
-  signUpFormValues,
-  showSignIn,
-  showSignUp,
-  hideSignInSignUp,
-  updateInputValue,
-  signInRequest,
+  checkForUserDuplication,
   createUser,
+  hideSignInSignUp,
   setError,
   setSignUpStage,
-  checkForUserDuplication
+  showSignIn,
+  showSignUp,
+  signInForm,
+  signInRequest,
+  signInShown,
+  signUpFormValues,
+  signUpShown,
+  updateInputValue
 }: Props) {
   return (
     <div
@@ -53,7 +53,7 @@ export default function SignIn({
     >
       {signInShown && (
         <SignInForm
-          signInFormValues={signInFormValues}
+          signInForm={signInForm}
           updateInputValue={updateInputValue}
           setError={setError}
           showSignUp={showSignUp}

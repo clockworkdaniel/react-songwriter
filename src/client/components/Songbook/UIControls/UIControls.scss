@@ -32,7 +32,7 @@
     }
 
     &::after {
-      content: '';
+      content: "";
       position: absolute;
       right: rem(5px);
       top: rem(8.5px);
@@ -41,12 +41,12 @@
         transform: rotate(180deg);
       }
     }
-    .alphabetically &[value='alphabetically'],
-    .modified &[value='modified'],
-    .created &[value='created'] {
+    .alphabetical &[value="alphabetical"],
+    .modified &[value="modified"],
+    .created &[value="created"] {
       opacity: 0.95;
       &::after {
-        content: '\25BC';
+        content: "\25BC";
       }
     }
   }

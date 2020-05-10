@@ -5,20 +5,19 @@ import SignInState from "../../types/signInState";
 import Artist from "./Artist";
 import Song from "./Song";
 import UIControls from "./UIControls/UIControls";
+import { OrderLogic } from "../../types/songbook";
 
 interface DispatchProps {
   fetchSongs(): void;
   fetchSongsBySingleArtist(artistId: string): void;
   deleteSongRequest(songId: string): void;
-  // this could be an enum
-  setOrderLogic(orderLogic: string): void;
+  setOrderLogic(orderLogic: OrderLogic): void;
   setSongPriority(songPriority: boolean): void;
   setOrderDirection(ascending: boolean): void;
 }
 
 export interface SongbookUiState {
-  // change to enum
-  orderLogic: string;
+  orderLogic: OrderLogic;
   songPriority: boolean;
   isAscending: boolean;
   currentlyFetching: boolean;
@@ -39,10 +38,6 @@ export default class Songbook extends React.Component<
   DispatchProps & StateProps & RouteComponentProps,
   {}
 > {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount() {
     this.dictateFetchType();
   }
@@ -71,7 +66,7 @@ export default class Songbook extends React.Component<
       fetchSongsBySingleArtist("test");
     } else {
       setSongPriority(false); // defaults to song priority
-      orderLogic === "created" && setOrderLogic("modified");
+      orderLogic === OrderLogic.Created && setOrderLogic(OrderLogic.Modified);
       fetchSongs();
     }
   }

@@ -45,7 +45,7 @@ const initialState: LayoutState = {
         message: ""
       }
     },
-    signInFormValues: {
+    signInForm: {
       usernameOrEmail: "",
       password: "",
       error: {
@@ -130,6 +130,7 @@ const editModalReducer: LoopReducer<LayoutState, any> = (
     }
 
     case "UPDATE_INPUT_VALUE": {
+      console.log(action);
       return {
         ...state,
         signIn: {

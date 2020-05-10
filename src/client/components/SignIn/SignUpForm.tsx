@@ -27,10 +27,6 @@ interface Props {
 }
 
 export default class SignUpForm extends React.Component<Props> {
-  constructor(props) {
-    super(props);
-  }
-
   private form = React.createRef<HTMLFormElement>();
 
   componentDidMount() {

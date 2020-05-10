@@ -1,4 +1,5 @@
 import * as React from "react";
+import { OrderLogic } from "../../../types/songbook";
 
 interface Props {
   matchesArtistUrl: boolean;
@@ -15,8 +16,8 @@ export default class UIControls extends React.Component<Props> {
     const { setSongPriority, orderLogic, setOrderLogic } = this.props;
     if (event.target.value === "artist") {
       setSongPriority(false);
-      if (orderLogic === "created") {
-        setOrderLogic("modified");
+      if (orderLogic === OrderLogic.Created) {
+        setOrderLogic(OrderLogic.Modified);
       }
     } else {
       setSongPriority(true);
@@ -74,10 +75,10 @@ export default class UIControls extends React.Component<Props> {
           <button
             className="book-controls__ordering-btn"
             type="button"
-            value="alphabetically"
+            value="alphabetical"
             onClick={this.handleOrderLogicChange}
           >
-            Alphabetically
+            alphabetical
           </button>
           <button
             className="book-controls__ordering-btn"

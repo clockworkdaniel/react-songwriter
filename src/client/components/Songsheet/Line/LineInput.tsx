@@ -28,10 +28,6 @@ type OwnProps = {
 };
 
 export default class LineInput extends React.Component<StateProps & OwnProps> {
-  constructor(props) {
-    super(props);
-  }
-
   private textInput = React.createRef<HTMLInputElement>();
 
   componentDidMount() {

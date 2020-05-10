@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 import {
   fetchSongs,
@@ -7,9 +7,9 @@ import {
   setOrderLogic,
   setSongPriority,
   setOrderDirection
-} from '../../actions/Songbook/songbook-actions';
+} from "../../actions/Songbook/songbook-actions";
 
-import Songbook from './Songbook';
+import Songbook from "./Songbook";
 
 const mapStateToProps = state => ({
   artistSongList: state.songbookState.artistSongList,
@@ -23,23 +23,22 @@ const mapDispatchToProps = dispatch => ({
   fetchSongs: () => {
     dispatch(fetchSongs());
   },
-  fetchSongsBySingleArtist: (artistId) => {
+  fetchSongsBySingleArtist: artistId => {
     dispatch(fetchSongsBySingleArtist(artistId));
   },
-  deleteSongRequest: (songId) => {
+  deleteSongRequest: songId => {
     dispatch(deleteSongRequest(songId));
   },
-  setOrderLogic: (orderLogic) => {
+  setOrderLogic: orderLogic => {
     dispatch(setOrderLogic(orderLogic));
   },
-  setSongPriority: (songPriority) => {
+  setSongPriority: songPriority => {
     dispatch(setSongPriority(songPriority));
   },
-  setOrderDirection: (ascending) => {
+  setOrderDirection: ascending => {
     dispatch(setOrderDirection(ascending));
   }
 });
-
 
 const SongbookContainer = connect(
   mapStateToProps,

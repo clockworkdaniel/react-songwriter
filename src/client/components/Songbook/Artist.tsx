@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import Artist from "../../types/artist";
 import SongInterface from "../../types/song";
 import Song from "./Song";
+import { OrderLogic } from "../../types/songbook";
 
 interface Props {
   artist: Artist;
@@ -12,7 +13,7 @@ interface Props {
   // dunno if implemented yet
   deleteSongRequest?: Function;
   // change
-  orderLogic: string;
+  orderLogic: OrderLogic;
   songPriority: boolean;
 }
 

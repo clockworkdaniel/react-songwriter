@@ -11,7 +11,7 @@ export interface SignUpFormValues {
   };
 }
 
-export interface SignInFormValues {
+export interface signInForm {
   usernameOrEmail: string;
   password: string;
   error: {
@@ -28,5 +28,5 @@ export default interface SignInState {
   // change
   currentForm: string;
   signUpFormValues: SignUpFormValues;
-  signInFormValues: SignInFormValues;
+  signInForm: signInForm;
 }

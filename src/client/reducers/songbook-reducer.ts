@@ -19,6 +19,7 @@ import {
 } from "../actions/Songbook/songbook-actions";
 import { SongbookUiState } from "../components/Songbook/Songbook";
 import Artist from "../types/artist";
+import { OrderLogic } from "../types/songbook";
 
 interface SongbookState {
   artistSongList: Artist[];
@@ -32,7 +33,7 @@ const intialState = {
   orderedArtistSongList: [],
   songTitle: "",
   uiState: {
-    orderLogic: "modified",
+    orderLogic: OrderLogic.Modified,
     songPriority: false,
     isAscending: false,
     currentlyFetching: false
@@ -52,7 +53,7 @@ const songbookReducer: LoopReducer<SongbookState, any> = (
     isAscending = uiState.isAscending
   }) {
     switch (orderLogic) {
-      case "alphabetically":
+      case OrderLogic.Alphabetical:
         if (!songPriority) {
           return sortAlphabetically(artistSongList, "name", isAscending);
         }
@@ -61,19 +62,19 @@ const songbookReducer: LoopReducer<SongbookState, any> = (
           "title",
           isAscending
         );
-      case "modified":
+      case OrderLogic.Modified:
         if (!songPriority) {
-          return sortByDate(artistSongList, "modified", isAscending);
+          return sortByDate(artistSongList, OrderLogic.Modified, isAscending);
         }
         return sortByDate(
           toSongPriority(artistSongList),
-          "modified",
+          OrderLogic.Modified,
           isAscending
         );
-      case "created":
+      case OrderLogic.Created:
         return sortByDate(
           toSongPriority(artistSongList),
-          "created",
+          OrderLogic.Created,
           isAscending
         );
       default:

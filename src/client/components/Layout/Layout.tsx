@@ -1,11 +1,12 @@
 import * as React from "react";
 
-import { Router, Route, Link } from "react-router-dom";
+import { Router, Route } from "react-router-dom";
 
 import { getCookie } from "../../functions/cookie";
 
 import history from "../../history";
 import EditModal, { EditModalUiState } from "../EditModal/EditModal";
+import Header from "./Header";
 import SongbookContainer from "../Songbook/SongbookContainer";
 import SongsheetContainer from "../Songsheet/SongsheetContainer";
 import SignIn from "../SignIn/SignIn";
@@ -13,12 +14,12 @@ import SignInState from "../../types/signInState";
 import { ActionCreator } from "redux";
 
 // refactor
-interface StateProps {
+type StateProps = {
   editModalState: EditModalUiState;
   signInState: SignInState;
-}
+};
 
-interface DispatchProps {
+type DispatchProps = {
   updateEditableText(udatedText: string): void;
   commitTextChange(object: {
     committedText: string;
@@ -41,7 +42,7 @@ interface DispatchProps {
   setSignUpStage(stage: number): void;
   // this should probably be happening serverside?!
   checkForUserDuplication(username: string, email: string): void;
-}
+};
 
 export default class Layout extends React.Component<
   StateProps & DispatchProps,
@@ -60,104 +61,57 @@ export default class Layout extends React.Component<
 
   render() {
     const {
-      editModalState,
-      updateEditableText,
+      checkForUserDuplication,
       commitTextChange,
-      signInState,
-      showSignIn,
-      showSignUp,
-      hideSignInSignUp,
-      signInRequest,
-      updateInputValue,
       createUser,
-      signOutRequest,
+      editModalState,
+      hideSignInSignUp,
       setError,
       setSignUpStage,
-      checkForUserDuplication
+      showSignIn,
+      showSignUp,
+      signInRequest,
+      signInState: {
+        isSignedIn,
+        signInForm,
+        signInShown,
+        signUpFormValues,
+        signUpShown
+      },
+      signOutRequest,
+      updateEditableText,
+      updateInputValue
     } = this.props;
 
     return (
       <Router history={history}>
         <div className="layout">
           <EditModal
+            commitTextChange={commitTextChange}
             editModalState={editModalState}
             updateEditableText={updateEditableText}
-            commitTextChange={commitTextChange}
           />
-
           <SignIn
-            signInShown={signInState.signInShown}
-            signUpShown={signInState.signUpShown}
-            signInFormValues={signInState.signInFormValues}
-            signUpFormValues={signInState.signUpFormValues}
-            showSignIn={showSignIn}
-            showSignUp={showSignUp}
-            hideSignInSignUp={hideSignInSignUp}
-            updateInputValue={updateInputValue}
-            signInRequest={signInRequest}
+            checkForUserDuplication={checkForUserDuplication}
             createUser={createUser}
+            hideSignInSignUp={hideSignInSignUp}
             setError={setError}
             setSignUpStage={setSignUpStage}
-            checkForUserDuplication={checkForUserDuplication}
+            showSignIn={showSignIn}
+            showSignUp={showSignUp}
+            signInForm={signInForm}
+            signInRequest={signInRequest}
+            signInShown={signInShown}
+            signUpFormValues={signUpFormValues}
+            signUpShown={signUpShown}
+            updateInputValue={updateInputValue}
           />
-
-          <header className="layout__header">
-            <nav className="header">
-              <ul className="header__nav-list">
-                <li className="header__li--title">
-                  <Link to="/">
-                    <h1 className="header__title">Songbird</h1>
-                  </Link>
-                </li>
-                {signInState.isSignedIn && (
-                  <li className="header__li">
-                    <button
-                      className="songbook__new-song"
-                      type="button"
-                      onClick={this.handleNewSongModal}
-                    >
-                      New Song
-                    </button>
-                  </li>
-                )}
-                <li className="header__li">
-                  <button className="header__link" type="button">
-                    Search
-                  </button>
-                </li>
-                {signInState.isSignedIn && (
-                  <li className="header__li">
-                    <button className="header__link" type="button">
-                      Settings
-                    </button>
-                  </li>
-                )}
-                {signInState.isSignedIn && (
-                  <li className="header__li">
-                    <button
-                      className="header__link"
-                      type="button"
-                      onClick={signOutRequest}
-                    >
-                      Sign out
-                    </button>
-                  </li>
-                )}
-                {!signInState.isSignedIn && (
-                  <li className="header__li">
-                    <button
-                      className="header__link"
-                      type="button"
-                      onClick={showSignIn}
-                    >
-                      Sign in
-                    </button>
-                  </li>
-                )}
-              </ul>
-            </nav>
-          </header>
-
+          <Header
+            handleNewSongModal={this.handleNewSongModal}
+            isSignedIn={isSignedIn}
+            showSignIn={showSignIn}
+            signOutRequest={signOutRequest}
+          />
           <section className="layout__content">
             <Route exact path="/" component={SongbookContainer} />
             <Route path="/artist/:id" component={SongbookContainer} />
