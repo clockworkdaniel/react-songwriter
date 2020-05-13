@@ -4,7 +4,7 @@ import { ISong } from "./song";
 export interface IArtist extends mongoose.Document {
   name: string;
   songs: mongoose.Types.Array<ISong>;
-  modified: number; // check
+  modified: number;
 }
 
 const artistSchema = new mongoose.Schema({

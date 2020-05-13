@@ -1,10 +1,10 @@
 import * as React from "react";
-import niceDate from "../../functions/niceDate";
+import niceDate from "../../util/niceDate";
 
-interface Props {
+type Props = {
   label: string;
   date?: string;
-}
+};
 
 export default function SongDate({ label, date }: Props) {
   const formattedDate = niceDate(date);

@@ -2,44 +2,45 @@ import * as React from "react";
 import { RouteComponentProps } from "react-router";
 
 import SignInState from "../../types/signInState";
-import Artist from "./Artist";
 import Song from "./Song";
 import UIControls from "./UIControls/UIControls";
 import { OrderLogic } from "../../types/songbook";
+import SongListByArtist from "./SongListByArtist";
+import Artist from "../../types/artist";
+import SongInterface from "../../types/song";
 
-interface DispatchProps {
+export type DispatchProps = {
   fetchSongs(): void;
   fetchSongsBySingleArtist(artistId: string): void;
   deleteSongRequest(songId: string): void;
   setOrderLogic(orderLogic: OrderLogic): void;
-  setSongPriority(songPriority: boolean): void;
+  setIsSongPriority(isSongPriority: boolean): void;
   setOrderDirection(ascending: boolean): void;
-}
+};
 
-export interface SongbookUiState {
+export type SongbookUiState = {
   orderLogic: OrderLogic;
-  songPriority: boolean;
+  isSongPriority: boolean;
   isAscending: boolean;
   currentlyFetching: boolean;
-}
+};
 
-interface StateProps {
-  // fix
-  artistSongList: Array<any>;
-  orderedArtistSongList: Array<any>;
+export type StateProps = {
+  orderedSongsByArtist?: Artist[];
+  orderedSongsBySong?: SongInterface[];
   newSong: any;
   uiState: SongbookUiState;
   signInState: SignInState;
-}
+};
 
 const matchesArtistUrlTest = match => !!match.url.includes("/artist/");
 
 export default class Songbook extends React.Component<
-  DispatchProps & StateProps & RouteComponentProps,
+  DispatchProps & StateProps & RouteComponentProps<{ id: string }>,
   {}
 > {
   componentDidMount() {
-    this.dictateFetchType();
+    this.intialise();
   }
 
   componentDidUpdate(prevProps) {
@@ -47,25 +48,24 @@ export default class Songbook extends React.Component<
       signInState: { isSignedIn }
     } = this.props;
     if (isSignedIn !== prevProps.signInState.isSignedIn) {
-      this.dictateFetchType();
+      this.intialise();
     }
   }
 
-  dictateFetchType() {
+  intialise() {
     const {
       fetchSongs,
       fetchSongsBySingleArtist,
       match,
-      setSongPriority,
+      setIsSongPriority,
       setOrderLogic,
       uiState: { orderLogic }
     } = this.props;
 
+    setIsSongPriority(false);
     if (matchesArtistUrlTest(match)) {
-      setSongPriority(true); // defaults to artist priority
-      fetchSongsBySingleArtist("test");
+      fetchSongsBySingleArtist(match.params.id);
     } else {
-      setSongPriority(false); // defaults to song priority
       orderLogic === OrderLogic.Created && setOrderLogic(OrderLogic.Modified);
       fetchSongs();
     }
@@ -73,82 +73,51 @@ export default class Songbook extends React.Component<
 
   render() {
     const {
-      artistSongList,
-      orderedArtistSongList,
       deleteSongRequest,
-      uiState: { isAscending, songPriority, orderLogic },
-      setOrderLogic,
-      setSongPriority,
+      orderedSongsByArtist,
+      orderedSongsBySong,
+      setIsSongPriority,
       setOrderDirection,
+      setOrderLogic,
+      uiState: { isAscending, isSongPriority, orderLogic },
       match
     } = this.props;
 
     const matchesArtistUrl = matchesArtistUrlTest(match);
-
-    const artistListJsx = () => {
-      if (!matchesArtistUrl) {
-        return (
-          <ul className="songbook__artist-list">
-            {orderedArtistSongList &&
-              orderedArtistSongList.map(artist => (
-                <Artist
-                  key={artist._id}
-                  artist={artist}
-                  matchesArtistUrl={matchesArtistUrl}
-                  orderLogic={orderLogic}
-                  songPriority={songPriority}
-                  // deleteSongRequest={deleteSongRequest}
-                />
-              ))}
-          </ul>
-        );
-      }
-      return (
-        <ul className="songbook__artist-list">
-          {/* hmmm don't like that naming */}
-          {artistSongList.length && !!orderedArtistSongList.length ? (
-            <Artist
-              key={artistSongList[0]._id}
-              artist={artistSongList[0]}
-              songs={orderedArtistSongList}
-              matchesArtistUrl={matchesArtistUrl}
-              orderLogic={orderLogic}
-              songPriority={songPriority}
-              // deleteSongRequest={deleteSongRequest}
-            />
-          ) : null}
-        </ul>
-      );
-    };
 
     return (
       <div className="songbook">
         <UIControls
           matchesArtistUrl={matchesArtistUrl}
           orderLogic={orderLogic}
-          songPriority={songPriority}
+          isSongPriority={isSongPriority}
           isAscending={isAscending}
           setOrderLogic={setOrderLogic}
-          setSongPriority={setSongPriority}
+          setIsSongPriority={setIsSongPriority}
           setOrderDirection={setOrderDirection}
         />
-        {artistSongList &&
-        orderedArtistSongList &&
-        (!songPriority || matchesArtistUrl) ? (
-          artistListJsx()
+        {!isSongPriority && !matchesArtistUrl && orderedSongsByArtist ? (
+          <SongListByArtist
+            matchesArtistUrl={matchesArtistUrl}
+            orderLogic={orderLogic}
+            isSongPriority={isSongPriority}
+            orderedSongsByArtist={orderedSongsByArtist}
+          />
         ) : (
           <ul className="songbook__song-list">
-            {orderedArtistSongList.map(song => (
-              <Song
-                key={song._id}
-                song={song}
-                artistName={song.artist.name}
-                orderLogic={orderLogic}
-                // don't this we are using this yet
-                // deleteSongRequest={deleteSongRequest}
-                songPriority={songPriority}
-              />
-            ))}
+            {orderedSongsBySong &&
+              orderedSongsBySong.map(song => (
+                <Song
+                  key={song._id}
+                  song={song}
+                  // tslint ignore0nex
+                  artistName={song.artist ? song.artist.name : undefined}
+                  orderLogic={orderLogic}
+                  // don't this we are using this yet
+                  // deleteSongRequest={deleteSongRequest}
+                  showArtistName={!matchesArtistUrl}
+                />
+              ))}
           </ul>
         )}
       </div>

@@ -2,14 +2,28 @@ import { Schema, Document, model } from "mongoose";
 import { IArtist } from "./artist";
 import { IUser } from "./user";
 
+interface ICharacter {
+  character: string;
+  chord: string;
+}
+
+interface ILine {
+  fullLine: string;
+  characters: ICharacter[];
+}
+
+interface ISection {
+  sectionName: string;
+  lines: ILine[];
+}
+
 export interface ISong extends Document {
   title: string;
   artist?: IArtist;
-  // fix
-  structure: Array<unknown>;
+  structure: ISection[];
   user: IUser;
-  created: number; // check
-  modified: number; // check
+  created: number;
+  modified: number;
   isPublic: boolean;
 }
 

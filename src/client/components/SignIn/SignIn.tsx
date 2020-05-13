@@ -3,7 +3,7 @@ import SignUpForm from "./SignUpForm";
 import SignInForm from "./SignInForm";
 import SignInState from "../../types/signInState";
 
-interface Props extends Omit<SignInState, "isSignedIn" | "currentForm"> {
+type Props = {
   showSignIn(): void;
   showSignUp(): void;
   hideSignInSignUp(): void;
@@ -16,7 +16,7 @@ interface Props extends Omit<SignInState, "isSignedIn" | "currentForm"> {
   setSignUpStage(stage: number): void;
   // this should probably be happening serverside?!
   checkForUserDuplication(username: string, email: string): void;
-}
+} & Omit<SignInState, "isSignedIn" | "currentForm">;
 
 export default function SignIn({
   checkForUserDuplication,

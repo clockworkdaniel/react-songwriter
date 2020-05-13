@@ -2,7 +2,7 @@ import * as React from "react";
 
 import { Router, Route } from "react-router-dom";
 
-import { getCookie } from "../../functions/cookie";
+import { getCookie } from "../../util/cookie";
 
 import history from "../../history";
 import EditModal, { EditModalUiState } from "../EditModal/EditModal";

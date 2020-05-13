@@ -1,6 +1,6 @@
 import * as React from "react";
 
-interface OwnProps {
+type Props = {
   field: string;
   updateInputValue(form: string, name: string, value: string);
   // fix
@@ -11,9 +11,9 @@ interface OwnProps {
   // change this to input type values type
   type: string;
   formKey: string;
-}
+};
 
-export default class InputGroup extends React.Component<OwnProps, {}> {
+export default class InputGroup extends React.Component<Props, {}> {
   handleFieldChange = event => {
     const {
       field,

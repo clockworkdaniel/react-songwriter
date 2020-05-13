@@ -1,26 +1,26 @@
 import * as React from "react";
 import { OrderLogic } from "../../../types/songbook";
 
-interface Props {
+type Props = {
   matchesArtistUrl: boolean;
   orderLogic: string;
-  songPriority: boolean;
-  setSongPriority: Function;
+  isSongPriority: boolean;
+  setIsSongPriority: Function;
   setOrderLogic: Function;
   setOrderDirection: Function;
   isAscending: boolean;
-}
+};
 
 export default class UIControls extends React.Component<Props> {
   handleAuthSongPrefChange = event => {
-    const { setSongPriority, orderLogic, setOrderLogic } = this.props;
+    const { setIsSongPriority, orderLogic, setOrderLogic } = this.props;
     if (event.target.value === "artist") {
-      setSongPriority(false);
+      setIsSongPriority(false);
       if (orderLogic === OrderLogic.Created) {
         setOrderLogic(OrderLogic.Modified);
       }
     } else {
-      setSongPriority(true);
+      setIsSongPriority(true);
     }
   };
 
@@ -43,7 +43,7 @@ export default class UIControls extends React.Component<Props> {
     const {
       matchesArtistUrl,
       orderLogic,
-      songPriority,
+      isSongPriority,
       isAscending
     } = this.props;
 
@@ -57,7 +57,7 @@ export default class UIControls extends React.Component<Props> {
               <p>Order:</p>
               <div className="select-container book-controls__select-container">
                 <select
-                  value={songPriority ? "song" : "artist"}
+                  value={isSongPriority ? "song" : "artist"}
                   onChange={this.handleAuthSongPrefChange}
                 >
                   <option value="artist">Artists</option>
@@ -78,7 +78,7 @@ export default class UIControls extends React.Component<Props> {
             value="alphabetical"
             onClick={this.handleOrderLogicChange}
           >
-            alphabetical
+            Alphabetical
           </button>
           <button
             className="book-controls__ordering-btn"
@@ -88,7 +88,7 @@ export default class UIControls extends React.Component<Props> {
           >
             Modified
           </button>
-          {songPriority && (
+          {isSongPriority && (
             <button
               className="book-controls__ordering-btn"
               type="button"

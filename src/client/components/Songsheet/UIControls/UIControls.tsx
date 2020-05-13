@@ -1,14 +1,14 @@
 import * as React from "react";
 import Song from "../../../types/song";
+import { PaintSpecificity } from "../../../types/songsheet";
 
 interface Props {
   chordMode: boolean;
   switchMode(): void;
   chordToPaint: string;
   updateChordToPaint(chord: string): void;
-  // change to enum
-  paintSpecificity: string;
-  updatePaintSpecificity(specificity: string): void;
+  paintSpecificity: PaintSpecificity;
+  updatePaintSpecificity(specificity: PaintSpecificity): void;
   song: Song;
   saveSongRequest(_id: string, song: Song): void;
   songSaved: boolean;

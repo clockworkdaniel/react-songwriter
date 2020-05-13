@@ -1,0 +1,7 @@
+☐ On single artist page ensure that order logic applies to songs not artists
+Typescript:
+  ☐ seperate actions from action creators
+  
+Modal:
+  ☐ Investigate working
+  ☐ Fix typing or aim for new implementation

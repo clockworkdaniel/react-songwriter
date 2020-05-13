@@ -1,5 +1,6 @@
 import Song from "../types/song";
 import Artist from "../types/artist";
+import { OrderLogic } from "../types/songbook";
 
 export function sortAlphabetically(array, propToSortBy, isAscending) {
   const sortedArray = array.sort((a, b) => {
@@ -19,18 +20,19 @@ export function sortAlphabetically(array, propToSortBy, isAscending) {
 
 export function sortByDate(
   array: Song[] | Artist[],
-  dateToSortBy: "modified" | "created",
+  dateToSortBy: OrderLogic.Modified | OrderLogic.Created,
   isAscending: boolean
 ) {
   const sortedArray = array.sort((a, b) => {
-    // definitely wrong
     if (!a[dateToSortBy] || !b[dateToSortBy]) {
       return 1;
     }
-    return Number(a[dateToSortBy]) - Number(b[dateToSortBy]);
+    return (
+      new Date(a[dateToSortBy]).getTime() - new Date(b[dateToSortBy]).getTime()
+    );
   });
 
-  return isAscending ? sortedArray : sortedArray.reverse();
+  return isAscending ? sortedArray.reverse() : sortedArray;
 }
 
 export function toSongPriority(array) {

@@ -5,21 +5,21 @@ import {
   fetchSongsBySingleArtist,
   deleteSongRequest,
   setOrderLogic,
-  setSongPriority,
+  setIsSongPriority,
   setOrderDirection
 } from "../../actions/Songbook/songbook-actions";
 
-import Songbook from "./Songbook";
+import Songbook, { StateProps, DispatchProps } from "./Songbook";
 
-const mapStateToProps = state => ({
-  artistSongList: state.songbookState.artistSongList,
-  orderedArtistSongList: state.songbookState.orderedArtistSongList,
+const mapStateToProps = (state): StateProps => ({
   newSong: state.songbookState.newSong,
-  uiState: state.songbookState.uiState,
-  signInState: state.layoutState.signIn
+  orderedSongsByArtist: state.songbookState.orderedSongsByArtist,
+  orderedSongsBySong: state.songbookState.orderedSongsBySong,
+  signInState: state.layoutState.signIn,
+  uiState: state.songbookState.uiState
 });
 
-const mapDispatchToProps = dispatch => ({
+const mapDispatchToProps = (dispatch): DispatchProps => ({
   fetchSongs: () => {
     dispatch(fetchSongs());
   },
@@ -32,8 +32,8 @@ const mapDispatchToProps = dispatch => ({
   setOrderLogic: orderLogic => {
     dispatch(setOrderLogic(orderLogic));
   },
-  setSongPriority: songPriority => {
-    dispatch(setSongPriority(songPriority));
+  setIsSongPriority: isSongPriority => {
+    dispatch(setIsSongPriority(isSongPriority));
   },
   setOrderDirection: ascending => {
     dispatch(setOrderDirection(ascending));

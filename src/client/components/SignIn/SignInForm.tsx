@@ -3,14 +3,14 @@ import * as React from "react";
 import { signInForm } from "../../types/signInState";
 import InputGroup from "./InputGroup";
 
-interface Props {
+type Props = {
   signInForm: signInForm;
   updateInputValue(form: string, name: string, value: string): void;
   showSignUp(): void;
   signInRequest(usernameOrEmail: string, password: string): void;
   // need info
   setError(errorObj: any): void;
-}
+};
 
 export default class SignInForm extends React.Component<Props, {}> {
   private form = React.createRef<HTMLFormElement>();

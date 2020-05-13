@@ -1,5 +1,6 @@
 import * as React from "react";
 import { Link } from "react-router-dom";
+import HeaderLink from "./HeaderLink";
 
 type Props = {
   isSignedIn: boolean;
@@ -24,49 +25,16 @@ export default function Header({
             </Link>
           </li>
           {isSignedIn && (
-            <li className="header__li">
-              <button
-                className="songbook__new-song"
-                type="button"
-                onClick={handleNewSongModal}
-              >
-                New Song
-              </button>
-            </li>
+            <HeaderLink label={"New Song"} onClick={handleNewSongModal} />
           )}
-          <li className="header__li">
-            <button className="header__link" type="button">
-              Search
-            </button>
-          </li>
-          {isSignedIn && (
-            <li className="header__li">
-              <button className="header__link" type="button">
-                Settings
-              </button>
-            </li>
-          )}
-          {isSignedIn && (
-            <li className="header__li">
-              <button
-                className="header__link"
-                type="button"
-                onClick={signOutRequest}
-              >
-                Sign out
-              </button>
-            </li>
-          )}
-          {!isSignedIn && (
-            <li className="header__li">
-              <button
-                className="header__link"
-                type="button"
-                onClick={showSignIn}
-              >
-                Sign in
-              </button>
-            </li>
+          <HeaderLink label={"Search"} />
+          {isSignedIn ? (
+            <>
+              <HeaderLink label={"Settings"} />
+              <HeaderLink label={"Sign out"} onClick={signOutRequest} />
+            </>
+          ) : (
+            <HeaderLink label={"Sign in"} onClick={showSignIn} />
           )}
         </ul>
       </nav>

@@ -15,7 +15,7 @@ function validatePasswordsMatch(password, passwordConfirm) {
   return password === passwordConfirm;
 }
 
-interface Props {
+type Props = {
   signUpFormValues: SignUpFormValues;
   createUser(username: string, email: string, password: string): void;
   // need info
@@ -24,7 +24,7 @@ interface Props {
   showSignIn(): void;
   setSignUpStage(stage: number): void;
   updateInputValue(form: string, name: string, value: string): void;
-}
+};
 
 export default class SignUpForm extends React.Component<Props> {
   private form = React.createRef<HTMLFormElement>();

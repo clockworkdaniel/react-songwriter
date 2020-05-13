@@ -1,10 +1,5 @@
 import { loop, Cmd, LoopReducer } from "redux-loop";
 
-import {
-  sortAlphabetically,
-  sortByDate,
-  toSongPriority
-} from "../functions/arrayStuff";
 import callApi from "../util/callApi";
 import history from "../history";
 import { editModalTrigger } from "../actions/Layout/edit-modal-actions";
@@ -15,26 +10,31 @@ import {
   fetchSongsSuccess,
   deleteSongSuccess,
   newSongModalProceed,
-  newSongModalSequenceComplete
+  newSongModalSequenceComplete,
+  fetchSongsBySingleArtistSuccess
 } from "../actions/Songbook/songbook-actions";
 import { SongbookUiState } from "../components/Songbook/Songbook";
 import Artist from "../types/artist";
 import { OrderLogic } from "../types/songbook";
+import orderSongs from "../util/orderSongs";
+import Song from "../types/song";
 
 interface SongbookState {
-  artistSongList: Artist[];
-  orderedArtistSongList: string[];
+  songsByArtist: Artist[];
+  orderedSongsByArtist: Artist[];
+  orderedSongsBySong: Song[];
   songTitle: string;
   uiState: SongbookUiState;
 }
 
 const intialState = {
-  artistSongList: [],
-  orderedArtistSongList: [],
+  songsByArtist: [],
+  orderedSongsByArtist: [],
+  orderedSongsBySong: [],
   songTitle: "",
   uiState: {
     orderLogic: OrderLogic.Modified,
-    songPriority: false,
+    isSongPriority: false,
     isAscending: false,
     currentlyFetching: false
   }
@@ -44,45 +44,12 @@ const songbookReducer: LoopReducer<SongbookState, any> = (
   state = intialState,
   action
 ) => {
-  const { uiState } = state;
-
-  function orderArtistSongList({
-    artistSongList = state.artistSongList,
-    songPriority = uiState.songPriority,
-    orderLogic = uiState.orderLogic,
-    isAscending = uiState.isAscending
-  }) {
-    switch (orderLogic) {
-      case OrderLogic.Alphabetical:
-        if (!songPriority) {
-          return sortAlphabetically(artistSongList, "name", isAscending);
-        }
-        return sortAlphabetically(
-          toSongPriority(artistSongList),
-          "title",
-          isAscending
-        );
-      case OrderLogic.Modified:
-        if (!songPriority) {
-          return sortByDate(artistSongList, OrderLogic.Modified, isAscending);
-        }
-        return sortByDate(
-          toSongPriority(artistSongList),
-          OrderLogic.Modified,
-          isAscending
-        );
-      case OrderLogic.Created:
-        return sortByDate(
-          toSongPriority(artistSongList),
-          OrderLogic.Created,
-          isAscending
-        );
-      default:
-        break;
-    }
-  }
-
-  let songListWithSongRemoved; // only comes into play on song removal
+  const existingParams = {
+    songsByArtist: state.songsByArtist,
+    orderLogic: state.uiState.orderLogic,
+    isAscending: state.uiState.isAscending,
+    isSongPriority: state.uiState.isSongPriority
+  };
 
   switch (action.type) {
     case "FETCH_SONGS": {
@@ -95,32 +62,44 @@ const songbookReducer: LoopReducer<SongbookState, any> = (
       );
     }
 
+    case "FETCH_SONGS_SUCCESS": {
+      return {
+        ...state,
+        songsByArtist: action.res.artists,
+        ...orderSongs({ ...existingParams, songsByArtist: action.res.artists })
+      };
+    }
+
     case "FETCH_SONGS_BY_SINGLE_ARTIST": {
       return loop(
         state,
         Cmd.run(callApi, {
           args: [`artist/${action.artistId}`],
-          successActionCreator: fetchSongsSuccess
+          successActionCreator: fetchSongsBySingleArtistSuccess
         })
       );
     }
 
-    case "FETCH_SONGS_SUCCESS": {
+    case "FETCH_SONGS_BY_SINGLE_ARTIST_SUCCESS": {
       return {
         ...state,
-        artistSongList: action.res.artists,
-        orderedArtistSongList: orderArtistSongList({
-          artistSongList: action.res.artists
-        })
+        songsByArtist: action.res.artists,
+        ...orderSongs({
+          ...existingParams,
+          songsByArtist: action.res.artists,
+          isSongPriority: true
+        }),
+        uiState: {
+          ...state.uiState,
+          isSongPriority: true
+        }
       };
     }
 
     case "SET_ORDER_LOGIC": {
       return {
         ...state,
-        orderedArtistSongList: orderArtistSongList({
-          orderLogic: action.orderLogic
-        }),
+        ...orderSongs({ ...existingParams, orderLogic: action.orderLogic }),
         uiState: {
           ...state.uiState,
           orderLogic: action.orderLogic
@@ -131,12 +110,13 @@ const songbookReducer: LoopReducer<SongbookState, any> = (
     case "SET_SONG_PRIORITY": {
       return {
         ...state,
-        orderedArtistSongList: orderArtistSongList({
-          songPriority: action.songPriority
+        ...orderSongs({
+          ...existingParams,
+          isSongPriority: action.isSongPriority
         }),
         uiState: {
           ...state.uiState,
-          songPriority: action.songPriority
+          isSongPriority: action.isSongPriority
         }
       };
     }
@@ -144,9 +124,7 @@ const songbookReducer: LoopReducer<SongbookState, any> = (
     case "SET_ORDER_DIRECTION": {
       return {
         ...state,
-        orderedArtistSongList: orderArtistSongList({
-          isAscending: action.isAscending
-        }),
+        ...orderSongs({ ...existingParams, isAscending: action.isAscending }),
         uiState: {
           ...state.uiState,
           isAscending: action.isAscending
@@ -187,7 +165,7 @@ const songbookReducer: LoopReducer<SongbookState, any> = (
     }
 
     case "DELETE_SONG_SUCCESS": {
-      songListWithSongRemoved = state.artistSongList.map(artist => {
+      const songsWithSongRemoved = state.songsByArtist.map(artist => {
         artist.songs = artist.songs.filter(
           song => song._id !== action.res.songId
         );
@@ -195,9 +173,10 @@ const songbookReducer: LoopReducer<SongbookState, any> = (
       });
       return {
         ...state,
-        artistSongList: songListWithSongRemoved,
-        orderedArtistSongList: orderArtistSongList({
-          artistSongList: songListWithSongRemoved
+        songsByArtist: songsWithSongRemoved,
+        ...orderSongs({
+          ...existingParams,
+          songsByArtist: songsWithSongRemoved
         })
       };
     }

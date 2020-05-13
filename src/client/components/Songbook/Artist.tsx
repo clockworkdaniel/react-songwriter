@@ -2,26 +2,23 @@ import * as React from "react";
 import { Link } from "react-router-dom";
 
 import Artist from "../../types/artist";
-import SongInterface from "../../types/song";
 import Song from "./Song";
 import { OrderLogic } from "../../types/songbook";
 
-interface Props {
+type Props = {
   artist: Artist;
-  songs?: SongInterface[];
   matchesArtistUrl: boolean;
   // dunno if implemented yet
   deleteSongRequest?: Function;
-  // change
   orderLogic: OrderLogic;
-  songPriority: boolean;
-}
+  isSongPriority: boolean;
+};
 
 export default function Artist({
   artist: { _id, name, songs },
   matchesArtistUrl,
   orderLogic,
-  songPriority
+  isSongPriority
 }: Props) {
   if (!matchesArtistUrl) {
     songs = songs.slice(0, 3);
@@ -41,7 +38,6 @@ export default function Artist({
               artistName={name}
               // deleteSongRequest={deleteSongRequest}
               orderLogic={orderLogic}
-              songPriority={songPriority}
             />
           ))}
       </ul>

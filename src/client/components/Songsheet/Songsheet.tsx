@@ -10,6 +10,7 @@ import { SongsheetUiState } from "../../reducers/songsheet-reducer";
 import { RouteComponentProps } from "react-router-dom";
 import Song from "../../types/song";
 import SignInState from "../../types/signInState";
+import { PaintSpecificity } from "../../types/songsheet";
 
 type StateProps = {
   uiState: SongsheetUiState;
@@ -21,8 +22,7 @@ type DispatchProps = {
   uiHandlers: {
     switchMode(): void;
     updateChordToPaint(newChord: string): void;
-    // change to enum
-    updatePaintSpecificity(newSpecificity: string): void;
+    updatePaintSpecificity(newSpecificity: PaintSpecificity): void;
     saveSongRequest(songId: string, song: Song): void;
     resetSongSaved(): void;
   };
@@ -41,10 +41,8 @@ type DispatchProps = {
   switchPrivacyRequest(songId: string): void;
 };
 
-type TParams = { id: string };
-
 export default class Songsheet extends React.Component<
-  StateProps & DispatchProps & RouteComponentProps<TParams>,
+  StateProps & DispatchProps & RouteComponentProps<{ id: string }>,
   { isMouseDown: boolean }
 > {
   constructor(props) {

@@ -12,7 +12,6 @@ type Props = {
   // fix
   rename(editableText: string, label: string, path: any): void;
   section: Section;
-  // potentially not correct
   sectionKey: number;
   isMouseDown: boolean;
   isEditable: boolean;

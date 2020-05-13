@@ -5,24 +5,24 @@ import Song from "../../types/song";
 import { OrderLogic } from "../../types/songbook";
 import SongDate from "./SongDate";
 
-interface Props {
+type Props = {
   song: Song;
-  artistName: string;
+  artistName?: string;
   orderLogic: OrderLogic;
-  songPriority: boolean;
-}
+  showArtistName?: boolean;
+};
 
 export default function Song({
   song: { _id, title, created, modified },
   artistName,
   orderLogic,
-  songPriority
+  showArtistName
 }: Props) {
   return (
     <Link to={`/song/${_id}`} title={`${title} by ${artistName}`}>
       <li className="song controls__container">
         <h3 className="song__title">{title}</h3>
-        {songPriority && <h4 className="song__artist-name">{artistName}</h4>}
+        {showArtistName && <h4 className="song__artist-name">{artistName}</h4>}
         {orderLogic === "created" ? (
           <SongDate label={"Created"} date={created} />
         ) : (

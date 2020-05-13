@@ -18,7 +18,7 @@ On the front-end, the app currently consists of the following main React compone
 - **SignIn/SignUp**
 
   - Does what it says on the tin, working front-end and back-end validation
-  - Creates a session on the backend authorises API respuests
+  - Creates a session on the backend authorises API requests
 
 - **Songbook** (where users browse their/other's songs)
 

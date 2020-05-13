@@ -1,8 +1,8 @@
 import update from "immutability-helper";
 import { loop, Cmd, Loop, LoopReducer } from "redux-loop";
 
-import breakDownLine from "../functions/breakDownLine";
-import lastChord from "../functions/lastChord";
+import breakDownLine from "../util/breakDownLine";
+import lastChord from "../util/lastChord";
 import callApi from "../util/callApi";
 import {
   fetchSongSuccess,
@@ -12,12 +12,12 @@ import {
 } from "../actions/Songsheet/songsheet-actions";
 import { editModalTrigger } from "../actions/Layout/edit-modal-actions";
 import Song from "../types/song";
+import { PaintSpecificity } from "../types/songsheet";
 
 export interface SongsheetUiState {
   chordMode: boolean;
   chordToPaint: string;
-  // change to enum
-  paintSpecificity: string;
+  paintSpecificity: PaintSpecificity;
   caretPosition: number;
   lineFocused: number;
   sectionFocused: number;
@@ -30,7 +30,7 @@ export const initialState = {
   uiState: {
     chordMode: false,
     chordToPaint: "E",
-    paintSpecificity: "word",
+    paintSpecificity: PaintSpecificity.Word,
     caretPosition: 0,
     lineFocused: 0,
     sectionFocused: 0,
@@ -134,14 +134,13 @@ const songsheetReducer: LoopReducer<SongsheetState, any> = (
           state.song.structure[action.sectionKey].lines[action.lineKey]
         )
       );
-
       // change chord on per character basis
-      if (state.uiState.paintSpecificity === "character") {
+      if (state.uiState.paintSpecificity === PaintSpecificity.Character) {
         lineCopy.characters[action.characterKey].chord =
           state.uiState.chordToPaint;
       }
       // change chord on per word basis
-      else if (state.uiState.paintSpecificity === "word") {
+      else if (state.uiState.paintSpecificity === PaintSpecificity.Word) {
         // assign this character and previous characters in word to given chord
         for (
           let i = action.characterKey;
@@ -161,7 +160,7 @@ const songsheetReducer: LoopReducer<SongsheetState, any> = (
         }
       }
       // change chord on per line basis
-      else if (state.uiState.paintSpecificity === "line") {
+      else if (state.uiState.paintSpecificity === PaintSpecificity.Line) {
         lineCopy.characters.map(character => {
           character.chord = state.uiState.chordToPaint;
         });

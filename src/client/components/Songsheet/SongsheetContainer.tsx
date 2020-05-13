@@ -1,4 +1,4 @@
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
 import {
   deleteSection,
@@ -14,9 +14,10 @@ import {
   resetSongSaved,
   switchPrivacyRequest,
   newSection
-} from '../../actions/Songsheet/songsheet-actions';
+} from "../../actions/Songsheet/songsheet-actions";
 
-import Songsheet from './Songsheet';
+import Songsheet from "./Songsheet";
+import { PaintSpecificity } from "../../types/songsheet";
 
 const mapStateToProps = state => ({
   uiState: state.songsheetState.uiState,
@@ -29,10 +30,10 @@ const mapDispatchToProps = dispatch => ({
     switchMode: () => {
       dispatch(switchMode());
     },
-    updateChordToPaint: (newChord) => {
+    updateChordToPaint: newChord => {
       dispatch(updateChordToPaint(newChord));
     },
-    updatePaintSpecificity: (newSpecificity) => {
+    updatePaintSpecificity: (newSpecificity: PaintSpecificity) => {
       dispatch(updatePaintSpecificity(newSpecificity));
     },
     saveSongRequest: (songId, song) => {
@@ -45,13 +46,13 @@ const mapDispatchToProps = dispatch => ({
   chord: {
     update: (characterKey, lineKey, sectionKey) => {
       dispatch(updateChord(characterKey, lineKey, sectionKey));
-    },
+    }
   },
   sectionHandlers: {
-    deleteSection: (sectionKey) => {
+    deleteSection: sectionKey => {
       dispatch(deleteSection(sectionKey));
     },
-    duplicateSection: (sectionKey) => {
+    duplicateSection: sectionKey => {
       dispatch(duplicateSection(sectionKey));
     },
     moveSection: (sectionKey, newPosition) => {
@@ -64,10 +65,10 @@ const mapDispatchToProps = dispatch => ({
   rename: (value, userPrompt, pathArray) => {
     dispatch(rename(value, userPrompt, pathArray));
   },
-  fetchSong: (songId) => {
+  fetchSong: songId => {
     dispatch(fetchSong(songId));
   },
-  switchPrivacyRequest: (songId) => {
+  switchPrivacyRequest: songId => {
     dispatch(switchPrivacyRequest(songId));
   }
 });
