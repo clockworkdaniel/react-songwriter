@@ -12,6 +12,7 @@ import SongsheetContainer from "../Songsheet/SongsheetContainer";
 import SignIn from "../SignIn/SignIn";
 import SignInState from "../../types/signInState";
 import { ActionCreator } from "redux";
+import GridDemo from "../GridDemo";
 
 // refactor
 type StateProps = {
@@ -117,6 +118,7 @@ export default class Layout extends React.Component<
             <Route path="/artist/:id" component={SongbookContainer} />
             <Route path="/song/:id" component={SongsheetContainer} />
             {/* <Route exact path="/settings" component={Settings} /> */}
+            <Route path="/grid-demo" component={GridDemo} />
           </section>
         </div>
       </Router>
