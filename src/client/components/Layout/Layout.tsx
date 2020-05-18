@@ -12,7 +12,7 @@ import SongsheetContainer from "../Songsheet/SongsheetContainer";
 import SignIn from "../SignIn/SignIn";
 import SignInState from "../../types/signInState";
 import { ActionCreator } from "redux";
-import GridDemo from "../GridDemo";
+import GridDemo from "../ReactGrid/GridDemo";
 
 // refactor
 type StateProps = {
