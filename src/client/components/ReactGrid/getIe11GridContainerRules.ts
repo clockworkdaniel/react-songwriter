@@ -7,7 +7,7 @@ export function getIe11GridContainerRules(
   const repeatReplaced = lineNamesRemoved.replace(
     /repeat\((\d+),\s(\w+)\)/g,
     (repeat, c, value) => {
-      const count = parseInt(c);
+      const count = Number(c);
 
       let msGridColumns = "";
       for (let i = count; i > 0; i--) {
