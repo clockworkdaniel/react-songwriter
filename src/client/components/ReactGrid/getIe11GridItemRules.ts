@@ -20,19 +20,17 @@ export default function getIe11GridItemRules(
         matches.push(match[1]);
       }
 
-      console.log(matches);
-
       let vertical, firstVertical, horizontal, firstHorizontal;
 
       if (matches.length) {
-        vertical = acc.vertical + 1;
+        vertical = !acc.firstVertical ? acc.vertical + 1 : acc.vertical + 2;
         if (!acc.firstVertical) {
-          firstVertical = index + 1;
+          firstVertical = index * 2 + 1;
         }
       }
 
       if (matches.length && !acc.horizontal) {
-        horizontal = matches.length;
+        horizontal = (matches.length - 1) * 2 + 1;
 
         const matchedRow = row.match(/[^'\s]+/g);
         const matchedRowIndex = matchedRow
@@ -40,7 +38,7 @@ export default function getIe11GridItemRules(
           : undefined;
         firstHorizontal =
           typeof matchedRowIndex !== "undefined"
-            ? matchedRowIndex + 1
+            ? matchedRowIndex * 2 + 1
             : undefined;
       }
 

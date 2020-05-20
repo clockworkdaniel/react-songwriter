@@ -1,22 +1,21 @@
 import { createUseStyles } from "react-jss";
 import * as React from "react";
 
-import { getIe11GridRules } from "./getIe11GridRules";
+import { getGridRules } from "./getGridRules";
 
-// idealy this should be more specific about styles we accept
-// but can't get that to work with typescript :(
-export interface BaseGridStyles {
-  [name: string]: string | number;
-}
-
-// including potential nested media query
-export interface GridStyles {
-  [name: string]: string | number | BaseGridStyles;
-}
+export type GridStyles = {
+  gridGap: string | number;
+  gridTemplateAreas: string;
+  gridTemplateColumns: string;
+  supportIe11?: boolean;
+};
 
 type Props = {
   children: JSX.Element[];
-  gridStyles: GridStyles;
+  gridStyles: GridStyles & {
+    // to allow for media query
+    [key: string]: Partial<GridStyles> | string | number | boolean;
+  };
 };
 
 const ReactGrid: React.FunctionComponent<Props> = ({
@@ -27,43 +26,62 @@ const ReactGrid: React.FunctionComponent<Props> = ({
     return null;
   }
 
-  let mediaQueryStyles = {};
+  // only top level supportIe11 is separated here
+  const { supportIe11, ...rest } = gridStyles;
 
-  for (let [key, value] of Object.entries(gridStyles)) {
+  let mediaQueryStyles = {};
+  let gridMainStyles = {};
+  for (let [key, value] of Object.entries(rest)) {
     if (key.match(/@media/) && typeof value === "object") {
+      const {
+        supportIe11,
+        gridTemplateAreas,
+        gridGap,
+        gridTemplateColumns,
+        ...mediaQueryOtherStyles
+      } = value;
+
       mediaQueryStyles[key] = {
-        ...value,
-        ...getIe11GridRules(
-          value.gridTemplateAreas,
-          // fallback to base gridGap if not specified within this media query
-          // note how this could differ from CSS rule application logic
-          value.gridGap || gridStyles.gridGap,
-          value.gridTemplateColumns,
-          children
-        )
+        reactGrid: {
+          ...mediaQueryOtherStyles,
+          ...getGridRules(
+            children,
+            gridTemplateAreas,
+            gridGap,
+            gridTemplateColumns,
+            supportIe11
+          )
+        }
       };
+    } else {
+      gridMainStyles[key] = value;
     }
   }
 
   const classes = createUseStyles({
     reactGrid: {
-      display: "-ms-grid",
-      ...gridStyles,
-      ...getIe11GridRules(
+      display: supportIe11 ? "-ms-grid" : "grid",
+      // doing this because I'm not sure how to have two display rules otherwise
+      ...(supportIe11
+        ? {
+            ["@supports (display: grid)"]: {
+              display: "grid"
+            }
+          }
+        : {}),
+      ...gridMainStyles,
+      ...getGridRules(
+        children,
         gridStyles.gridTemplateAreas,
         gridStyles.gridGap,
         gridStyles.gridTemplateColumns,
-        children
-      ),
-      // doing this because I'm not sure how to have 2 display rules otherwise
-      ["@supports (display: grid)"]: {
-        display: "grid"
-      },
-      ...mediaQueryStyles
-    }
-  })();
+        supportIe11
+      )
+    },
+    ...mediaQueryStyles
+  });
 
-  return <div className={classes.reactGrid}>{children}</div>;
+  return <div className={classes().reactGrid}>{children}</div>;
 };
 
 export default ReactGrid;

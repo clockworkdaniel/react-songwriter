@@ -1,6 +1,6 @@
 import { LoremIpsum } from "lorem-ipsum";
 import * as React from "react";
-import ReactGrid from "./ReactGrid";
+import ReactGrid, { GridStyles } from "./ReactGrid";
 
 const lorem = new LoremIpsum({
   sentencesPerParagraph: {
@@ -19,11 +19,14 @@ const styles = {
     'copy copyTwo copyTwo'`,
   gridGap: "1rem",
   gridTemplateColumns: "repeat(3, 1fr)",
+  supportIe11: true,
   ["@media (max-width: 600px)"]: {
     gridTemplateAreas: `'blah .'
         'copy copyTwo'
         'copy copyTwo'`,
-    gridTemplateColumns: "3fr 2fr"
+    gridTemplateColumns: "3fr 2fr",
+    gridGap: "1rem",
+    supportIe11: true
   }
 };
 

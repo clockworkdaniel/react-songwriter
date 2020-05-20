@@ -19,9 +19,6 @@ export function getIe11GridContainerRules(
   const gapsAdded = repeatReplaced.replace(/\s+/g, ` ${gridGap} `);
 
   return {
-    // so there is parity between browsers,
-    // thus making ie11 problems more obvious
-    gridTemplateColumns: lineNamesRemoved,
     "-ms-grid-columns": gapsAdded,
     "-ms-grid-rows": `auto ${gridGap} `
       .repeat(gridTemplateAreasByRow.length - 1)
