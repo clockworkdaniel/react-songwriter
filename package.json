@@ -18,7 +18,7 @@
     "@types/mongodb": "^3.5.14",
     "@types/react-router-dom": "^5.1.4",
     "@types/redux-logger": "^3.0.7",
-    "async": "^2.6.1",
+    "async": "^3.2.2",
     "bcrypt": "*",
     "body-parser": "^1.18.3",
     "connect-mongo": "^2.0.3",
