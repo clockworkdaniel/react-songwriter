@@ -22,7 +22,7 @@
     "bcrypt": "*",
     "body-parser": "^1.18.3",
     "connect-mongo": "^2.0.3",
-    "cross-fetch": "^2.2.3",
+    "cross-fetch": "^3.1.5",
     "express": "^4.16.4",
     "express-session": "^1.15.6",
     "history": "^4.7.2",
